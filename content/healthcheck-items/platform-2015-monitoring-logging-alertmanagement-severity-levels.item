@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Alert Management Severity Levels"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Are there predefined severity levels associated with OpenShift alerts?"
+    - type: survey
+      question: "How are alert severity levels mapped to business impact?"
+    - type: survey
+      question: "What criteria determine the severity level of an alert?"
+    - type: survey
+      question: "How are severity levels documented and communicated?"
+    - type: survey
+      question: "What is the process for reviewing and adjusting severity levels?"
+    - type: survey
+      question: "How are response times tied to severity levels?"
+    - type: survey
+      question: "What automation exists for severity classification?"
+    - type: survey
+      question: "How are severity level changes tracked?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Yes, with clear definitions for each severity level, B) No, severity is determined case by case"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic severity levels exist"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Simple severity classification without detailed criteria"
+      impact_and_risk_text: "Risk of inconsistent prioritization"
+      remediation_text: "Enhance severity level definitions"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective severity system"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-defined severity levels with clear criteria"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current severity practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Comprehensive severity framework"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Clear severity levels mapped to business impact"
+      impact_and_risk_text: "Minimal risk in alert prioritization"
+      remediation_text: "Maintain existing severity framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited severity definitions"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Insufficient severity level criteria"
+      impact_and_risk_text: "Risk of improper alert prioritization"
+      remediation_text: "Implement structured severity system"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Severity alignment needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Severity levels not aligned with business impact"
+      impact_and_risk_text: "Mismatched response to critical alerts"
+      remediation_text: "Align severity levels with business priorities"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

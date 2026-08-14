@@ -1,0 +1,64 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Infrastructure"
+    - "OpenShift Cluster"
+    - "Configuration"
+  description: "Application Networking"
+  references:
+    - title: "NetworkPolicy objects"
+      url: "https://docs.openshift.com/container-platform/latest/networking/network_policy/creating-network-policy.html"
+  check_procedures:
+    - type: survey
+      question: "How do you handle the networking and communication aspects of your containerized applications? E.G. Ingress, Egress, Cross Project/Namespace Communications"
+    - type: survey
+      question: "What tools or methods are used to manage network policies in your Kubernetes environment?"
+    - type: survey
+      question: "How often are network policies reviewed and updated?"
+    - type: survey
+      question: "Are there any challenges in managing network security and compliance?"
+    - type: survey
+      question: "How is network traffic monitored and logged for security purposes?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe application networking.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Revisiones infrecuentes de políticas de red (Network Policies)"
+      description_long_text: "Las políticas de red no se revisan periódicamente."
+      impact_and_risk_text: "Las revisiones infrecuentes pueden generar prácticas obsoletas y posibles riesgos de seguridad."
+      remediation_text: "Establecer un programa regular para revisar y actualizar las políticas de red."
+    - key: "advisory02"
+      scenario_description_short_text: "Revisar las herramientas de gestión de red"
+      description_long_text: "Se recomienda revisar periódicamente las herramientas de gestión de red para garantizar que satisfagan las necesidades actuales."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar las herramientas actuales y explorar nuevas opciones si es necesario."
+    - key: "no_change01"
+      scenario_description_short_text: "Gestión de red adecuada"
+      description_long_text: "Las prácticas actuales de gestión de red son suficientes"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Desafíos en la seguridad de la red"
+      description_long_text: "Existen desafíos en la gestión de la seguridad y el cumplimiento normativo de la red."
+      impact_and_risk_text: "Una gestión inadecuada de la seguridad de la red puede generar vulnerabilidades."
+      remediation_text: "Implementar las mejores prácticas de seguridad de la red y garantizar la implementación de controles de acceso adecuados."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

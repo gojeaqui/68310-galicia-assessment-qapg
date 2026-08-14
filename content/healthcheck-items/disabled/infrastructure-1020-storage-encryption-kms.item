@@ -1,0 +1,60 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "storage"
+  severity_key: "Not defined"
+  tag_keys:
+    - "Security"
+  tags: []
+  description: "Document Storage Encryption Key Management System (KMS) integration"
+  references: 
+  - title: "Encrypting etcd data"
+    url: "https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html"
+  - title: "Using external key management system (KMS)"
+    url: "https://docs.openshift.com/container-platform/latest/security/using-kms.html"
+  check_procedures:
+    - type: survey
+      question: "What KMS solution is being used for storage encryption?"
+    - type: survey
+      question: "How is the KMS integrated with the OpenShift cluster?"
+    - type: survey
+      question: "What is the key rotation policy and schedule?"
+    - type: survey
+      question: "Are there any monitoring or alerting mechanisms for KMS?"
+    - type: survey
+      question: "How often is the KMS configuration reviewed and updated?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "KMS correctamente configurado"
+      description_long_text: "KMS está correctamente integrado y configurado con rotación regular de llaves."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "KMS monitoring in place"
+      scenario_description_short_text: "Hay un monitoreo de KMSr"
+      description_long_text: "Los mecanismos de monitoreo y alerta adecuados están en su lugar para KMS."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "La rotacion de llaves necesita revision"
+      description_long_text: "La política de rotación de llaves no está definida o implementada correctamente."
+      impact_and_risk_text: "La rotación de llaves inadecuada puede conducir a vulnerabilidades de seguridad."
+      remediation_text: "Implemente un cronograma de rotación de llaves regular y una política."
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Se necesita monitoreo de KMS"
+      description_long_text: "No hay sistema de monitoreo o alerta en su lugar para KMS."
+      impact_and_risk_text: "La falta de monitoreo puede conducir a problemas de KMS no detectados."
+      remediation_text: "Implementar monitoreo y alerta para KMS."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

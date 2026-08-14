@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Monitoring"
+  severity_key: "High"
+  tags: ["Monitoring", "Alerts"]
+  tag_keys:
+    - "Metrics"
+    - "Alerting"
+  description: "Monitoring virtual machines and setting up alerts"
+  references:
+    - title: "Monitoring and troubleshooting VMs"
+      url: "https://docs.openshift.com/container-platform/4.16/virt/monitoring/virt-monitoring-overview.html"
+  check_procedures:
+    - type: survey
+      question: "Do you monitor key performance metrics for virtual machines?"
+    - type: survey
+      question: "Are alerts configured for critical VM events?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Monitoring configured"
+      description_long_text: "Monitoring and alerting are in place for virtual machines."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Monitoring not configured"
+      description_long_text: "Monitoring and alerting are not configured, or critical events are missed."
+      impact_and_risk_text: "Lack of monitoring can delay issue detection, causing prolonged downtime."
+      remediation_text: "Implement monitoring and alerting for virtual machines."
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

@@ -1,0 +1,57 @@
+////
+Proposito
+-------
+Briefly repeat in one or two sentences describe the principle purpose of the
+engagement.  Then at a high level summarize the outcomes of the engagement.
+Where applicable be sure to note the scope of achievements, i.e. how many
+systems were improved/affected, which environments were acted upon etc...
+Be sure to include a summary of any knowledge transfer activities such as
+executive demos and KT sessions. Try to end with one or two sentences
+summarizing next steps.
+
+Why was Red Hat there
+What did Red Hat do
+Obtacles and/or lingering blockers
+Next steps
+
+Ejemplo
+------
+Red Hat Consulting was engaged by Acme Inc. to assist with the Application Standardization 2.0 Project.  Three Ansible Tower clusters were established to serve Dev, Test and Prod environments.  Red Hat Consulting collaborated on the creation of 135 compliance and remediation playbooks, and over the course of the engagement scanned the entire Dev environment automatically bringing nearly 200 non-compliant services into compliance and flagging an additional 50 for manual remediation.  Acme's ServiceNow environment now has up-to-date compliance status on every application identified in the Dev environment.  During the course of the engagement three separate demonstrations were provided to Acme executive management as well as several knowledge transfer sessions crafted to ensure that Acme is enabled to begin scanning Test and Prod environments on their own after the necessary approvals.
+
+////
+El Banco de la Nación Argentina contrató los servicios de Red Hat Consulting para apoyar al Banco en las fases cruciales de estabilización y puesta en producción del proyecto de Banca Digital. Nuestra misión es garantizar una transición fluida y eficiente, minimizando cualquier posible interrupción y optimizando el rendimiento de la nueva plataforma. +
+
+En este contexto, se identifican y describen varias áreas que consideramos de suma importancia, las cuales deben ser revisadas y ajustadas meticulosamente durante el proceso de implementación de Banca Digital. Esto es especialmente relevante si se considera el alto volumen de usuarios y el gran número de transacciones que se espera que la plataforma maneje en un periodo de tiempo significativamente corto. La capacidad de la plataforma para escalar y mantener un rendimiento óptimo bajo estas condiciones es fundamental para el éxito del proyecto y la satisfacción del cliente.
+
+A continuación se deja un resumen de lo que se encontró durante el assessment:
+
+* Corrección en datos de la cuenta de VMWare
+** Se encontró que a la cuenta de VMWare le falta configurar el nombre del vCenter
+
+* Corrección de uso de llaves SSH
+** Se encontró el uso de multiples llaves SSH para ingresar a los nodos
+
+* Version de cluster desactualizada
+** Si bien el equipo ya esta al tanto de esto y se están actualizando los clusters, el problema de fondo es que no hay una política de actualización periódica. Debería haber un ejercicio de actualización de los clusters cada 3 meses.
+
+* Certificados auto-firmados
+** Se encontró el uso de certificados auto-firmados para la API y *.apps.
+
+* Envío de alertas a sistemas externos no configurada
+** No esta configurado el envío de alertas a un sistema externo a Openshift como puede ser algún sistema de mensajería como Teams o Telegram
+
+* La cuenta de 'kubeadmin' esta habilitada
+** Encontramos que se esta utilizando la cuenta de admin default 'kubeadmin', se recomienda deshabilitarla por seguridad.
+
+* Auto aprovisionamiento de Proyectos habilitado
+** Encontramos que se encuentra habilitado el auto-aprovisionamiento de proyectos, se recomienda deshabilitarlo
+
+* Conexión LDAP no cifrada
+** Encontramos que la conexión al LDAP no esta cifrada lo cual provoca que durante el login a la plataforma el usuario y password 
+
+Los puntos que consideramos críticos son los siguientes:
+
+* Cuenta de 'kubeadmin' habilitada
+* Conexión LDAP no cifrada
+* Version de cluster desactualizada
+

@@ -1,0 +1,66 @@
+version: v2
+check_definition:
+  category_key: "operation_ready"
+  subcategory_key: "Site Architecture"
+  severity_key: low
+  tags: []
+  description: "Hybrid and multi-cloud strategies"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Have you considered multi-cloud or hybrid cloud strategies for you containerized applications?"
+    - type: survey
+      question: "What cloud providers are currently in use or planned?"
+    - type: survey
+      question: "How do you manage workload distribution across clouds?"
+    - type: survey
+      question: "What is your disaster recovery strategy across clouds?"
+    - type: survey
+      question: "How do you handle data sovereignty requirements?"
+    - type: survey
+      question: "What tools do you use for multi-cloud management?"
+    - type: survey
+      question: "How do you maintain consistency across cloud environments?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out findings
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Multi-cloud Strategy Review"
+      description_long_text: "Current multi-cloud approach needs assessment"
+      impact_and_risk_text: "Potential gaps in cloud strategy"
+      remediation_text: "Review and optimize multi-cloud strategy"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective Multi-cloud Strategy"
+      description_long_text: "Well-planned multi-cloud implementation"
+      impact_and_risk_text: "Good cloud diversity and redundancy"
+      remediation_text: "Maintain current cloud strategy"
+    - key: "no_change02"
+      scenario_description_short_text: "Strong Cloud Management"
+      description_long_text: "Effective multi-cloud management practices"
+      impact_and_risk_text: "Consistent cross-cloud operations"
+      remediation_text: "Continue current management approach"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Strategy Enhancement Required"
+      description_long_text: "Multi-cloud strategy needs improvement"
+      impact_and_risk_text: "Risk of inefficient cloud usage"
+      remediation_text: "Develop comprehensive multi-cloud strategy"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Tool Integration Needed"
+      description_long_text: "Multi-cloud management tools insufficient"
+      impact_and_risk_text: "Complex management overhead"
+      remediation_text: "Implement unified cloud management tools"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

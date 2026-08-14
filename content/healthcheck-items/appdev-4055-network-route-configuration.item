@@ -1,0 +1,58 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Ingress"
+    - "Security"
+  description: "Securing Application Routes"
+  references:
+    - title: "Secured routes"
+      url: "https://docs.openshift.com/container-platform/latest/networking/routes/secured-routes.html"
+  check_procedures:
+    - type: survey
+      question: "Are application routes secure?"
+    - type: survey
+      question: "What methods are used to secure application routes?"
+    - type: survey
+      question: "How often are security practices for routes reviewed and updated?"
+    - type: survey
+      question: "Are there any challenges in managing certificates for secured routes?"
+    - type: survey
+      question: "How is traffic encryption managed for application routes?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Workload routes are secured"
+      description_long_text: "Workload routes are secured and a process is in place to update certificates"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Las rutas de las cargas de trabajo (Workload) no están protegidas"
+      description_long_text: "Las rutas de las cargas de trabajo no están protegidas, estan utilizando HTTP."
+      impact_and_risk_text: "Las rutas de las cargas de trabajo no protegidas exponen datos confidenciales a posibles interceptaciones y manipulaciones, lo que aumenta el riesgo de ataques de intermediario (MITM), filtraciones de datos e infracciones de cumplimiento."
+      remediation_text: "Administrar certificados de las cargas de trabajo mediante GitOps y usar rutas cifradas para las cargas de trabajo."
+    - key: "advisory01"
+      scenario_description_short_text: "Revisar las prácticas de seguridad de rutas"
+      description_long_text: "Se recomienda revisar periódicamente las prácticas de seguridad de rutas para garantizar que satisfagan las necesidades actuales."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar las prácticas de seguridad actuales y explorar mejoras si es necesario."
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Desafíos en la gestión de certificados"
+      description_long_text: "Existen desafíos en la gestión de certificados para rutas seguras."
+      impact_and_risk_text: "La gestión inadecuada de certificados puede provocar vulnerabilidades de seguridad."
+      remediation_text: "Implementar las mejores prácticas para la gestión de certificados y garantizar la implementación de controles de acceso adecuados."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

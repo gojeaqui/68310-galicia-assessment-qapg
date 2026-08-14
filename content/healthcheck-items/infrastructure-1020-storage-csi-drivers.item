@@ -1,0 +1,256 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "storage"
+  severity_key: "Not defined"
+  tags: []
+  description: "Storage CSI Drivers"
+  references: 
+  - title: "Using Container Storage Interface (CSI)"
+    url: "https://docs.openshift.com/container-platform/latest/storage/container_storage_interface/persistent-storage-csi.html"
+  - title: "Managing the default storage class"
+    url: " https://docs.openshift.com/container-platform/latest/storage/container_storage_interface/persistent-storage-csi-sc-manage.html"
+  check_procedures:
+    - type: survey
+      question: "Which CSI drivers are in use?"
+    - type: survey
+      question: "Are the CSI drivers properly configured and up-to-date?"
+    - type: survey
+      question: "Have there been any issues with the current CSI drivers?"
+    - type: survey
+      question: "Is there a backup mechanism for CSI driver configurations?"
+    - type: survey
+      question: "How often are the CSI drivers reviewed and updated?"
+    - type: command
+      command: |
+        oc get sc -o yaml
+        oc get csinode -o yaml
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Se están utilizando los drivers CSI: csi.trident.netapp.io y csi.vsphere.vmware.com"
+      description_long_text: "El upgrade de Openshift a version 4.14 realiza un upgrade transparente al driver CSI pero los features de alto nivel como expansion de volúmenes no quedan habilitados"  # Consultant to fill out storage driver details
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "Los controladores CSI están configurados correctamente"
+      description_long_text: "Todos los controladores CSI están actualizados y configurados correctamente."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Los drivers CSI necesitan ser actualizados"
+      description_long_text: "Algunos controladores CSI no están en la última versión o requieren actualizaciones de configuración."
+      impact_and_risk_text: "Los controladores desactualizados pueden no incluir funciones importantes o actualizaciones de seguridad."
+      remediation_text: "Actualice los controladores CSI a las últimas versiones compatibles y revise las configuraciones."
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Se necesita copia de seguridad del controlador CSI"
+      description_long_text: "No existe un mecanismo de respaldo para las configuraciones del controlador CSI."
+      impact_and_risk_text: "Riesgo de pérdida de configuración durante los cambios o fallas del sistema."
+      remediation_text: "Implemente una solución de respaldo para las configuraciones del controlador CSI."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "advisory01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [guillermo@darkstar BNA]$ omc get sc -o yaml
+    apiVersion: v1
+    items:
+    - apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        creationTimestamp: "2025-08-27T18:29:09Z"
+        labels:
+          local.storage.openshift.io/owner-name: loki-odf-storage
+          local.storage.openshift.io/owner-namespace: openshift-local-storage
+        name: loki-odf-storage
+        resourceVersion: "1038035029"
+        uid: 91474ca3-44fd-45c0-9fe5-47d2fb724744
+      provisioner: kubernetes.io/no-provisioner
+      reclaimPolicy: Delete
+      volumeBindingMode: WaitForFirstConsumer
+    - allowVolumeExpansion: true
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          description: Provides RWO Filesystem volumes, and RWO and RWX Block volumes
+        creationTimestamp: "2025-08-27T18:36:16Z"
+        name: ocs-storagecluster-ceph-rbd
+        resourceVersion: "1038047268"
+        uid: c6d90355-77a5-437e-9de6-0d2be2ad0af0
+      parameters:
+        clusterID: openshift-storage
+        csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+        csi.storage.k8s.io/controller-expand-secret-namespace: openshift-storage
+        csi.storage.k8s.io/fstype: ext4
+        csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+        csi.storage.k8s.io/node-stage-secret-namespace: openshift-storage
+        csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+        csi.storage.k8s.io/provisioner-secret-namespace: openshift-storage
+        imageFeatures: layering,deep-flatten,exclusive-lock,object-map,fast-diff
+        imageFormat: "2"
+        pool: ocs-storagecluster-cephblockpool
+      provisioner: openshift-storage.rbd.csi.ceph.com
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+    - apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          description: Provides Object Bucket Claims (OBCs)
+        creationTimestamp: "2025-08-27T18:31:29Z"
+        name: ocs-storagecluster-ceph-rgw
+        resourceVersion: "1038037968"
+        uid: 66dd0c4a-6641-4a61-9e34-6c51d1d8e755
+      parameters:
+        objectStoreName: ocs-storagecluster-cephobjectstore
+        objectStoreNamespace: openshift-storage
+        region: us-east-1
+      provisioner: openshift-storage.ceph.rook.io/bucket
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+    - allowVolumeExpansion: true
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          description: Provides RWO and RWX Filesystem volumes
+        creationTimestamp: "2025-08-27T18:36:21Z"
+        name: ocs-storagecluster-cephfs
+        resourceVersion: "1038047360"
+        uid: e6015732-d697-4bea-9933-043f08d80458
+      parameters:
+        clusterID: openshift-storage
+        csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+        csi.storage.k8s.io/controller-expand-secret-namespace: openshift-storage
+        csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+        csi.storage.k8s.io/node-stage-secret-namespace: openshift-storage
+        csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+        csi.storage.k8s.io/provisioner-secret-namespace: openshift-storage
+        fsName: ocs-storagecluster-cephfilesystem
+      provisioner: openshift-storage.cephfs.csi.ceph.com
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+    - allowVolumeExpansion: true
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          description: NetApp onTap Storage Class
+        creationTimestamp: "2023-01-18T20:06:24Z"
+        name: ontap-delete
+        resourceVersion: "191731004"
+        uid: 7d73e596-ae7e-444b-b6c3-9e3a9699a8a9
+      provisioner: csi.trident.netapp.io
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+    - allowVolumeExpansion: true
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          description: NetApp onTap Storage Class
+        creationTimestamp: "2023-01-18T20:06:48Z"
+        name: ontap-retain
+        resourceVersion: "191731270"
+        uid: 40f9c8ac-080f-4f47-b326-46ef2e55637d
+      provisioner: csi.trident.netapp.io
+      reclaimPolicy: Retain
+      volumeBindingMode: Immediate
+    - apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          description: Provides Object Bucket Claims (OBCs)
+        creationTimestamp: "2025-08-27T18:38:09Z"
+        name: openshift-storage.noobaa.io
+        resourceVersion: "1038049390"
+        uid: 03f95b4f-de64-44f4-8609-f6f2dce4d3ab
+      parameters:
+        bucketclass: noobaa-default-bucket-class
+      provisioner: openshift-storage.noobaa.io/obc
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+    - allowVolumeExpansion: true
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          storageclass.kubernetes.io/is-default-class: "false"
+        creationTimestamp: "2023-08-17T18:17:23Z"
+        name: thin-csi
+        resourceVersion: "810024177"
+        uid: a1ac0002-9548-4f2b-af43-2e6131984df0
+      parameters:
+        StoragePolicyName: openshift-storage-policy-oscdmzprd01-n5xps
+      provisioner: csi.vsphere.vmware.com
+      reclaimPolicy: Delete
+      volumeBindingMode: WaitForFirstConsumer
+    - allowVolumeExpansion: true
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        creationTimestamp: "2025-06-24T15:43:19Z"
+        name: thin-retain
+        resourceVersion: "958867655"
+        uid: 73d3d75c-85f7-4f55-a227-5a984958afdd
+      provisioner: csi.vsphere.vmware.com
+      reclaimPolicy: Retain
+      volumeBindingMode: Immediate
+    - allowVolumeExpansion: true
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          storageclass.kubernetes.io/is-default-class: "true"
+        creationTimestamp: "2025-06-24T15:41:32Z"
+        name: thin
+        resourceVersion: "958866738"
+        uid: 64de5fc7-c434-4db0-a5da-dd49651c2cb0
+      provisioner: csi.vsphere.vmware.com
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+    kind: List
+
+    [guillermo@darkstar BNA]$ omc get csinode -o yaml
+    apiVersion: v1
+    items:
+    - apiVersion: storage.k8s.io/v1
+      kind: CSINode
+      metadata:
+        annotations:
+          storage.alpha.kubernetes.io/migrated-plugins: kubernetes.io/aws-ebs,kubernetes.io/azure-disk,kubernetes.io/azure-file,kubernetes.io/cinder,kubernetes.io/gce-pd,kubernetes.io/vsphere-volume
+        creationTimestamp: "2025-07-01T05:06:32Z"
+        name: oscdmzprd01-n5xps-infra-6bjvr
+        ownerReferences:
+        - apiVersion: v1
+          kind: Node
+          name: oscdmzprd01-n5xps-infra-6bjvr
+          uid: 41c29ab7-51c4-4f56-9f10-fc65ce31f20f
+        resourceVersion: "1038062673"
+        uid: af735454-78cc-4ee1-beed-f2af7fc093e6
+      spec:
+        drivers:
+        - allocatable:
+            count: 59
+          name: csi.vsphere.vmware.com
+          nodeID: 423fcfd7-248d-3e60-0099-b50044ec8da0
+          topologyKeys: null
+        - name: csi.trident.netapp.io
+          nodeID: oscdmzprd01-n5xps-infra-6bjvr
+          topologyKeys: null
+        - name: openshift-storage.rbd.csi.ceph.com
+          nodeID: oscdmzprd01-n5xps-infra-6bjvr
+          topologyKeys: null
+        - name: openshift-storage.cephfs.csi.ceph.com
+          nodeID: oscdmzprd01-n5xps-infra-6bjvr
+          topologyKeys: null
+    ...

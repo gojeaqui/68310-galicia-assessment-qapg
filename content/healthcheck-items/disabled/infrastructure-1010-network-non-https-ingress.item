@@ -1,0 +1,106 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "External IP"
+    - "OpenShift Cluster Configuration"
+  description: "Non-HTTP/HTTPS ingress connections"
+  references: []
+  check_procedures:
+    - type: "command"
+      command: |
+        oc get routes --all-namespaces -o custom-columns='NAMESPACE:.metadata.namespace,NAME:.metadata.name,HOST:.spec.host,HTTPS:.spec.tls.termination'
+    - type: survey
+      question: "Describe non HTTP/HTTPS ingress connections"
+    - type: survey
+      question: "What protocols are used for non-HTTP/HTTPS ingress connections?"
+    - type: survey
+      question: "How are non-HTTP/HTTPS ingress connections secured?"
+    - type: survey
+      question: "Are there any known issues with non-HTTP/HTTPS ingress connections?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only" 
+      description_long_text: ""  # Consultant to document non HTTP/HTTPS connections
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "Las conexiones no HTTP/HTTPS son seguras."
+      description_long_text: "Las conexiones de entrada no HTTP/HTTPS están aseguradas y funcionan como se esperaba."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Las conexiones no HTTP/HTTPS necesitan revisión."
+      description_long_text: "Las conexiones de entrada no HTTP/HTTPS requieren una revisión para garantizar que sean seguras y eficientes."
+      impact_and_risk_text: "Las conexiones no aseguradas pueden conducir a posibles vulnerabilidades de seguridad."
+      remediation_text: "Revise y mejore la seguridad de las conexiones de entrada no HTTP/HTTPS."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    
+    [openshift@bastion ~]$ oc get routes --all-namespaces -o custom-columns='NAMESPACE:.metadata.namespace,NAME:.metadata.name,HOST:.spec.host,HTTPS:.spec.tls.termination'
+    NAMESPACE                            NAME                                                 HOST                                                                                               HTTPS
+    bna-cdp-prod01                       ingress-api-services-k95dh                           apapiservices0001.cc.bna.net                                                                       edge
+    bna-cdp-prod01                       ingress-backoffice-directo-8t85g                     backoffice-directo.apps.oscdmzprd01.cc.bna.net                                                     <none>
+    bna-cdp-prod01                       ingress-bna-cdp-prod01-externo-cjjxt                 digital.bna.com.ar                                                                                 edge
+    bna-cdp-prod01                       ingress-bna-cdp-prod01-externo-spt8g                 digital.bna.com.ar                                                                                 edge
+    bna-cdp-prod01                       ingress-bna-cdp-prod01-interno-67wz9                 apcdp0001.cc.bna.net                                                                               edge
+    bna-cdp-prod01                       ingress-bna-cdp-prod01-interno-zhvc6                 apcdp0001.cc.bna.net                                                                               edge
+    bna-cdp-prod01                       ingress-risk-bp4ch                                   aprisk0001.cc.bna.net                                                                              edge
+    bna-cdp-prod01                       monitor-cdp-2pzcg                                    monitor-cdp.apps.oscdmzprd01.cc.bna.net                                                            edge
+    bna-cdp-prod01                       monitor-cdp-4jgpx                                    monitor-cdp.apps.oscdmzprd01.cc.bna.net                                                            edge
+    bna-cdp-prod01                       monitor-cdp-5dbm8                                    monitor-cdp.apps.oscdmzprd01.cc.bna.net                                                            edge
+    bna-cdp-prod01                       monitor-cdp-lkshw                                    monitor-cdp.apps.oscdmzprd01.cc.bna.net                                                            edge
+    bna-cdp-prod01                       monitor-cdp-mqh7k                                    monitor-cdp.apps.oscdmzprd01.cc.bna.net                                                            edge
+    bna-cdp-prod01                       monitor-cdp-mwvxp                                    monitor-cdp.apps.oscdmzprd01.cc.bna.net                                                            edge
+    bna-cdp-prod01                       monitor-cdp-qlgqk                                    monitor-cdp.apps.oscdmzprd01.cc.bna.net                                                            edge
+    bna-cdp-prod01                       monitor-cdp-r464k                                    monitor-cdp.apps.oscdmzprd01.cc.bna.net                                                            edge
+    bna-cdp-prod01                       monitor-cdp-rzrdx                                    monitor-cdp.apps.oscdmzprd01.cc.bna.net                                                            edge
+    bna-kafka-monitor                    ingress-kafka-monitor-qddzr                          monitor-kafka.apps.oscdmzprd01.cc.bna.net                                                          <none>
+    bna-kafka-prod01                     bna-apicurioregistry-kafkasql-prod01-ingress-24h4m   bna-apicurioregistry-kafkasql-prod01.bna-kafka-prod01.router-default.apps.oscdmzprd01.cc.bna.net   <none>
+    bna-kafka-prod01                     kafka-ui                                             kafka-ui-bna-kafka-prod01.apps.oscdmzprd01.cc.bna.net                                              <none>
+    bna-observability                    grafana-route                                        grafana-amq-streams.apps.oscdmzprd01.cc.bna.net                                                    edge
+    bna-vu-prod01                        ingress-vu-k88fz                                     apvu0001.cc.bna.net                                                                                edge
+    bna-vu-prod01                        monitor-vu-9s222                                     monitor-vu.apps.oscdmzprd01.cc.bna.net                                                             edge
+    bna-vu-prod01                        monitor-vu-cpjfw                                     monitor-vu.apps.oscdmzprd01.cc.bna.net                                                             edge
+    bna-vu-prod01                        monitor-vu-dw529                                     monitor-vu.apps.oscdmzprd01.cc.bna.net                                                             edge
+    openshift-adp                        velero-metrics                                       velero-metrics-openshift-adp.apps.oscdmzprd01.cc.bna.net                                           <none>
+    openshift-authentication             oauth-openshift                                      oauth-openshift.apps.oscdmzprd01.cc.bna.net                                                        passthrough
+    openshift-console                    console                                              console-openshift-console.apps.oscdmzprd01.cc.bna.net                                              reencrypt
+    openshift-console                    downloads                                            downloads-openshift-console.apps.oscdmzprd01.cc.bna.net                                            edge
+    openshift-gitops                     kam                                                  kam-openshift-gitops.apps.oscdmzprd01.cc.bna.net                                                   passthrough
+    openshift-gitops                     openshift-gitops-server                              openshift-gitops-server-openshift-gitops.apps.oscdmzprd01.cc.bna.net                               reencrypt
+    openshift-image-registry             default-route                                        default-route-openshift-image-registry.apps.oscdmzprd01.cc.bna.net                                 reencrypt
+    openshift-ingress-canary             canary                                               <none>                                                                                             edge
+    openshift-logging                    elasticsearch                                        elasticsearch-openshift-logging.apps.oscdmzprd01.cc.bna.net                                        passthrough
+    openshift-logging                    kibana                                               kibana-openshift-logging.apps.oscdmzprd01.cc.bna.net                                               reencrypt
+    openshift-logging                    logging-loki                                         logging-loki-openshift-logging.apps.oscdmzprd01.cc.bna.net                                         reencrypt
+    openshift-monitoring                 alertmanager-main                                    alertmanager-main-openshift-monitoring.apps.oscdmzprd01.cc.bna.net                                 reencrypt
+    openshift-monitoring                 prometheus-k8s                                       prometheus-k8s-openshift-monitoring.apps.oscdmzprd01.cc.bna.net                                    reencrypt
+    openshift-monitoring                 prometheus-k8s-expo                                  prometheus-k8s-expo-openshift-monitoring.apps.oscdmzprd01.cc.bna.net                               reencrypt
+    openshift-monitoring                 prometheus-k8s-federate                              prometheus-k8s-federate-openshift-monitoring.apps.oscdmzprd01.cc.bna.net                           reencrypt
+    openshift-monitoring                 thanos                                               thanos-openshift-monitoring.apps.oscdmzprd01.cc.bna.net                                            reencrypt
+    openshift-monitoring                 thanos-expo                                          thanos-expo-openshift-monitoring.apps.oscdmzprd01.cc.bna.net                                       reencrypt
+    openshift-monitoring                 thanos-querier                                       thanos-querier-openshift-monitoring.apps.oscdmzprd01.cc.bna.net                                    reencrypt
+    openshift-storage                    noobaa-mgmt                                          noobaa-mgmt-openshift-storage.apps.oscdmzprd01.cc.bna.net                                          reencrypt
+    openshift-storage                    ocs-storagecluster-cephobjectstore                   ocs-storagecluster-cephobjectstore-openshift-storage.apps.oscdmzprd01.cc.bna.net                   edge
+    openshift-storage                    ocs-storagecluster-cephobjectstore-secure            ocs-storagecluster-cephobjectstore-secure-openshift-storage.apps.oscdmzprd01.cc.bna.net            reencrypt
+    openshift-storage                    s3                                                   s3-openshift-storage.apps.oscdmzprd01.cc.bna.net                                                   reencrypt
+    openshift-storage                    sts                                                  sts-openshift-storage.apps.oscdmzprd01.cc.bna.net                                                  reencrypt
+    openshift-user-workload-monitoring   federate                                             federate-openshift-user-workload-monitoring.apps.oscdmzprd01.cc.bna.net                            reencrypt
+    openshift-user-workload-monitoring   thanos-ruler                                         thanos-ruler-openshift-user-workload-monitoring.apps.oscdmzprd01.cc.bna.net                        reencrypt
+    ---

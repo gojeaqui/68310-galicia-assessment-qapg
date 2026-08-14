@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Platform Engineering"
+  severity_key:  low
+  tag_keys: []
+  tags: []
+  description: "General Understanding"
+  references: 
+    - title: "Platform Engineering"
+      url: https://www.redhat.com/en/topics/devops/platform-engineering 
+    - title: "DevOps to Platform Engineering"
+      url: https://www.redhat.com/architect/devops-enterprise-architect-2022
+    - title: "Platform Engineering - How to get started"
+      url: https://www.redhat.com/en/blog/platform-engineering-for-your-it-team-how-to-get-started
+  check_procedures:
+    - type: survey
+      question: "How familiar are you with platform engineering?"
+    - type: survey
+      question: "Do you have a dedicated platform engineering team?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Platform Engineering Current State" 
+      description_long_text: ""  # We are trying to get an understanding of the organization's maturity and strategy in platform engineering. This also provides a window in to their challenges and provides an opportunity to  discuss platform engineering concepts
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

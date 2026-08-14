@@ -1,0 +1,42 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "vSphere"
+  severity_key: "Not defined"
+  tags: []
+  description: "VMware vSphere Version"
+  references: 
+  - title: "OpenShift 4.18 - VMware vSphere Infrastructure Requirements"
+    url: "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/installing_on_vmware_vsphere/installer-provisioned-infrastructure#installation-vsphere-infrastructure_ipi-vsphere-installation-reqs"
+  check_procedures:
+    - type: survey
+      question: "Please have the client provide the current version of vSphere and hardware version. This is to verify vSphere and hardware are a supported version."
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Versión de VMware vSphere compatible"
+    description_long_text: "La versión de VMware vSphere es compatible con 7.0U2+ o 8.0U1+ con versión de hardware 15."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "VMware vSphere tiene la versión mínima compatible"
+    description_long_text: "La versión de VMware vSphere cumple con la versión mínima compatible de 7.0U2+ con la versión de hardware 15. El cliente debe considerar actualizar a 8.0U1+ con la versión de hardware 15 para ser compatible con OpenShift Container Platform 4.18 y versiones posteriores."
+    impact_and_risk_text: "Si bien la versión actual de vSphere (7.0U2+) cumple con los requisitos mínimos, no actualizar a vSphere 8.0U1+ puede limitar el acceso a las últimas funciones, mejoras de rendimiento y actualizaciones de seguridad. También podría afectar la compatibilidad con futuras versiones de OpenShift Container Platform, lo que podría aumentar el riesgo operativo."
+    remediation_text: "Planifique y ejecute una actualización del entorno de VMware vSphere a la versión 8.0U1 o posterior manteniendo la versión de hardware 15."
+  - key: "changes_required01"
+    scenario_description_short_text: "La versión de VMware vSphere no cumple con la versión mínima"
+    description_long_text: "La versión de VMware vSphere no cumple con la versión mínima compatible de 7.0U2+ con la versión de hardware 15. El cliente debe actualizar vSphere a la versión mínima compatible de 7.0U2+ con la versión de hardware 15."
+    impact_and_risk_text: "Los proveedores de infraestructura sin soporte limitan la capacidad del soporte técnico de Red Hat para asistir en los casos de soporte. La infraestructura sin soporte puede comportarse de forma inusual o carecer de las funciones esenciales de OpenShift."
+    remediation_text: "Actualizar VMware vSphere a la versión mínima compatible de 7.0U2+ con la versión de hardware 15."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc. See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

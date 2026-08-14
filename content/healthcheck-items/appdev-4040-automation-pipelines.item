@@ -1,0 +1,60 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Automation"
+  severity_key: "Not defined"
+  tags: []
+  description: "Application Pipeline Maturity"
+  references:
+    - title: "CI/CD Overview"
+      url: "https://docs.openshift.com/container-platform/latest/cicd/index.html"
+  check_procedures:
+    - type: survey
+      question: "What is the level of automation in your containerized application deployment and management processes?"
+    - type: survey
+      question: "Which CI/CD tools are currently used for automating application deployments?"
+    - type: survey
+      question: "How often are pipeline processes reviewed and optimized?"
+    - type: survey
+      question: "Are there any manual steps in the pipeline that could be automated?"
+    - type: survey
+      question: "What challenges have you faced in automating pipeline management?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe app deployment and mgmt process.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "El pipeline no está completamente automatizado"
+      description_long_text: "El pipeline contiene pasos manuales que podrían automatizarse."
+      impact_and_risk_text: "Los pasos manuales pueden generar ineficiencias y errores."
+      remediation_text: "Identificar y automatizar los pasos manuales en el pipeline."
+    - key: "advisory02"
+      scenario_description_short_text: "Revisar las herramientas de CI/CD"
+      description_long_text: "Se recomienda revisar periódicamente las herramientas de CI/CD para garantizar que satisfagan las necesidades actuales."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar las herramientas actuales y explorar nuevas opciones si es necesario."
+    - key: "no_change01"
+      scenario_description_short_text: "Automatización de pipelines adecuada"
+      description_long_text: "Las prácticas actuales de automatización de pipelines son suficientes"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Revisiones infrecuentes del pipeline"
+      description_long_text: "Los procesos del pipeline no se revisan regularmente."
+      impact_and_risk_text: "Las revisiones infrecuentes pueden dar lugar a prácticas obsoletas."
+      remediation_text: "Establecer un programa regular para las revisiones del pipeline."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

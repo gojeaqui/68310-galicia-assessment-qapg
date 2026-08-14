@@ -1,0 +1,41 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Container Adoption Boot Camp (DO700)
+
+[.big]#*Descripción del curso*#
+
+*Respaldo de la infraestructura para adoptar aplicaciones creadas en contenedores, Kubernetes y las prácticas de DevOps*
+
+En el curso Container Adoption Boot Camp for Administrators (DO700), aprenderá a gestionar de forma práctica e intensiva las aplicaciones desarrolladas en los contenedores que se utilizan en la implementación de Kubernetes de Red Hat, Red Hat® OpenShift® Container Platform, a nivel empresarial. El curso está destinado a quienes buscan dar un gran salto en su proceso de transformación digital. Para lograrlo, deberá poder trabajar con cada vez más clústeres, partes interesadas, aplicaciones y usuarios, lo cual le permitirá realizar implementaciones más grandes. Podrá aplicar las habilidades que adquirirá con este curso tanto a las ediciones autogestionadas de OpenShift como a las versiones de los servicios gestionados, como Red Hat OpenShift on AWS (ROSA) y Azure Red Hat OpenShift. Como parte de la inscripción, obtendrá la suscripción https://www.redhat.com/es/services/training/learning-subscription[Red Hat Learning Subscription Standard] por un año, que brinda acceso ilimitado a todos nuestros cursos en línea, y puede realizar hasta cinco exámenes y volver a repetir cualquiera de ellos en caso de que no haya aprobado.
+
+Este conjunto de cursos se basa en Red Hat OpenShift Container Platform 4.14.
+
+*Nota:* El curso se ofrece como clase virtual de diez días. Los tiempos pueden variar conforme lo realice. Para obtener la información completa sobre el curso, el cronograma y los precios, seleccione su ubicación y, luego, "Explorar ahora" en el menú de la derecha.
+
+[.big]#*Algunos temas del curso*#
+
+* Introducción a Kubernetes y Red Hat OpenShift
+* Implementación de aplicaciones en contenedores para OpenShift y resolución de problemas relacionados con ellas
+* Supervisión del acceso a los proyectos utilizando el control de acceso basado en funciones (RBAC)
+* Configuración de la autenticación y la gestión de identidades para OpenShift
+* Aislamiento de aplicaciones mediante políticas de red
+* Supervisión del uso de los recursos por medio de cuotas y límites
+* Automatización de las tareas administrativas con el operador OpenShift GitOps
+* Implementación de aplicaciones empaquetadas con los Charts de Helm y las plantillas de OpenShift
+* Preparación del almacenamiento permanente adaptado a los requisitos de las aplicaciones
+* Backups y restauraciones de aplicaciones organizadas en contenedores con el operador OpenShift API for Data Protection (OADP)
+
+[.big]#*Público destinatario*#
+
+* Administradores de sistemas y de nube e ingenieros de confiabilidad del sitio (SRE) que estén interesados en adoptar las tecnologías de contenedores y de Kubernetes
+
+[.big]#*Capacitación recomendada*#
+
+* Certificación https://www.redhat.com/es/services/certification/rhcsa[Red Hat Certified System Administrator (RHCSA)]o experiencia equivalente comprobable
+
+[.big]#*Aspectos tecnológicos que debe tener en cuenta*#
+
+* Acceso a Internet para acceder a los clústeres exclusivos y compartidos de OpenShift de este curso
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/do700-container-adoption-boot-camp

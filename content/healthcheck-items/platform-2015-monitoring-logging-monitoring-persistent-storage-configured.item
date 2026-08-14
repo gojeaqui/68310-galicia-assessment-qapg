@@ -1,0 +1,72 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"
+  description: "Monitoring components need high performance/local persistent storage to maintain consistent state after a pod restart"
+  references: 
+  - title: "Configure metrics collection for applications deployed on OCP using metrics collection for user defined projects"
+    url: "https://docs.openshift.com/container-platform/latest/monitoring/configuring-the-monitoring-stack.html#configuring-persistent-storage"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the pvc mounts and StorageClass configs in the UI used by monitoring and storage"
+    - type: "survey"
+      question: "Do the openshift monitoring and openshift user monitoring components have high performance/local persistent storage configured?"
+    - type: "command"
+      question: ""
+      command: |
+          oc get sc
+          oc get pvc -n openshift-monitoring
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Monitoreo de clúster configurado con almacenamiento persistente"
+    description_long_text: "Al ejecutar el monitoreo de clúster con almacenamiento persistente, las métricas se almacenan en un volumen persistente (PV) y se conservan incluso si se reinicia o se recrea un pod. Esto es ideal si necesita proteger sus métricas o datos de alertas contra la pérdida de datos. Para entornos de producción, se recomienda encarecidamente configurar el almacenamiento persistente. Debido a las altas demandas de E/S, es ventajoso usar almacenamiento local."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_required01"
+    scenario_description_short_text: "OpenShift monitoring components do not have the appropriate storage"
+    description_long_text: "The OpenShift monitoring components do not have the appropriate storage configured for a production environment and are not protected against data loss"
+    impact_and_risk_text: "Running cluster monitoring with persistent storage means that your metrics are stored to a persistent volume (PV) and can survive a pod being restarted or recreated. This is ideal if you require your metrics or alerting data to be guarded from data loss. For production environments, it is highly recommended to configure persistent storage. Because of the high IO demands, it is advantageous to use local storage."
+    remediation_text: "Configure persistent storage for the OpenShift monitoring components per the OpenShift documentation"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get sc
+    NAME                          PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+    loki-odf-storage              kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  56d
+    ocs-storagecluster-ceph-rbd   openshift-storage.rbd.csi.ceph.com      Delete          Immediate              true                   56d
+    ocs-storagecluster-ceph-rgw   openshift-storage.ceph.rook.io/bucket   Delete          Immediate              false                  56d
+    ocs-storagecluster-cephfs     openshift-storage.cephfs.csi.ceph.com   Delete          Immediate              true                   56d
+    ontap-delete                  csi.trident.netapp.io                   Delete          Immediate              true                   2y277d
+    ontap-retain                  csi.trident.netapp.io                   Retain          Immediate              true                   2y277d
+    openshift-storage.noobaa.io   openshift-storage.noobaa.io/obc         Delete          Immediate              false                  56d
+    thin (default)                csi.vsphere.vmware.com                  Delete          Immediate              true                   120d
+    thin-csi                      csi.vsphere.vmware.com                  Delete          WaitForFirstConsumer   true                   2y67d
+    thin-retain                   csi.vsphere.vmware.com                  Retain          Immediate              true                   120d
+    ---
+
+    [openshift@bastion ~]$ oc get pvc -n openshift-monitoring
+    NAME                                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+    alertmanager-main-db-alertmanager-main-0   Bound    pvc-bb07bf89-1874-4690-9a08-451fcf1e70fd   10Gi       RWO            thin           120d
+    alertmanager-main-db-alertmanager-main-1   Bound    pvc-767a62fc-20dd-4d20-a381-a7fc54865abc   10Gi       RWO            thin           120d
+    prometheus-k8s-db-prometheus-k8s-0         Bound    pvc-0ad8c864-d259-456c-9998-56c78e483115   100Gi      RWO            thin           120d
+    prometheus-k8s-db-prometheus-k8s-1         Bound    pvc-1fcf280e-dd47-4c9f-8e8b-17d910c82bf2   100Gi      RWO            thin           182d
+    test                                       Bound    pvc-c9dd0d80-78ec-4e90-af0f-0cbac3a2fa61   5Gi        RWO            thin           20d
+    ---

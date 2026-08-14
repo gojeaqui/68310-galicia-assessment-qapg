@@ -1,0 +1,45 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Introduction to Red Hat JBoss Enterprise Application Platform 8 (AD258)
+
+[.big]#*Descripción del curso*#
+
+*Introducción a las funciones que ofrece Red Hat JBoss Enterprise Application Platform 8 y a la gestión básica de sus servicios*
+
+En el curso _Introduction to Red Hat JBoss Enterprise Application Platform 8_ se presentan las funciones de esta plataforma. Con los laboratorios prácticos, aprenderás algunas tareas esenciales y reales que un administrador del sistema debe conocer para implementar y gestionar aplicaciones en el programa de manera efectiva.
+
+Este curso se basa en Red Hat JBoss® Enterprise Application Platform 8.0.
+
+[.big]#*Resumen del contenido del curso*#
+
+* Instalar y gestionar Red Hat JBoss Enterprise Application Platform 8
+* Migrar a la plataforma: identificar los puntos principales de este proceso
+* Migrar a la plataforma: kit de herramientas de migración para aplicaciones (MTA)
+* Migrar a la plataforma: herramienta de migración del servidor
+* Proteger Red Hat JBoss Enterprise Application Platform 8: introducción a Elytron y la seguridad de la plataforma
+* Proteger Red Hat JBoss Enterprise Application Platform 8: migrar a Elytron
+* Proteger Red Hat JBoss Enterprise Application Platform 8: TLS en las interfaces de gestión y de HTTP
+* Proteger Red Hat JBoss Enterprise Application Platform 8: controlar el acceso basado en funciones en las interfaces de gestión y de HTTP
+* Red Hat JBoss Enterprise Application Platform 8 en OpenShift: implementar las aplicaciones de la plataforma en las nubes híbridas
+* Red Hat JBoss Enterprise Application Platform 8 en OpenShift: configurar y reducir el tamaño de la plataforma para las aplicaciones en OpenShift
+* Red Hat JBoss Enterprise Application Platform 8 en OpenShift: operador de la plataforma
+
+[.big]#*Público al que va dirigido*#
+
+* Administradores de sistemas que gestionan servidores de aplicaciones Java
+* Desarrolladores que crean aplicaciones de JakartaEE
+* Arquitectos de automatización, administradores de nube e ingenieros de plataformas que diseñan y automatizan la infraestructura de aplicaciones Java de la empresa
+
+[.big]#*Capacitación recomendada*#
+
+* Se requiere experiencia básica en Linux o haber completado el curso _Red Hat System Administration I (RH124)._
+* Es necesario contar con conceptos básicos de programación relacionados con Java y las especificaciones de JakartaEE o JavaEE o haber completado el cursohttps://www.redhat.com/es/services/training/ad183-red-hat-application-development-i-programming-java-ee[] Red Hat Application Development I: Programming in Java EE (AD183).
+* Se requiere experiencia básica en la administración de Red Hat JBoss Enterprise Application Platform 8.
+* Se debe tener experiencia básica en Red Hat OpenShift o Kubernetes, o haber completado el curso _Introduction to OpenShift Applications (DO101)._
+
+[.big]#*Aspectos tecnológicos que debes tener en cuenta*#
+
+* No hay aulas disponibles para la capacitación guiada por instructor (ILT).
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/ad258-introduction-red-hat-jboss-enterprise-application-platform-8

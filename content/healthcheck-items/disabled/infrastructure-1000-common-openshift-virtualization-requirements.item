@@ -1,0 +1,52 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Common"
+  severity_key: "Not defined"
+  tag_keys: 
+    - High Availability
+    - Resilency
+    - Disaster Recovery
+  tags: []
+  description: "Openshift virtualization"
+  references: 
+    - title: "About OpenShift Virtualization"
+      url: "https://docs.openshift.com/container-platform/latest/virt/about_virt/about-virt.html"
+  check_procedures:
+    - type: "survey"
+      question: "Have you considered using OpenShift Virtualization as a means to manage containerized workloads as Virtual Machines in instances where converting the application to a container isn't possible?"
+    - type: "survey"
+      question: "What are the current challenges faced with managing workloads that could benefit from virtualization?"
+    - type: "survey"
+      question: "How is the performance of virtualized workloads monitored and optimized?"
+    - type: "survey"
+      question: "Are there specific applications that require virtualization due to legacy dependencies?"
+  common_outcomes:
+  - key: no_change01
+    scenario_description_short_text: "Virtualización implementada"
+    description_long_text: "OpenShift Virtualization se utiliza eficazmente para gestionar cargas de trabajo que no se pueden contenerizar"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: changes_recommended01
+    scenario_description_short_text: "Virtualización no utilizada"
+    description_long_text: "No se utiliza OpenShift Virtualization, lo que puede limitar la capacidad de gestionar ciertas cargas de trabajo"
+    impact_and_risk_text: "Posibles ineficiencias en la gestión de cargas de trabajo no contenerizadas"
+    remediation_text: "Considere implementar OpenShift Virtualization para cargas de trabajo que no se pueden contenerizar"
+  - key: advisory01
+    scenario_description_short_text: "Mejores prácticas de virtualización"
+    description_long_text: "Asegurar que las cargas de trabajo virtualizadas se monitoreen y optimicen para un rendimiento óptimo."
+    impact_and_risk_text: "Mejora el rendimiento de las cargas de trabajo y la utilización de recursos."
+    remediation_text: "Implementar prácticas de monitorización y optimización para cargas de trabajo virtualizadas."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

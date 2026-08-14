@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Incident Management Responsibility"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Who is responsible for initially triaging and categorizing incidents related to OpenShift clusters?"
+    - type: survey
+      question: "What is the team structure for incident management?"
+    - type: survey
+      question: "How are incident responsibilities distributed across different teams?"
+    - type: survey
+      question: "Is there a defined on-call rotation for incident response?"
+    - type: survey
+      question: "Who has authority to declare major incidents?"
+    - type: survey
+      question: "How are incident handovers managed between teams?"
+    - type: survey
+      question: "What is the escalation path for unresolved incidents?"
+    - type: survey
+      question: "Who is responsible for incident documentation and reporting?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Site Reliability Engineer team, B) Development team, C) Operations team, D) External consultants, E) Others Please Specify"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Roles identified but need clarification"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Incident management roles exist but require better definition"
+      impact_and_risk_text: "Risk of confusion during incident response"
+      remediation_text: "Document and communicate clear role definitions"
+    - key: "no_change01"
+      scenario_description_short_text: "Clear responsibility structure"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-defined incident management roles and responsibilities"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue with current responsibility framework"
+    - key: "no_change02"
+      scenario_description_short_text: "Effective team organization"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Clear ownership and escalation paths for incidents"
+      impact_and_risk_text: "Minimal risk in incident handling"
+      remediation_text: "Maintain current team structure"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Unclear responsibilities"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Incident management roles not properly defined"
+      impact_and_risk_text: "Risk of delayed or ineffective incident response"
+      remediation_text: "Define and document clear incident management responsibilities"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Team structure improvements needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Gaps in incident management coverage and handover"
+      impact_and_risk_text: "Risk of missed or mishandled incidents"
+      remediation_text: "Restructure incident management team and processes"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

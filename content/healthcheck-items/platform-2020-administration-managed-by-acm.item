@@ -1,0 +1,60 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Administration"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "ACM"
+    - "Tools"
+    - "Platform Engineering"
+    - "GitOps"
+    - "Management"
+  description: "Is OpenShift cluster managed by ACM"
+  references: 
+  - title: "Advanced Cluster Management"
+    url: "https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.10/html/clusters/cluster_mce_overview#mce-intro"
+  check_procedures:
+    - type: "survey"
+      question: "Is this OpenShift Cluster managed by ACM?"
+    - type: command
+      command: |
+        oc get pods -n open-cluster-management
+        oc get clustermanagers -A
+        oc get managedclusters -A
+        oc get managedclusteraddons -A
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out details
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get pods -n open-cluster-management
+    No resources found in open-cluster-management namespace.
+    ---
+
+    [openshift@bastion ~]$ oc get clustermanagers
+    error: the server doesn't have a resource type "clustermanagers"
+    ---
+
+    [openshift@bastion ~]$ oc get managedclusters
+    error: the server doesn't have a resource type "managedclusters"
+    ---
+
+    [openshift@bastion ~]$ oc get managedclusteraddons -A
+    error: the server doesn't have a resource type "managedclusteraddons"
+    ---

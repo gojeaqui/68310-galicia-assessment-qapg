@@ -1,0 +1,57 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "storage"
+  severity_key: "Not defined"
+  tags: []
+  description: "ODF Component Check"
+  references:
+  - title: "Red Hat OpenShift Data Foundation"
+    url: "https://docs.openshift.com/container-platform/latest/storage/persistent_storage/persistent-storage-ocs.html"
+  check_procedures:
+    - type: survey
+      question: "Is ODF installed?"
+    - type: survey
+      question: "What version of ODF is currently deployed?"
+    - type: survey
+      question: "How is ODF configured in terms of storage capacity and redundancy?"
+    - type: survey
+      question: "Are there any known performance issues with the current ODF setup?"
+    - type: survey
+      question: "How often is the ODF configuration reviewed and updated?"
+    - type: survey
+      question: "Revisar la configuración de dominios de falla (failure domains) para garantizar la resiliencia de los datos"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "ODF configurado apropiadamente"
+      description_long_text: "ODF está instalado y configurado correctamente con capacidad de almacenamiento y redundancia adecuados"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "La versión ODF es actual"
+      description_long_text: "La versión ODF instalada está actualizada sin problemas informados"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "ODF necesita actualización"
+      description_long_text: "La versión actual de ODF requiere una actualización para abordar los problemas conocidos o recibir nuevas funciones"
+      impact_and_risk_text: "Ejecutar versiones desactualizadas puede hacer que falten correcciones o funciones importantes."
+      remediation_text: "Actualizar ODF a la última versión compatible"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Revisión de configuración de ODF necesaria"
+      description_long_text: "La configuración de ODF requiere una revisión para un rendimiento y confiabilidad óptimos"
+      impact_and_risk_text: "La configuración subóptima puede afectar el rendimiento del almacenamiento"
+      remediation_text: "Revise y optimice la configuración de ODF de acuerdo con las mejores prácticas"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

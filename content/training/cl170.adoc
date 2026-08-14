@@ -1,0 +1,42 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= OpenStack Administration: Control Plane Management (CL170)
+
+[.big]#*Descripción del curso*#
+
+*Utiliza Red Hat OpenShift para gestionar los servicios de OpenStack y los nodos informáticos de Red Hat Enterprise Linux que ejecutan cargas de trabajo basadas en máquinas virtuales.*
+
+El curso OpenStack Administration: Control Plane Management (CL170) ayuda a los administradores de clústeres de Red Hat OpenStack a gestionar el estado y el rendimiento de los servicios del plano de control de OpenStack, a solucionar problemas mediante la inspección de los operadores y las cargas de trabajo de Kubernetes y a configurar los servicios del plano de control de OpenStack usando los recursos personalizados de Kubernetes.
+
+El curso se basa en Red Hat OpenShift en OpenStack 18.
+
+*Nota:* Este curso se ofrece en modalidad presencial con una duración de dos días, en modalidad virtual con una duración de tres días o como curso autorregulado. Es posible que los tiempos varíen conforme lo realices. Para obtener la información completa sobre el curso, el cronograma y los precios, selecciona tu ubicación y, luego, haz clic en "Explorar ahora" en el menú principal.
+
+[.big]#*Resumen del contenido del curso*#
+
+* Verificar el estado de los operadores y las cargas de trabajo de OpenStack e identificar los servicios deshabilitados o mal configurados
+* Recopilar información sobre la solución de problemas de los planos de control y de datos de OpenStack para las solicitudes de soporte de los clientes
+* Habilitar y personalizar los servicios de plano de control de OpenStack mediante la configuración del recurso personalizado del plano de control
+* Verificar el estado de las notas informáticas de OpenStack e identificar los servicios del plano de datos faltantes o mal configurados
+* Eliminar y remplazar o volver a implementar los nodos informáticos fallidos
+
+[.big]#*Público al que va dirigido*#
+
+* Ingenieros de plataformas y administradores de nube y de sistemas interesados en gestionar, ajustar y solucionar problemas de los clústeres de Red Hat OpenStack
+
+[.big]#*Capacitación recomendada*#
+
+* https://www.redhat.com/rhtapps/assessment/[Realiza una evaluación sin costo] para determinar si esta oferta es la más conveniente en función de tus habilidades.
+* Se recomienda completar el curso https://www.redhat.com/es/services/training/rh124-red-hat-system-administration-i[Red Hat System Administration I (RH124)].
+* Se aconseja completar los cursos https://www.redhat.com/es/services/training/rh134-red-hat-system-administration-ii[Red Hat System Administration II (RH134)] yhttps://www.redhat.com/es/services/training/rh294-red-hat-linux-automation-with-ansible[Red Hat Enterprise Linux Automation with Ansible (RH294)] o demostrar habilidades equivalentes, pero no es obligatorio.
+* Es necesario conocer los conceptos básicos de almacenamiento del centro de datos: protocolos de almacenamiento, sistemas tradicionales de almacenamiento adjunto a la red (NAS) y redes de área de almacenamiento (SAN).
+* Se requiere estar familiarizado con los conceptos de redes del centro de datos: modelo ISO, redes locales virtuales (VLAN), firewalls y protocolos de Internet, que incluyen, entre otros, ICMP, IP y HTTP.
+* Los conceptos básicos de almacenamiento de objetos, como la experiencia con AWS S3, son útiles, pero no son obligatorios.
+* Las habilidades de administración de Ceph también son útiles, pero no se exigen.
+
+[.big]#*Aspectos tecnológicos que debes tener en cuenta*#
+
+* No se necesita una conexión a Internet.
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/cl170-openstack-administration-control-plane-management

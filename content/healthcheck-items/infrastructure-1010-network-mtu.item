@@ -1,0 +1,85 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  description: "Cluster Network MTU Size"
+  references: 
+  - title: "Changing the MTU for the cluster network"
+    url: "https://docs.openshift.com/container-platform/latest/networking/changing-cluster-network-mtu.html"
+  check_procedures:
+    - type: "command"
+      command: |
+          oc describe network.config cluster
+    - type: "survey"
+      question: "What is the current MTU setting for the physical network?"
+    - type: "survey"
+      question: "Have there been any issues related to MTU size in the cluster?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "La configuración de MTU es apropiada."
+    description_long_text: "La configuración de MTU para el OpenShift SDN es igual o más baja que la MTU de la red física."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_required01"
+    scenario_description_short_text: "La configuración de MTU necesita ajuste."
+    description_long_text: "La configuración de MTU para el OpenShift SDN es mayor que la MTU de la red física."
+    impact_and_risk_text: "Se producirá fragmentación severa y degradación del rendimiento."
+    remediation_text: "El cliente debe ajustar la configuración a un valor igual o inferior al MTU de la red física."
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Ajuste de MTU recomendado para OVN-Kubernetes."
+    description_long_text: "El tipo de red del clúster está configurado como OVN-Kubernetes.El MTU del clúster debe establecerse en 100 menos que el valor MTU de hardware más bajo en su clúster."
+    impact_and_risk_text: "Posibles problemas de rendimiento si no se ajusta."
+    remediation_text: "Ajuste la MTU del clúster para que sea 100 menos que la MTU de hardware más baja."
+  - key: "changes_recommended02"
+    scenario_description_short_text: "Ajuste de MTU recomendado para OpenShift SDN."
+    description_long_text: "El tipo de red de del clúster está configurado como OpenShift SDN. El MTU del clúster debe establecerse en 50 menos que el valor MTU de hardware más bajo en su clúster."
+    impact_and_risk_text: "Posibles problemas de rendimiento si no se ajusta."
+    remediation_text: "Ajuste la MTU del clúster para que sea 50 menos que la MTU de hardware más baja."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    
+    [openshift@bastion ~]$ oc describe network.config cluster
+    Name:         cluster
+    Namespace:    
+    Labels:       <none>
+    Annotations:  <none>
+    API Version:  config.openshift.io/v1
+    Kind:         Network
+    Metadata:
+      Creation Timestamp:  2022-08-24T17:34:58Z
+      Generation:          6
+      Resource Version:    960068894
+      UID:                 fffa9a3b-7e35-4c69-be95-22481a7866c6
+    Spec:
+      Cluster Network:
+        Cidr:         10.168.0.0/14
+        Host Prefix:  23
+      External IP:
+        Policy:
+      Network Type:  OVNKubernetes
+      Service Network:
+        172.60.0.0/16
+    Status:
+      Cluster Network:
+        Cidr:               10.168.0.0/14
+        Host Prefix:        23
+      Cluster Network MTU:  1400
+      Network Type:         OVNKubernetes
+      Service Network:
+        172.60.0.0/16
+    Events:  <none>
+    ---

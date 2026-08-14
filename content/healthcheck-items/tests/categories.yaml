@@ -1,0 +1,23 @@
+categories:
+  infra:
+    text: "Infrastructure"
+    short_text: "Infra"
+  appdev:
+    text: "Application Development"
+    short_text: 'App Dev'
+  network:
+    text: "Network"
+    short_text: 'Network'
+  storage:
+    text: "Storage"
+    short_text: "Storage"
+  ocp_config: 
+    text: "OpenShift Cluster Config"
+    short_text: "Cluster Config"
+  vsphere:
+    text: "vSphere"
+    short_text: "vSphere"
+  security:
+    text: "Security"
+    short_text: "Security"
+

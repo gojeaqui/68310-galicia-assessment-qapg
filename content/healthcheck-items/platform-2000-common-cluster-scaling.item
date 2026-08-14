@@ -1,0 +1,79 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Common"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Operators"
+    - "Container Images"
+    - "OLM"
+    - "Registry"
+    - "Openshift Cluster Configuration"
+  description: "Enabling Cluster Autoscaling"
+  references: 
+  - title: "Applying autoscaling to an OpenShift Container Platform cluster"
+    url: "https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
+  check_procedures:
+    - type: command
+      command: |
+        oc describe clusterautoscaler -n default
+    - type: "survey"
+      question: "Is cluster autoscaling currently enabled?"
+    - type: "survey"
+      question: "What are your current autoscaling thresholds?"
+    - type: "survey"
+      question: "How do you monitor autoscaling events?"
+    - type: "survey"
+      question: "What is your maximum node limit for autoscaling?"
+    - type: "survey"
+      question: "Have you configured node group-specific scaling policies?"
+    - type: "survey"
+      question: "What is your scale-down policy configuration?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "No se utiliza autoscaling" 
+      description_long_text: "No se va a utilizar autoscaling de nodos porque el escalamiento se hará manualmente de acuerdo al crecimiento esperado de la aplicación"  # Consultant to describe autoscaling config
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Autoscaling Review Required"
+      description_long_text: "Current autoscaling configuration needs assessment"
+      impact_and_risk_text: "Potential inefficiencies in resource scaling"
+      remediation_text: "Review and optimize autoscaling parameters"
+    - key: "no_change01"
+      scenario_description_short_text: "Optimal Autoscaling"
+      description_long_text: "Autoscaling properly configured with appropriate thresholds"
+      impact_and_risk_text: "Efficient resource utilization"
+      remediation_text: "Maintain current configuration"
+    - key: "no_change02"
+      scenario_description_short_text: "Effective Monitoring"
+      description_long_text: "Good visibility of autoscaling operations"
+      impact_and_risk_text: "Clear scaling behavior tracking"
+      remediation_text: "Continue current monitoring approach"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Configuration Adjustment Needed"
+      description_long_text: "Autoscaling parameters need optimization"
+      impact_and_risk_text: "Risk of inefficient scaling behavior"
+      remediation_text: "Adjust autoscaling thresholds and policies"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Monitoring Enhancement Required"
+      description_long_text: "Autoscaling monitoring needs improvement"
+      impact_and_risk_text: "Limited visibility of scaling operations"
+      remediation_text: "Implement comprehensive autoscaling monitoring"
+customer_environment_findings:
+  status: pass
+  common_outcome_key: "advisory01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc describe clusterautoscaler -n default
+    No resources found in default namespace.
+    ---

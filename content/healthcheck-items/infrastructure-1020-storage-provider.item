@@ -1,0 +1,73 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Storage"
+  severity_key: "Not defined"
+  tags: []
+  description: "Storage Provider"
+  references: 
+  - title: "Understanding persistent storage"
+    url: "https://docs.openshift.com/container-platform/latest/storage/understanding-persistent-storage.html"
+  check_procedures:
+    - type: survey
+      question: "What storage provider is being used?"
+    - type: survey
+      question: "How is the storage provider configured in terms of capacity and performance?"
+    - type: survey
+      question: "Are there any known issues with the current storage provider?"
+    - type: survey
+      question: "How often is the storage provider configuration reviewed and updated?"
+    - type: survey
+      question: "Is there a backup mechanism for the storage provider configuration?"
+    - type: "command"
+      command: |
+        oc get sc
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Proveedor de almacenamiento esta correctamente configurado"
+      description_long_text: "El proveedor de almacenamiento está configurado correctamente con configuraciones de rendimiento y capacidad adecuada."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "El proveedor de almacenamiento es estable"
+      description_long_text: "La configuración actual del proveedor de almacenamiento es estable sin problemas informados"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "El proveedor de almacenamiento necesita revision"
+      description_long_text: "La configuración del proveedor de almacenamiento requiere una revisión para un rendimiento óptimo"
+      impact_and_risk_text: "La configuración subóptima puede afectar el rendimiento del almacenamiento"
+      remediation_text: "Revise y optimice la configuración del proveedor de almacenamiento de acuerdo con las mejores prácticas"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Se necesita copia de seguridad del proveedor de almacenamiento"
+      description_long_text: "No existe un mecanismo de copia de seguridad para la configuración del proveedor de almacenamiento"
+      impact_and_risk_text: "Riesgo de pérdida de configuración durante los cambios o fallas del sistema"
+      remediation_text: "Implementar la solución de respaldo para la configuración del proveedor de almacenamiento"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "advisory01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    
+    [openshift@bastion ~]$ oc get sc
+    NAME                          PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+    loki-odf-storage              kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  56d
+    ocs-storagecluster-ceph-rbd   openshift-storage.rbd.csi.ceph.com      Delete          Immediate              true                   56d
+    ocs-storagecluster-ceph-rgw   openshift-storage.ceph.rook.io/bucket   Delete          Immediate              false                  56d
+    ocs-storagecluster-cephfs     openshift-storage.cephfs.csi.ceph.com   Delete          Immediate              true                   56d
+    ontap-delete                  csi.trident.netapp.io                   Delete          Immediate              true                   2y277d
+    ontap-retain                  csi.trident.netapp.io                   Retain          Immediate              true                   2y277d
+    openshift-storage.noobaa.io   openshift-storage.noobaa.io/obc         Delete          Immediate              false                  56d
+    thin (default)                csi.vsphere.vmware.com                  Delete          Immediate              true                   120d
+    thin-csi                      csi.vsphere.vmware.com                  Delete          WaitForFirstConsumer   true                   2y67d
+    thin-retain                   csi.vsphere.vmware.com                  Retain          Immediate              true                   120d
+    ---

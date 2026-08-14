@@ -1,0 +1,102 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "storage"
+  severity_key: "Not defined"
+  tags: []
+  description: "ODF General State Check"
+  references:
+  - title: "Red Hat OpenShift Data Foundation"
+    url: "https://docs.openshift.com/container-platform/latest/storage/persistent_storage/persistent-storage-ocs.html"
+  check_procedures:
+    - type: survey
+      question: "Verificar la salud general del clúster de ODF."
+    - type: "command"
+      command: |
+        oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph status
+        oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph health detail
+        oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph df detail
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "ODF configurado apropiadamente"
+      description_long_text: "ODF está instalado y configurado correctamente con capacidad de almacenamiento y redundancia adecuados"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "El clúster de ODF se encuentra en estado 'HEALTH_OK'"
+      description_long_text: "Se encontró que el estado de salud general del cluster de ODF es saludable y no se observaron errores."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "ODF necesita actualización"
+      description_long_text: "La versión actual de ODF requiere una actualización para abordar los problemas conocidos o recibir nuevas funciones"
+      impact_and_risk_text: "Ejecutar versiones desactualizadas puede hacer que falten correcciones o funciones importantes."
+      remediation_text: "Actualizar ODF a la última versión compatible"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Revisión de configuración de ODF necesaria"
+      description_long_text: "La configuración de ODF requiere una revisión para un rendimiento y confiabilidad óptimos"
+      impact_and_risk_text: "La configuración subóptima puede afectar el rendimiento del almacenamiento"
+      remediation_text: "Revise y optimice la configuración de ODF de acuerdo con las mejores prácticas"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph status
+      cluster:
+        id:     372fc554-7a5f-480a-b82b-48a8170c7a8d
+        health: HEALTH_OK
+     
+      services:
+        mon: 3 daemons, quorum a,b,c (age 8w)
+        mgr: a(active, since 8w)
+        mds: 1/1 daemons up, 1 hot standby
+        osd: 20 osds: 20 up (since 8w), 20 in (since 8w)
+        rgw: 1 daemon active (1 hosts, 1 zones)
+     
+      data:
+        volumes: 1/1 healthy
+        pools:   12 pools, 585 pgs
+        objects: 341.15k objects, 609 GiB
+        usage:   1.8 TiB used, 308 TiB / 310 TiB avail
+        pgs:     585 active+clean
+     
+      io:
+        client:   2.7 KiB/s rd, 2.2 MiB/s wr, 4 op/s rd, 6 op/s wr
+     
+    ---
+
+    [openshift@bastion ~]$ oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph health detail
+    HEALTH_OK
+    ---
+
+    [openshift@bastion ~]$ oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph df detail
+    --- RAW STORAGE ---
+    CLASS     SIZE    AVAIL     USED  RAW USED  %RAW USED
+    ssd    310 TiB  308 TiB  1.8 TiB   1.8 TiB       0.58
+    TOTAL  310 TiB  308 TiB  1.8 TiB   1.8 TiB       0.58
+     
+    --- POOLS ---
+    POOL                                                   ID  PGS   STORED   (DATA)   (OMAP)  OBJECTS     USED   (DATA)   (OMAP)  %USED  MAX AVAIL  QUOTA OBJECTS  QUOTA BYTES  DIRTY  USED COMPR  UNDER COMPR
+    .mgr                                                    1    1  3.9 MiB  3.9 MiB      0 B        2   12 MiB   12 MiB      0 B      0     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ocs-storagecluster-cephblockpool                        2  256  428 GiB  428 GiB  3.2 KiB  110.32k  1.3 TiB  1.3 TiB  9.6 KiB   0.48     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ocs-storagecluster-cephobjectstore.rgw.buckets.index    3    8   86 MiB      0 B   86 MiB       22  259 MiB      0 B  259 MiB      0     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ocs-storagecluster-cephobjectstore.rgw.control          4    8      0 B      0 B      0 B        8      0 B      0 B      0 B      0     87 TiB            N/A          N/A    N/A         0 B          0 B
+    .rgw.root                                               5    8  5.7 KiB  5.7 KiB      0 B       17  192 KiB  192 KiB      0 B      0     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ocs-storagecluster-cephobjectstore.rgw.meta             6    8  9.4 KiB  3.8 KiB  5.6 KiB       19  185 KiB  168 KiB   17 KiB      0     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ocs-storagecluster-cephobjectstore.rgw.buckets.non-ec   7    8      0 B      0 B      0 B        0      0 B      0 B      0 B      0     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ocs-storagecluster-cephobjectstore.rgw.log              8    8  506 KiB   23 KiB  483 KiB      341  3.3 MiB  1.9 MiB  1.4 MiB      0     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ocs-storagecluster-cephobjectstore.rgw.otp              9    8      0 B      0 B      0 B        0      0 B      0 B      0 B      0     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ocs-storagecluster-cephfilesystem-metadata             10   16   17 KiB  2.3 KiB   15 KiB       22  141 KiB   96 KiB   45 KiB      0     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ocs-storagecluster-cephobjectstore.rgw.buckets.data    11  128  180 GiB  180 GiB      0 B  230.40k  541 GiB  541 GiB      0 B   0.20     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ocs-storagecluster-cephfilesystem-data0                12  128      0 B      0 B      0 B        0      0 B      0 B      0 B      0     87 TiB            N/A          N/A    N/A         0 B          0 B
+    ---

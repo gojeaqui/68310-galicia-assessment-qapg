@@ -1,0 +1,45 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Administration"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Self Provisioner Enabled"
+  references: 
+  - title: "Document self provisioner configuration"
+    url: "https://docs.openshift.com/container-platform/latest/applications/projects/configuring-project-creation.html#disabling-project-self-provisioning_configuring-project-creation"
+  check_procedures:
+    - type: "command"
+      command: |
+          # If system:authenticated is present then self provisioning is enabled
+          oc describe clusterrolebinding.rbac self-provisioners | grep system:authenticated:oauth
+  common_outcomes:
+  - key: "nochange_01"
+    scenario_description_short_text: "Self Provisioner Disabled"
+    description_long_text: "Self Provisioner is disabled for system:authenticated:oauth in Production Environment."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "recommend01"
+    scenario_description_short_text: "Auto aprovisionamiento de Proyectos habilitado"
+    description_long_text: "El auto aprovisionamiento está habilitado para system:authenticated:oauth. Debe deshabilitarse en el entorno de producción para evitar la creación incontrolada de espacios de nombres."
+    impact_and_risk_text: "Permitir el auto aprovisionamiento a usuarios autenticados reduce el control sobre la creación de proyectos."
+    remediation_text: "Eliminar el auto aprovisionamiento del grupo system:authenticated:oauth."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: changes_recommended
+  common_outcome_key: "recommend01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc describe clusterrolebinding.rbac self-provisioners | grep system:authenticated:oauth
+      Group  system:authenticated:oauth  
+    ---

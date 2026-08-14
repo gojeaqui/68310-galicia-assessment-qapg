@@ -1,0 +1,15 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Securing Kubernetes Clusters with Red Hat Advanced Cluster Security (DO430)
+
+[.big]#*Resumen del curso*#
+
+. *Instalación de Red Hat Advanced Cluster Security for Kubernetes*Describe e implementa la arquitectura de RHACS y sus elementos, sigue las prácticas recomendadas para su instalación y soluciona los problemas comunes durante este proceso.
+. *Gestión de los puntos vulnerables con Red Hat Advanced Cluster Security for Kubernetes*Interpreta los resultados del análisis de puntos vulnerables, genera informes y evalúa los riesgos para priorizar las medidas de seguridad.
+. *Gestión de las políticas con Red Hat Advanced Cluster Security for Kubernetes*Implementa y aplica las políticas de RHACS en todas las etapas para proteger el canal de CI/CD y la cadena de suministro de software.
+. *Segmentación de la red con Red Hat Advanced Cluster Security for Kubernetes*Identifica y corrige las fallas de seguridad en las políticas de red mediante el uso de Network Graph y aplica las políticas generadas en un canal de CI/CD.
+. *Gestión del cumplimiento de los estándares del sector con Red Hat Advanced Cluster Security for Kubernetes*Realiza análisis de cumplimiento normativo integrados e instala y ejecuta el operador para determinar la adherencia del clúster a las políticas y los estándares de seguridad y generar informes y pruebas de cumplimiento.
+. *Integración de los elementos externos a Red Hat Advanced Cluster Security for Kubernetes*Integra RHACS a elementos externos para proporcionar funciones adicionales, como notificaciones de alertas concentradas, backups y restauraciones, y gestión de identidades y permisos.
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/do430-securing-kubernetes-clusters-red-hat-advanced-cluster-security

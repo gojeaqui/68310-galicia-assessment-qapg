@@ -1,0 +1,64 @@
+- debug: 
+    msg: "Processing item {{ ansible_loop.index }} of {{ ansible_loop.length }}"
+
+- debug: var=input_file
+  when: debug == true
+
+- name: Read input file
+  slurp:
+    src: "{{ input_file }}"
+  register: input_content
+
+- name: Parse YAML content
+  set_fact:
+    input_data: "{{ input_content['content'] | b64decode | from_yaml }}"
+
+- debug: var=input_data
+  when: debug == true
+
+- name: Find command-type procedure
+  set_fact:
+    commands: >-
+      {{ (input_data.check_definition.check_procedures | selectattr('type', 'equalto', 'command') | list | first).command.strip() }}
+  when: input_data.check_definition.check_procedures | selectattr('type', 'equalto', 'command') | list | length > 0
+
+- name: Fail if no command-type procedure found
+  fail:
+    msg: "No command-type check procedure found in the input file {{ input_file }}."
+  when: input_data.check_definition.check_procedures | selectattr('type', 'equalto', 'command') | list | length == 0
+
+- name: Split commands into a list
+  set_fact:
+    command_list: "{{ commands.splitlines() | reject('equalto', '') | list }}"
+    merged_output: ""
+
+- name: Run each command and capture output
+  shell: "{{ item }} 2>&1"
+  register: command_result
+  with_items: "{{ command_list }}"
+  failed_when: false
+  when: item | length > 0 or not item.startswith('#')
+
+- name: Merge command, stdout, and stderr
+  set_fact:
+    merged_output: |
+      {{ merged_output }}
+      [openshift@bastion ~]$ {{ item.item }}
+      {{ item.stdout }}
+      ---
+  with_items: "{{ command_result.results }}"
+
+- name: Display merged output
+  debug:
+    var: merged_output
+  when: debug == true
+
+- name: Generate output file
+  template:
+    src: "{{ input_file }}"
+    dest: "{{ output_dir }}/{{ input_file | basename | replace('.j2', '.item') }}"
+
+# Create a template file named output_template.j2 with the following content:
+# customer_environment_findings:
+#   outcome_evidence: |
+#     {% filter indent(width=4) %}{{ merged_output }}{% endfilter %}

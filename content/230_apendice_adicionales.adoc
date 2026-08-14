@@ -1,0 +1,19 @@
+////
+Proposito
+-------
+Add additional apéndice includes here or optionally put them directly in line.
+
+Ejemplo
+------
+[appendix]
+== My Additional Appendix
+//include::my_additional_appendix.adoc[]
+
+[appendix]
+== My Additional Appendix 2
+//include::my_additional_appendix_2.adoc[]
+
+[appendix]
+== My Additional Appendix 3
+My inline appendix
+////

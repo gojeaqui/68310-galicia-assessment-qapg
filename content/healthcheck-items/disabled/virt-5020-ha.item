@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "HA"
+  severity_key: "High"
+  tags: ["HA", "Resilience"]
+  tag_keys:
+    - "High Availability"
+    - "Fault Tolerance"
+  description: "Ensuring high availability of virtualized workloads"
+  references:
+    - title: "High Availability for OpenShift Virtualization"
+      url: "https://docs.openshift.com/container-platform/4.16/virt/virtual_machines/advanced_vm_management/virt-high-availability-for-vms.html"
+  check_procedures:
+    - type: survey
+      question: "Do you ensure VMs are deployed with HA policies?"
+    - type: survey
+      question: "How do you handle failovers for virtualized workloads?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "HA configured"
+      description_long_text: "Virtual machines are configured with high availability and failover policies."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "HA not configured"
+      description_long_text: "High availability policies are not in place for virtualized workloads."
+      impact_and_risk_text: "Lack of HA can lead to downtime during node failures."
+      remediation_text: "Configure high availability for critical virtual machines."
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

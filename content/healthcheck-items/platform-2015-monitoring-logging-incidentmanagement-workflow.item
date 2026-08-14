@@ -1,0 +1,45 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key:  "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Incident Management Workflow"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Is there a workflow defined for incident management? If so, please describe."
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: |
+                  The general workflow of how a new incident is managed by Red Hat:
+                  1. An SRE first responder is alerted to a new incident, and begins an initial investigation.
+                  2. After the initial investigation, the incident is assigned an incident lead, who coordinates the recovery efforts.
+                  3. The incident lead manages all communication and coordination around recovery, including any relevant notifications or support case updates.
+                  4. The incident is recovered.
+                  5. The incident is documented and a root cause analysis is performed within 5 business days of the incident.
+                  6. A root cause analysis (RCA) draft document is shared with the customer within 7 business days of the incident.
+                  "
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

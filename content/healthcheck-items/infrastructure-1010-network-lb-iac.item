@@ -1,0 +1,59 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "IaC"
+    - "GitOps"
+  description: "Load Balancer Provisioning & Configuration Management"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "What kind of automation is used to configure external load balancer?"
+    - type: survey
+      question: "How often is the load balancer configuration reviewed and updated?"
+    - type: survey
+      question: "Are there any known issues with the current load balancer setup?"
+    - type: survey
+      question: "Is there a backup mechanism for the load balancer configuration?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Existe una automatizacion"
+    description_long_text: "Existe una automatizacion y está dentro de las prácticas recomendadas."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "No hay o automatización insuficiente"
+    description_long_text: "La automatización no existe o no está dentro de las prácticas recomendadas."
+    impact_and_risk_text: "Los procesos manuales reducen la resiliencia del medio ambiente y aumentan el trabajo."
+    remediation_text: "Implementar la automatización de acuerdo con las prácticas recomendadas."
+  - key: "notapplicable01"
+    scenario_description_short_text: "No se usa un Load Balancer externo (N/A)"
+    description_long_text: "No se esta utilizando un Load Balancer externo."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "advisory01"
+    scenario_description_short_text: "La configuración del Load Balancer está respaldada."
+    description_long_text: "Existe un mecanismo de respaldo para la configuración del Load Balancer, lo que garantiza la recuperación de datos en caso de falla."
+    impact_and_risk_text: "None"
+    remediation_text: "Continúe manteniendo copias de seguridad regulares de la configuración del Load Balancer."
+  - key: "changes_recommended01"
+    scenario_description_short_text: "La frecuencia de revisión del Load Balancer es insuficiente."
+    description_long_text: "Las configuraciones del Load Balancer no se revisan con la frecuencia suficiente, lo que puede conducir a configuraciones obsoletas."
+    impact_and_risk_text: "Las revisiones poco frecuentes pueden dar lugar a configuraciones erróneas y posibles problemas de red."
+    remediation_text: "Aumente la frecuencia de las revisiones de configuración del Load Balancer para garantizar que permanezcan actuales y efectivos."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

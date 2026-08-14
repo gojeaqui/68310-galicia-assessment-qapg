@@ -1,0 +1,43 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Performance"
+  severity_key: "Not defined"
+  tags: []
+  description: "Application performance optimization"
+  references:
+    - title: "Application Health"
+      url: "https://docs.openshift.com/container-platform/latest/applications/application-health.html"
+  check_procedures:
+    - type: survey
+      question: "Are there any specific performance or optimization strategies you employ for your containerized applications?"
+    - type: survey
+      question: "How do you monitor the performance of your applications in production?"
+    - type: survey
+      question: "Do you use any tools or services for application performance monitoring and optimization?"
+    - type: survey
+      question: "Have you implemented any caching strategies to improve application performance?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out application performance info
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "change01"
+      scenario_description_short_text: "Faltan sondas de estado (health probes)"
+      description_long_text: "No se han implementado las sondas de readiness, liveness y startup"
+      impact_and_risk_text: "Kubernetes no está informado sobre el estado del pod y no puede tomar decisiones adecuadas sobre él"
+      remediation_text: "Implementar las sondas de readiness, liveness y startup"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

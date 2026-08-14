@@ -1,0 +1,42 @@
+version: v2
+check_definition:
+  category_key: "security"
+  subcategory_key: "Garbage Collection"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Ensure that garbage collection is configured as appropriate"
+  references: 
+  - title: "Hardening Guide"
+    url: "https://access.redhat.com/solutions/5778951"
+  - title: "Node Garbage Collection"
+    url: "https://docs.openshift.com/container-platform/latest/nodes/nodes/nodes-nodes-garbage-collection.html"
+  check_procedures:
+    - type: command
+      command: |
+        # command to check level of GC
+        oc get kubeletconfigs -A
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "No hay una configuración de Garbage Collection"
+      description_long_text: "Si bien no hay una configuración de Garbage Collection no consideramos que sea necesaria, es suficiente con la configuración default"  # Consultant to fill out GC details
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "advisory01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get kubeletconfigs -A
+    No resources found
+    ---

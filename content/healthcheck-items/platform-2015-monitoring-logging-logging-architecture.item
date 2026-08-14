@@ -1,0 +1,68 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Storage"
+  description: "Determine if local logging is required when cluster log forwarding is in place"
+  references: 
+  - title: "Removing unused components if local cluster logging is unused"
+    url: "https://docs.openshift.com/container-platform/latest/logging/log_collection_forwarding/cluster-logging-collector.html#cluster-logging-collector-limits_cluster-logging-collector"
+  check_procedures:
+    - type: "survey"
+      question: "Are logs from OpenShift sent to an external logging system?"
+    - type: "survey"
+      question: "Is that external logging system the system of record and accessible by Operations, Developers and Security?"
+    - type: "survey"
+      question: "Is the internal OpenShift log store unnecessary for the organization?"
+    - type: "command"
+      question: "see logging configurations"
+      command: |
+        # 'Check if logStore and visualization stanzas are defined'
+        oc get ClusterLogging instance -o yaml
+        oc get clusterlogforwarder -n openshift-logging -o yaml
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Designed as per customer requirements"
+    description_long_text: "Including the log storage and visualization components within OpenShift is a business decision based on the organizational priorities and workflow. If an external log store is the prefered method of viewing and searching logs, then the OpenShift logstore and visualization may be unnecessary and can consume significant resources. "
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Logging components installed do not match the organizational priorities"
+    description_long_text: "Logging components installed do not match the organizational priorities. Including the log storage and visualization components within OpenShift is a business decision based on the organizational priorities and workflow. If an external log store is the prefered method of viewing and searching logs, then the OpenShift logstore and visualization may be unnecessary and can consume significant resources."
+    impact_and_risk_text: "OpenShifts internal logStore consumes significant resources in order to store and process all the audit, infrastructure and application logs. If components are installed that aren't being used increase the resources required to host the OpenShift cluster"
+    remediation_text: "Remove the logStore and visualization stanzas from the ClusterLogging instance. NOTE - Do not remove the collection stanza as that will remove the components necessary to forward logs to external logging systems"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+
+  outcome_evidence: |
+    
+    [openshift@bastion ~]$ # 'Check if logStore and visualization stanzas are defined'
+
+    ---
+
+    [openshift@bastion ~]$ oc get ClusterLogging instance -o yaml
+    Error from server (NotFound): clusterloggings.logging.openshift.io "instance" not found
+    ---
+
+    [openshift@bastion ~]$ oc get clusterlogforwarder -n openshift-logging -o yaml
+    apiVersion: v1
+    items: []
+    kind: List
+    metadata:
+      resourceVersion: ""
+    ---

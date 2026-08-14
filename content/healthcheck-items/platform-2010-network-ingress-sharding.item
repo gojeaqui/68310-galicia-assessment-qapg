@@ -1,0 +1,57 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "OpenShift Cluster Configuration"
+  description: "Ingress Sharding"
+  references: 
+  - title: "Ingress sharding in OpenShift"
+    url: "https://docs.openshift.com/container-platform/latest/networking/ingress-sharding.html"
+  check_procedures:
+    - type: "survey"
+      question: "Is ingress sharding in use?"
+    - type: "survey"
+      question: "How many shards are currently configured for ingress?"
+    - type: "survey"
+      question: "What is the observed performance of the ingress controller with the current sharding configuration?"
+    - type: "survey"
+      question: "Are there any plans to scale the number of shards in the future?"
+    - type: "survey"
+      question: "Are there any monitoring or alerting mechanisms in place for the ingress shards?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out ingress sharding details
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "Ingress sharding is appropriately configured."
+      description_long_text: "The current ingress sharding configuration meets the requirements of the workload."
+      impact_and_risk_text: "None."
+      remediation_text: "None."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Adjust ingress sharding configuration."
+      description_long_text: "The current ingress sharding configuration may need adjustments to optimize performance or accommodate future scaling."
+      impact_and_risk_text: "Insufficient sharding can lead to performance bottlenecks and potential downtime."
+      remediation_text: "Consider increasing the number of shards or redistributing traffic across existing shards."
+    - key: "advisory02"
+      scenario_description_short_text: "Implement monitoring for ingress shards."
+      description_long_text: "Monitoring ingress shards is crucial for detecting performance issues and ensuring high availability."
+      impact_and_risk_text: "Lack of monitoring can lead to undetected performance degradation and potential outages."
+      remediation_text: "Implement monitoring and alerting for key metrics such as request latency, error rate, and throughput for each shard."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

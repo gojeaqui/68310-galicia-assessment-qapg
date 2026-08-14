@@ -1,0 +1,54 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Deployment"
+  severity_key: "Not defined"
+  tags: []
+  description: "Pod Creation Method"
+  references: 
+  - title: "Understanding Deployment and DeploymentConfig objects"
+    url: "https://docs.openshift.com/container-platform/latest/applications/deployments/what-deployments-are.html"
+  - title: "Deprecated Features 4.14"
+    url: "https://docs.openshift.com/container-platform/4.14/release_notes/ocp-4-14-release-notes.html#ocp-4-14-deprecated-features"
+  check_procedures:
+    - type: "command"
+      command: |
+        oc get deploymentconfig --all-namespaces
+    - type: survey
+      question: "How do you manage the transition from DeploymentConfigs to Deployments?"
+    - type: survey
+      question: "What challenges have you faced with using DeploymentConfigs?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "No se estan utilizando DeploymentConfigs"
+    description_long_text: "Los despliegues (deployments) se realizan con StatefulSets o con objetos de tipo Deployment"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "Se estan utilizando DeploymentConfigs"
+    description_long_text: "Los despliegues (deployments) se realizan utilizando el objeto DeploymentConfig obsoleto"
+    impact_and_risk_text: "DeploymentConfig ha quedado obsoleto y podría eliminarse en futuras versiones"
+    remediation_text: "Convertir DeploymentConfig en objetos de tipo Deployment"
+  - key: "advisory01"
+    scenario_description_short_text: "Se necesita una estrategia de transición"
+    description_long_text: "No se ha definido una estrategia clara para la transición de DeploymentConfigs a Deployments."
+    impact_and_risk_text: "Sin una estrategia de transición, podrían producirse interrupciones al eliminar DeploymentConfigs."
+    remediation_text: "Desarrollar un plan de transición para pasar de DeploymentConfigs a Deployments."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get deploymentconfig --all-namespaces
+    Warning: apps.openshift.io/v1 DeploymentConfig is deprecated in v4.14+, unavailable in v4.10000+
+    No resources found
+    ---

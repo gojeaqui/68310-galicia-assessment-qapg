@@ -1,0 +1,79 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "CNI Network Plugin"
+  references: 
+  - title: "About OpenShift SDN Plugin"
+    url: "https://docs.openshift.com/container-platform/latest/networking/openshift_sdn/about-openshift-sdn.html"
+  - title: "About OpenShift OVN-Kubernetes Plugin"
+    url: https://docs.openshift.com/container-platform/latest/networking/ovn_kubernetes_network_provider/about-ovn-kubernetes.html
+  - title: "Certified CNI Plugins"
+    url: "https://access.redhat.com/articles/5436171"
+  check_procedures:
+    - type: command
+      command: | 
+        oc get network.config.openshift.io cluster -o yaml
+  common_outcomes:
+    - key: "recommended01"
+      scenario_description_short_text: "Using OpenShiftSDN"
+      description_long_text: "{cust} is using OpenShiftSDN plugin.  This is an older plugin, and it's recommended to upgrade to OVN-Kubernetes."
+      impact_and_risk_text: "OpenShiftSDN is still supported, but not receiving new development or feature requests."
+      remediation_text: "{cust} should plan an upgrade or rebuild of affected clusters use the OVN-Kubernetes CNI."
+    - key: "required01"
+      scenario_description_short_text: "Using non-certified CNI plugin"
+      description_long_text: "{cust} is using a non-certified CNI plugin." # Consultant to fill out Plugin information
+      impact_and_risk_text: |
+                            A non certified CNI plug in presents supportability risks for the cluster.  Red Hat Support may not be 
+                            resolve or advise on issues related to non-certified plugin.
+      remediation_text: "{cust} should plan an upgrade or rebuild of affected clusters to use a supported plug-in."
+    - key: "nochange01"
+      scenario_description_short_text: "Se esta utilizando OVN-Kubernetes o el complemento CNI certificado"
+      description_long_text: "Se encontró que el cluster ya fue migrado a OVN-Kubernetes"  # Consultant to fill out Plugin information
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "nochange01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get network.config.openshift.io cluster -o yaml
+    apiVersion: config.openshift.io/v1
+    kind: Network
+    metadata:
+      creationTimestamp: "2022-08-24T17:34:58Z"
+      generation: 6
+      name: cluster
+      resourceVersion: "960068894"
+      uid: fffa9a3b-7e35-4c69-be95-22481a7866c6
+    spec:
+      clusterNetwork:
+      - cidr: 10.168.0.0/14
+        hostPrefix: 23
+      externalIP:
+        policy: {}
+      networkType: OVNKubernetes
+      serviceNetwork:
+      - 172.60.0.0/16
+    status:
+      clusterNetwork:
+      - cidr: 10.168.0.0/14
+        hostPrefix: 23
+      clusterNetworkMTU: 1400
+      networkType: OVNKubernetes
+      serviceNetwork:
+      - 172.60.0.0/16
+    ---

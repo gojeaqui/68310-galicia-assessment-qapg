@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Alert Management Frequency of Review and Optimization"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "How often are OpenShift alert configurations reviewed and optimized?"
+    - type: survey
+      question: "What criteria trigger alert configuration reviews?"
+    - type: survey
+      question: "How are alert thresholds periodically evaluated?"
+    - type: survey
+      question: "What metrics are used to determine optimization needs?"
+    - type: survey
+      question: "Who is responsible for regular alert reviews?"
+    - type: survey
+      question: "How are alert review findings documented?"
+    - type: survey
+      question: "What is the process for implementing review recommendations?"
+    - type: survey
+      question: "How are alert performance trends analyzed?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Regularly scheduled reviews and updates, B) Ad-hoc basis or as issues arise"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic review schedule exists"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Simple alert review process with limited optimization"
+      impact_and_risk_text: "Risk of outdated alert configurations"
+      remediation_text: "Enhance review and optimization process"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective review system"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-established alert review and optimization process"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current review practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Regular optimization cycle"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Consistent alert review and tuning procedures"
+      impact_and_risk_text: "Minimal risk in alert effectiveness"
+      remediation_text: "Maintain existing review framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited review process"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Insufficient alert review and optimization"
+      impact_and_risk_text: "Risk of alert ineffectiveness"
+      remediation_text: "Implement structured review system"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Review implementation needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Reviews conducted but optimizations not implemented"
+      impact_and_risk_text: "Continued alert inefficiencies"
+      remediation_text: "Establish process for implementing optimizations"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

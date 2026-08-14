@@ -1,0 +1,313 @@
+////
+Resources
+---------
+* Standard draw.io libraries: https://gitlab.com/redhatdemocentral/portfolio-architecture-tooling/-/tree/main/Libraries
+* standard Red Hat icons: https://drive.google.com/drive/folders/1YMP7wtoWgSAovc4OuMHdUZwVqwjnvwPg
+////
+
+[id="cluster_{context}"]
+= Información sobre el cluster
+
+== Resumen General
+
+// omc get infrastructure -o yaml
+// omc get clusterversion
+// omc get cm -n kube-system cluster-config-v1 -o yaml
+// omc get network -o yaml
+
+[cols="h,1"]
+|===
+| Nombre | oscdmzprd01
+| Descripción | Producción 1
+| Ubicación Geográfica | CPC (Centro de Procesamiento Central) - Casa central
+| ClusterVersion | 4.14.52
+| Update channel | eus-4.14
+| Console URL | https://console-openshift-console.apps.oscdmzprd01.cc.bna.net/dashboards
+| API URL | https://api.oscdmzprd01.cc.bna.net:6443
+| ClusterID | 7bdefcf9-9c51-46c7-a238-55aa6c36f3af
+| Infrastructure provider | VMWare / IPI
+| VMWare cluster | PRODUCCION-LENOVO (*)
+| VMWare datacenter | BNA
+| VMWare defaultDatastore | CPCSOSC0001
+| VMWare network | srv-PSWOS_prod1
+| VMWare folder | /BNA/vm/oscdmzprd01-n5xps
+| VMWare username | svc_openshiftP@cc.bna.net
+| vCenter | smf99cc0001.cc.bna.net
+| API Server Internal IP | 10.10.13.22
+| Ingress IP | 10.10.13.23
+| Machine Network | 10.10.13.0/24
+| Cluster Network Type | OVNKubernetes
+| Pod IP Subnet | 10.168.0.0/14 (hostPrefix: 23)
+| Services IP Subnet | 172.60.0.0/16
+|===
+
+[NOTE]
+====
+PRODUCCION-LENOVO se migro al cluster PRODUCCION-SR850v3
+====
+
+== Hardware
+
+Los clústeres de producción: `oscdmzprd01` y `oscdmzprd02` están corriendo sobre el cluster de VMWare `PRODUCCION-SR850v3`. El mismo consiste de hipervisores de tipo: `Lenovo ThinkSystem SR850 V3 Server`.
+
+Datos del servidor:
+
+[options="header"]
+|===
+| Hypervisor Hardware | SR850v3
+| Model | Intel Xeon Platinum 8454H
+| Processor speed | 2,1Ghz
+| Processor sockets | 4
+| Cores per socket | 32
+| Logical processors | 256
+| Hyperthreading | Active
+| Memoria | 3TB total
+|===
+
+Acceso al storage mediante placa: Emulex 32 Gb LPe35000/LPe35002 1-port and 2-port Fibre Channel host bus adapters 
+
+== Operadores
+
+// omc get csv -A -o jsonpath='{range .items[*]}{"|"}{.metadata.name}{"|"}{.spec.displayName}{"|"}{.spec.version}{"\n"}{end}'|sort -u
+
+//|amqstreams.v2.7.0-7|Streams for Apache Kafka|2.7.0-7
+//|cluster-logging.v5.9.15|Red Hat OpenShift Logging|5.9.15
+//|elasticsearch-operator.v5.8.21|OpenShift Elasticsearch Operator|5.8.21
+//|grafana-operator.v5.18.0|Grafana Operator|5.18.0
+//|oadp-operator.v1.4.6|OADP Operator|1.4.6
+//|openshift-gitops-operator.v1.13.3-0.1741683398.p|Red Hat OpenShift GitOps|1.13.3+0.1741683398.p
+//|openshift-pipelines-operator-rh.v1.13.1|Red Hat OpenShift Pipelines|1.13.1
+//|packageserver|Package Server|0.0.1-snapshot
+//|rhacs-operator.v4.8.4|Advanced Cluster Security for Kubernetes|4.8.4
+//|service-registry-operator.v2.6.12-r1|Red Hat build of Apicurio Registry|2.6.12-r1
+
+// omc get subs -A -o jsonpath='{range .items[*]}{"|"}{.metadata.namespace}{"|"}{.status.currentCSV}{"\n"}{end}'
+
+[options="header"]
+|===
+|NAMESPACE| NOMBRE| VERSION
+|bna-observability | grafana-operator|v5.19.4
+|openshift-adp | oadp-operator|v1.4.6
+|openshift-local-storage | local-storage-operator|v4.14.0-202508260116
+|openshift-logging | cluster-logging|v6.0.10
+|openshift-operators | amqstreams|v2.7.0-7
+|openshift-operators | openshift-gitops-operator|v1.13.3-0.1741683398.p
+|openshift-operators|service-registry-operator|v2.6.13-r1
+|openshift-operators-redhat|elasticsearch-operator|v5.8.22
+|openshift-operators-redhat|loki-operator|v6.0.10
+|openshift-storage|mcg-operator|v4.14.23-rhodf
+|openshift-storage|ocs-operator|v4.14.23-rhodf
+|openshift-storage|odf-csi-addons-operator|v4.14.23-rhodf
+|openshift-storage|odf-operator|v4.14.23-rhodf
+|rhacs-operator|rhacs-operator|v4.8.4
+|===
+
+#*NOTA*: SE OBSERVA QUE POR UN LADO ESTA INSTALADO LOGGING EN VERSION 6.0, PERO A SU VEZ ESTA ELASTICSEARCH Y LOKI#
+
+== Pods
+
+// =CONCATENATE("|";A1;"|";B1)
+
+[options="header"]
+|===
+|NAMESPACE|NAME
+|bna-cdp-prod01|haproxy-deployment-7b974f4859-62z7t
+|bna-cdp-prod01|haproxy-deployment-7b974f4859-bmt24
+|bna-cdp-prod01|redis-node-0
+|bna-cdp-prod01|redis-node-1
+|bna-cdp-prod01|redis-node-2
+|bna-kafka-monitor|kafka-ui-deployment-5df6f7549c-xcfz9
+|bna-kafka-prod01|apicurio-entity-operator-7466bc8d5b-tczqc
+|bna-kafka-prod01|apicurio-kafka-0
+|bna-kafka-prod01|apicurio-kafka-1
+|bna-kafka-prod01|apicurio-zookeeper-0
+|bna-kafka-prod01|apicurio-zookeeper-1
+|bna-kafka-prod01|apicurio-zookeeper-2
+|bna-kafka-prod01|bna-apicurioregistry-kafkasql-prod01-deployment-68f7f578bb7dzps
+|bna-kafka-prod01|bna-apicurioregistry-kafkasql-prod01-deployment-68f7f578bbc9x8v
+|bna-kafka-prod01|bna-kafkacluster-prod01-entity-operator-5c7dccf765-qwlb4
+|bna-kafka-prod01|bna-kafkacluster-prod01-kafka-0
+|bna-kafka-prod01|bna-kafkacluster-prod01-kafka-1
+|bna-kafka-prod01|bna-kafkacluster-prod01-kafka-2
+|bna-kafka-prod01|bna-kafkacluster-prod01-kafka-3
+|bna-kafka-prod01|bna-kafkacluster-prod01-kafka-4
+|bna-kafka-prod01|bna-kafkacluster-prod01-kafka-5
+|bna-kafka-prod01|bna-kafkacluster-prod01-kafka-exporter-86d49565f6-mbbdq
+|bna-kafka-prod01|bna-kafkacluster-prod01-zookeeper-0
+|bna-kafka-prod01|bna-kafkacluster-prod01-zookeeper-1
+|bna-kafka-prod01|bna-kafkacluster-prod01-zookeeper-2
+|bna-kafka-prod01|kafka-ui-65484bccc6-hlwk4
+|bna-observability|grafana-deployment-6697744bd7-vgtwv
+|bna-observability|grafana-operator-controller-manager-v5-6f4774cb7-7v489
+|===
+
+== Storage
+
+// omc get sc
+// =CONCATENATE("|";A1;"|";B1;"|";C1;"|";D1)
+
+=== Storage Classes
+
+[options="header"]
+|===
+| NAME|PROVISIONER|RECLAIMPOLICY|VOLUMEBINDINGMODE
+| loki-odf-storage|kubernetes.io/no-provisioner|Delete|WaitForFirstConsumer
+| ocs-storagecluster-ceph-rbd|openshift-storage.rbd.csi.ceph.com|Delete|Immediate
+| ocs-storagecluster-ceph-rgw|openshift-storage.ceph.rook.io/bucket|Delete|Immediate
+| ocs-storagecluster-cephfs|openshift-storage.cephfs.csi.ceph.com|Delete|Immediate
+| ontap-delete|csi.trident.netapp.io|Delete|Immediate
+| ontap-retain|csi.trident.netapp.io|Retain|Immediate
+| openshift-storage.noobaa.io|openshift-storage.noobaa.io/obc|Delete|Immediate
+| thin-csi|csi.vsphere.vmware.com|Delete|WaitForFirstConsumer
+| thin-retain|csi.vsphere.vmware.com|Retain|Immediate
+| thin|csi.vsphere.vmware.com|Delete|Immediate
+|===
+
+
+=== Prueba de FIO (seqwrite) sobre Storage Class thin
+|===
+| Ancho de banda | 927 MiB/s (≈972 MB/s) | Rendimiento de escritura sostenido muy alto, excelente para directorios de datos de Kafka.
+| IOPS | ≈927 IOPS (bloques de 1 MiB) | 927 x 1 MiB ≈ 927 MiB/s confirma la consistencia.
+| Latencia promedio | ~0,68 ms | Cada escritura de 1 MiB se completa en menos de 1 ms en promedio, muy buen resultado.
+| Latencia del percentil 99 | ≈1,4 ms | Solo el 1 % de las escrituras son más lentas que 1,4 ms, lo cual sigue siendo muy bueno.
+| Uso de CPU | ~81 % | Limitado por E/S del sistema, normal para escrituras secuenciales de alto rendimiento.
+| Utilización del disco | 41 % | El dispositivo no estaba saturado; hay margen para más carga.
+|===
+
+=== Prueba de FIO (fsync-test) sobre Storage Class thin
+|===
+| Ancho de banda de escritura | ≈ 2,7 MB/s (≈ 666 IOPS) | Se espera para un patrón de 4 KB + fsync (cada escritura espera a que se vacíe el búfer).
+| Latencia de escritura promedio | ~13 µs (escritura) | Tiempo para copiar datos a los búferes del kernel, sin incluir fsync.
+| Latencia de fsync promedio | ≈ 1,48 ms | Esta es la métrica crítica para la durabilidad de Kafka.
+| Latencia de fsync del percentil 99 | ≈ 4,3 ms | Excelente consistencia: solo el 1 % de las sincronizaciones son más lentas que ~4 ms.
+| Latencia de fsync del percentil 99,9 | ≈ 9,9 ms | Muy buena; latencia de cola inferior a 10 ms.
+| Utilización del disco | ≈ 100 % | El dispositivo está completamente ocupado atendiendo sincronizaciones, lo cual es normal para este patrón.
+|===
+
+
+
+=== Persistent Volumes
+
+// omc get pv
+// *NOTA* ACORDARSE DE ORDENAR SEGUN LA COLUMNA "F"
+// =CONCATENATE("|";A1;"|";B1;"|";C1;"|";D1;"|";E1;"|";F1;"|";G1)
+
+[options="header"]
+|===
+|PV|CAPACITY|ACCESS MODES|RECLAIM POLICY|STATUS|PVC|STORAGECLASS
+|pv-retain-safeway|25Mi|RWX|Retain|Bound|bna-cdp-prod01/pvc-retain-safeway|slow
+|pv-retain-ses|25Mi|RWX|Retain|Bound|bna-cdp-prod01/pvc-retain-ses|slow
+|pvc-afac6b20-4e21-43fe-83d8-4fca293090ac|8Gi|RWO|Delete|Bound|bna-cdp-prod01/redis-data-redis-node-0|thin
+|pvc-7076300b-77b5-406a-8682-30d6a4853a32|8Gi|RWO|Delete|Bound|bna-cdp-prod01/redis-data-redis-node-1|thin
+|pvc-e7cca204-8bfa-4cf7-9d03-f5a20badbbc4|8Gi|RWO|Delete|Bound|bna-cdp-prod01/redis-data-redis-node-2|thin
+|pvc-b2395bbf-f000-48bf-a52d-ea544809d365|25Mi|RWX|Retain|Released|bna-cdp-prod01/volume-retain-safeway|ontap-retain
+|pvc-740418c3-fb98-43a6-bb45-b18d34296dfb|25Mi|RWX|Retain|Released|bna-cdp-prod01/volume-retain-ses|ontap-retain
+
+|pvc-621d9009-fde6-4ac2-8f46-aa59a95633ac|5Gi|RWO|Retain|Bound|bna-kafka-prod01/data-apicurio-kafka-0|thin-retain
+|pvc-8fe3446c-f8a7-4ae7-90ba-1f37ef0a33f4|5Gi|RWO|Retain|Bound|bna-kafka-prod01/data-apicurio-kafka-1|thin-retain
+|pvc-dadac5ec-7eb4-421c-8f49-acaa14f092c5|10Gi|RWO|Retain|Bound|bna-kafka-prod01/data-apicurio-zookeeper-0|thin-retain
+|pvc-7b9ef4af-f7a6-4bad-82a5-1d1d979d9c13|10Gi|RWO|Retain|Bound|bna-kafka-prod01/data-apicurio-zookeeper-1|thin-retain
+|pvc-a341ce16-8ca4-4fad-b6a0-a0b943aa38f8|10Gi|RWO|Retain|Bound|bna-kafka-prod01/data-apicurio-zookeeper-2|thin-retain
+
+//
+|pvc-5faceec5-3baa-4c17-8073-4a4c0c3b691d|300Gi|RWO|Retain|Bound|bna-kafka-prod01/data-0-bna-kafkacluster-prod01-kafka-0|thin-retain
+|pvc-7d520827-c75f-46dd-a04f-858567689efc|300Gi|RWO|Retain|Bound|bna-kafka-prod01/data-0-bna-kafkacluster-prod01-kafka-1|thin-retain
+|pvc-819f7719-4e66-468c-83b3-e79b09bcb05c|300Gi|RWO|Retain|Bound|bna-kafka-prod01/data-0-bna-kafkacluster-prod01-kafka-2|thin-retain
+|pvc-587363c9-0d75-462a-87a2-85a86cb2efad|300Gi|RWO|Retain|Bound|bna-kafka-prod01/data-0-bna-kafkacluster-prod01-kafka-3|thin-retain
+|pvc-4d5df407-6755-4d4c-848e-f6e07b7658b5|300Gi|RWO|Retain|Bound|bna-kafka-prod01/data-0-bna-kafkacluster-prod01-kafka-4|thin-retain
+|pvc-5ef68f17-35d0-4d62-ad85-dc7d41ba5802|300Gi|RWO|Retain|Bound|bna-kafka-prod01/data-0-bna-kafkacluster-prod01-kafka-5|thin-retain
+//
+
+|pvc-7dce5d0b-ec81-4fed-88f1-8b31efc556ee|20Gi|RWO|Retain|Bound|bna-kafka-prod01/data-bna-kafkacluster-prod01-zookeeper-0|thin-retain
+|pvc-58cf3c07-a70f-46bf-af2f-8864b57cd16b|20Gi|RWO|Retain|Bound|bna-kafka-prod01/data-bna-kafkacluster-prod01-zookeeper-1|thin-retain
+|pvc-e69f9a04-1d46-4e6a-86ba-d9b030238600|20Gi|RWO|Retain|Bound|bna-kafka-prod01/data-bna-kafkacluster-prod01-zookeeper-2|thin-retain
+
+|oscdmzprd01-registry-pv|500Gi|RWX|Retain|Bound|openshift-image-registry/oscdmzprd01-registry-pvc|slow
+|pvc-de101214-c395-4029-b386-4e492364f841|2Ti|RWO|Delete|Bound|openshift-logging/elasticsearch-elasticsearch-cdm-0l2d423c-1|thin
+|pvc-d082c894-6048-43dc-8351-9a64773c1491|2Ti|RWO|Delete|Bound|openshift-logging/elasticsearch-elasticsearch-cdm-0l2d423c-2|thin
+|pvc-8f6d78a8-61f1-4955-a223-bb62daebd4dc|2Ti|RWO|Delete|Bound|openshift-logging/elasticsearch-elasticsearch-cdm-0l2d423c-3|thin
+|pvc-49466cb8-d515-476a-ac01-d35ea1e55ecc|10Gi|RWO|Delete|Bound|openshift-logging/storage-logging-loki-compactor-0|ocs-storagecluster-ceph-rbd
+|pvc-913dad1a-6287-4b1c-8ff6-a66a0aee4c6a|50Gi|RWO|Delete|Bound|openshift-logging/storage-logging-loki-index-gateway-0|ocs-storagecluster-ceph-rbd
+|pvc-29e20d23-f8b8-4494-ad09-139363daf387|50Gi|RWO|Delete|Bound|openshift-logging/storage-logging-loki-index-gateway-1|ocs-storagecluster-ceph-rbd
+|pvc-b95095b9-e9d5-4b4a-8c53-c750814e3570|10Gi|RWO|Delete|Bound|openshift-logging/storage-logging-loki-ingester-0|ocs-storagecluster-ceph-rbd
+|pvc-84f13fe2-dff9-401b-837f-acd1869d1340|10Gi|RWO|Delete|Bound|openshift-logging/storage-logging-loki-ingester-1|ocs-storagecluster-ceph-rbd
+|pvc-da5343cb-9fe0-4612-b72b-cbbfcc26fea2|10Gi|RWO|Delete|Bound|openshift-logging/storage-logging-loki-ingester-2|ocs-storagecluster-ceph-rbd
+|pvc-5b2c7c3e-d18e-4992-8ab2-11f5c6c1d232|150Gi|RWO|Delete|Bound|openshift-logging/wal-logging-loki-ingester-0|ocs-storagecluster-ceph-rbd
+|pvc-97ea7433-9c3b-4dcf-b32a-d3d96a5e2d2e|150Gi|RWO|Delete|Bound|openshift-logging/wal-logging-loki-ingester-1|ocs-storagecluster-ceph-rbd
+|pvc-647ac491-b6a9-44e4-8412-d225fedc5ace|150Gi|RWO|Delete|Bound|openshift-logging/wal-logging-loki-ingester-2|ocs-storagecluster-ceph-rbd
+|pvc-bb07bf89-1874-4690-9a08-451fcf1e70fd|10Gi|RWO|Delete|Bound|openshift-monitoring/alertmanager-main-db-alertmanager-main-0|thin
+|pvc-767a62fc-20dd-4d20-a381-a7fc54865abc|10Gi|RWO|Delete|Bound|openshift-monitoring/alertmanager-main-db-alertmanager-main-1|thin
+|pvc-0ad8c864-d259-456c-9998-56c78e483115|100Gi|RWO|Delete|Bound|openshift-monitoring/prometheus-k8s-db-prometheus-k8s-0|thin
+|pvc-1fcf280e-dd47-4c9f-8e8b-17d910c82bf2|100Gi|RWO|Delete|Bound|openshift-monitoring/prometheus-k8s-db-prometheus-k8s-1|thin
+|pvc-c9dd0d80-78ec-4e90-af0f-0cbac3a2fa61|5Gi|RWO|Delete|Bound|openshift-monitoring/test|thin
+|pvc-54d8b4a3-c50d-48ad-b68e-5b8052d44d00|50Gi|RWO|Delete|Bound|openshift-storage/db-noobaa-db-pg-0|ocs-storagecluster-ceph-rbd
+|local-pv-6194dbc3|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-0zk4dv|loki-odf-storage
+|local-pv-88fccc8e|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-10pn7w2|loki-odf-storage
+|local-pv-9a91eee0|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-11qh4sk|loki-odf-storage
+|local-pv-c5ab2fbc|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-12bshpz|loki-odf-storage
+|local-pv-7f6315f2|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-13qkntw|loki-odf-storage
+|local-pv-66bc2a32|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-14nttp4|loki-odf-storage
+|local-pv-e867ad1|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-15xbzgg|loki-odf-storage
+|local-pv-7be95ece|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-16gndph|loki-odf-storage
+|local-pv-994436e|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-17g6pk9|loki-odf-storage
+|local-pv-5b7a311c|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-18b2xpk|loki-odf-storage
+|local-pv-a5bc7df4|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-194wmjw|loki-odf-storage
+|local-pv-79e8da02|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-1wb77j|loki-odf-storage
+|local-pv-8bacecb3|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-247m65|loki-odf-storage
+|local-pv-70af9adc|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-366vb7|loki-odf-storage
+|local-pv-8b007997|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-49lvcd|loki-odf-storage
+|local-pv-a2e3323|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-5kstcl|loki-odf-storage
+|local-pv-46d9e35a|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-68bhvc|loki-odf-storage
+|local-pv-e832db1b|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-7blhzp|loki-odf-storage
+|local-pv-dab51c50|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-8ktbbx|loki-odf-storage
+|local-pv-490b234|15872Gi|RWO|Delete|Bound|openshift-storage/ocs-deviceset-loki-odf-storage-0-data-9847mc|loki-odf-storage
+|===
+
+== Nodos
+
+=== Resumen
+[options="header"]
+|===
+| Tipo | Cantidad | vCPUs | Memoria (GiB) | Disco (GiB)
+| master | 3 | 8 | 32 | 200
+| infra | 4 | 8 | 32 | 200
+| loki | 3 | 72 | 200 | 200
+| storage | 5 | 32 | 64 | 200
+| worker | 7 | 16 | 48 | 200
+|===
+
+[NOTE]
+====
+72 vCPU y 200Gi de RAM para los nodos de Loki puede parecer excesivo pero es el valor calculado por la BU de Logging para el volumen de logs estimado
+====
+
+=== Listado de Nodos
+
+// omc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.capacity.cpu}{"\t"}{.status.capacity.memory}{"\t"}{.status.capacity.ephemeral-storage}{"\n"}{end}'
+
+[options="header"]
+|===
+| Nombre | vCPUs | Memoria | Disco
+| oscdmzprd01-n5xps-infra-6bjvr | 8  | 31.35Gi | 199.46Gi
+| oscdmzprd01-n5xps-infra-hdwjx | 8  | 31.35Gi | 199.46Gi
+| oscdmzprd01-n5xps-infra-xggmf | 8  | 31.35Gi | 199.46Gi
+| oscdmzprd01-n5xps-infra-xstc7 | 8  | 31.35Gi | 199.46Gi
+| oscdmzprd01-n5xps-loki-9c5z2  | 72 | 196.76Gi | 199.46Gi
+| oscdmzprd01-n5xps-loki-tj4bh  | 72 | 196.76Gi | 199.46Gi
+| oscdmzprd01-n5xps-loki-z852k  | 72 | 196.76Gi | 199.46Gi
+| oscdmzprd01-n5xps-master-0    | 8  | 31.35Gi | 199.51Gi
+| oscdmzprd01-n5xps-master-1    | 8  | 31.35Gi | 199.51Gi
+| oscdmzprd01-n5xps-master-2    | 8  | 31.35Gi | 199.51Gi
+| oscdmzprd01-n5xps-storage-1-dj9c9 | 32 | 62.81Gi | 199.46Gi
+| oscdmzprd01-n5xps-storage-2-nrhkd | 32 | 62.81Gi | 199.46Gi
+| oscdmzprd01-n5xps-storage-3-wnsfn | 32 | 62.81Gi | 199.46Gi
+| oscdmzprd01-n5xps-storage-4-d6p6k | 32 | 62.81Gi | 199.46Gi
+| oscdmzprd01-n5xps-storage-5-642cg | 32 | 62.81Gi | 199.46Gi
+| oscdmzprd01-n5xps-worker-5l8fh | 16 | 47.06Gi | 199.46Gi
+| oscdmzprd01-n5xps-worker-b5fwt | 16 | 47.06Gi | 199.46Gi
+| oscdmzprd01-n5xps-worker-f4lxl | 16 | 47.06Gi | 199.46Gi
+| oscdmzprd01-n5xps-worker-jwpzr | 16 | 47.06Gi | 199.46Gi
+| oscdmzprd01-n5xps-worker-qvq2n | 16 | 47.06Gi | 199.46Gi
+| oscdmzprd01-n5xps-worker-vg9vs | 16 | 47.06Gi | 199.46Gi
+| oscdmzprd01-n5xps-worker-w29hd | 16 | 47.06Gi | 199.46Gi
+|===

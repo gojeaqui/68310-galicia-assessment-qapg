@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Incident Management Classifying Incidents"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "What criteria are commonly used to classify incidents related to OpenShift clusters?"
+    - type: survey
+      question: "How are incident severity levels determined?"
+    - type: survey
+      question: "What is the process for escalating incident classifications?"
+    - type: survey
+      question: "How are security incidents classified differently from operational incidents?"
+    - type: survey
+      question: "What metrics are used to validate incident classification?"
+    - type: survey
+      question: "How are multi-component incidents classified?"
+    - type: survey
+      question: "What tools are used to assist in incident classification?"
+    - type: survey
+      question: "How often is the incident classification system reviewed?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Severity, impact, and urgency, B) Time of occurrence and affected service, C) Geographic location and user role, D) Priority level and budget allocation, E) Others Please Specify"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic classification system exists"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Simple incident classification process in place"
+      impact_and_risk_text: "Risk of inconsistent classification"
+      remediation_text: "Enhance classification criteria"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective classification system"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-defined incident classification framework"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current classification practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Comprehensive classification process"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Clear criteria for all incident types"
+      impact_and_risk_text: "Minimal risk in incident classification"
+      remediation_text: "Maintain existing classification system"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Classification needs standardization"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Inconsistent incident classification methods"
+      impact_and_risk_text: "Risk of misclassified incidents"
+      remediation_text: "Implement standardized classification system"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Classification automation required"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Manual classification causing delays"
+      impact_and_risk_text: "Delayed response due to classification issues"
+      remediation_text: "Deploy automated classification tools"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

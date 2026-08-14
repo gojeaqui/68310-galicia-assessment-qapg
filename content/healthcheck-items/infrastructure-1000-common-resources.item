@@ -1,0 +1,89 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Common"
+  severity_key: "Not defined"
+  tag_keys: []
+  tags: []
+  description: "OpenShift Node CPU/Memory/Storage"
+  references: 
+  - title: "Minimum Resource requirements for Cluster Operation"
+    url: "https://docs.openshift.com/container-platform/latest/installing/installing_platform_agnostic/installing-platform-agnostic.html#installation-minimum-resource-requirements_installing-platform-agnostic"
+  check_procedures:
+    - type: "survey"
+      question: "How much CPU, Memory, and Local Storage are assigned to each node? Obtain information either at the infrastructure/cloud provider layer or from within the platform."
+    - type: "survey"
+      question: "Are there any nodes currently experiencing resource pressure or constraints?"
+    - type: "survey"
+      question: "What monitoring tools are used to track node resource usage over time?"
+    - type: "command"
+      command: |
+          oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.capacity.cpu}{"\t"}{.status.capacity.memory}{"\t"}{.status.capacity.ephemeral-storage}{"\n"}{end}'
+          oc get machinesets -n openshift-machine-api
+  common_outcomes:
+  - key: "scenario1"
+    scenario_description_short_text: "Requisitos cumplidos"
+    description_long_text: "Todos los nodos cumplen con los requisitos mínimos para instalar OpenShift"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "scenario2"
+    scenario_description_short_text: "Requisitos no cumplidos"
+    description_long_text: "Uno o más nodos no cumplen con la cantidad requerida de CPU, memoria y/o requisitos de almacenamiento local."
+    impact_and_risk_text: "No proporcionar a los nodos de clúster la cantidad apropiada de recursos podría conducir a problemas de rendimiento si se reduce."
+    remediation_text: "Como organización, asegúrese de que los equipos de infraestructura, plataforma y aplicaciones trabajen juntos para definir y documentar los requisitos de recursos.Aumente/disminuya la CPU, la memoria y el almacenamiento local para cumplir con ambos requisitos de la plataforma."
+  - key: "advisory01"
+    scenario_description_short_text: "Mejores prácticas de monitoreo de recursos"
+    description_long_text: "Asegúrese de que el uso de recursos de los nodos sea monitoreado y analizado continuamente."
+    impact_and_risk_text: "Ayuda en la gestión proactiva de recursos y evita posibles cuellos de botella."
+    remediation_text: "Implemente soluciones de monitoreo para rastrear y analizar las tendencias de uso de recursos de nodos."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "scenario1"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    
+    [openshift@bastion ~]$ oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.capacity.cpu}{"\t"}{.status.capacity.memory}{"\t"}{.status.capacity.ephemeral-storage}{"\n"}{end}'
+    oscdmzprd01-n5xps-infra-6bjvr	8	32868616Ki	209124332Ki
+    oscdmzprd01-n5xps-infra-hdwjx	8	32868616Ki	209124332Ki
+    oscdmzprd01-n5xps-infra-xggmf	8	32868608Ki	209124332Ki
+    oscdmzprd01-n5xps-infra-xstc7	8	32868616Ki	209124332Ki
+    oscdmzprd01-n5xps-loki-9c5z2	72	206310924Ki	209124332Ki
+    oscdmzprd01-n5xps-loki-tj4bh	72	206310924Ki	209124332Ki
+    oscdmzprd01-n5xps-loki-z852k	72	206310916Ki	209124332Ki
+    oscdmzprd01-n5xps-master-0	8	32869164Ki	209179628Ki
+    oscdmzprd01-n5xps-master-1	8	32869164Ki	209179628Ki
+    oscdmzprd01-n5xps-master-2	8	32869172Ki	209179628Ki
+    oscdmzprd01-n5xps-storage-1-dj9c9	32	65844100Ki	209124332Ki
+    oscdmzprd01-n5xps-storage-2-nrhkd	32	65844096Ki	209124332Ki
+    oscdmzprd01-n5xps-storage-3-wnsfn	32	65844096Ki	209124332Ki
+    oscdmzprd01-n5xps-storage-4-d6p6k	32	65844100Ki	209124332Ki
+    oscdmzprd01-n5xps-storage-5-642cg	32	65844096Ki	209124332Ki
+    oscdmzprd01-n5xps-worker-5l8fh	16	49332688Ki	209124332Ki
+    oscdmzprd01-n5xps-worker-b5fwt	16	49332700Ki	209124332Ki
+    oscdmzprd01-n5xps-worker-f4lxl	16	49332704Ki	209124332Ki
+    oscdmzprd01-n5xps-worker-jwpzr	16	49332696Ki	209124332Ki
+    oscdmzprd01-n5xps-worker-qvq2n	16	49332708Ki	209124332Ki
+    oscdmzprd01-n5xps-worker-vg9vs	16	49332704Ki	209124332Ki
+    oscdmzprd01-n5xps-worker-w29hd	16	49332696Ki	209124332Ki
+    ---
+
+    [openshift@bastion ~]$ oc get machinesets -n openshift-machine-api
+    NAME                          DESIRED   CURRENT   READY   AVAILABLE   AGE
+    oscdmzprd01-n5xps-infra       4         4         4       4           3y59d
+    oscdmzprd01-n5xps-loki        3         3         3       3           57d
+    oscdmzprd01-n5xps-storage-1   1         1         1       1           57d
+    oscdmzprd01-n5xps-storage-2   1         1         1       1           57d
+    oscdmzprd01-n5xps-storage-3   1         1         1       1           57d
+    oscdmzprd01-n5xps-storage-4   1         1         1       1           57d
+    oscdmzprd01-n5xps-storage-5   1         1         1       1           57d
+    oscdmzprd01-n5xps-worker      7         7         7       7           3y60d
+    ---

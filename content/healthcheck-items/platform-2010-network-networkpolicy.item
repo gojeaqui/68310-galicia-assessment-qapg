@@ -1,0 +1,512 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Network Policy"
+  description: "Network Policy"
+  references: 
+  - title: "Network Policy usage in OpenShift"
+    url: "https://docs.openshift.com/container-platform/latest/networking/network_security/network_policy/about-network-policy.html"
+  check_procedures:
+    - type: "command"
+      command: |
+        oc describe networkpolicy --all-namespaces
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Se utilizan NetworkPolicies"
+      description_long_text: "Se encontró que se están utilizando NetworkPolicies para proteger los namespaces de la aplicación"  # Consultant to fill out details
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "advisory01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc describe networkpolicy --all-namespaces
+    Name:         apicurio-entity-operator
+    Namespace:    bna-kafka-prod01
+    Created on:   2025-06-25 12:31:59 -0300 -03
+    Labels:       app=apicurio
+                  app.kubernetes.io/instance=apicurio
+                  app.kubernetes.io/managed-by=strimzi-cluster-operator
+                  app.kubernetes.io/name=entity-operator
+                  app.kubernetes.io/part-of=strimzi-apicurio
+                  strimzi.io/cluster=apicurio
+                  strimzi.io/component-type=entity-operator
+                  strimzi.io/kind=Kafka
+                  strimzi.io/name=apicurio-entity-operator
+    Annotations:  <none>
+    Spec:
+      PodSelector:     strimzi.io/cluster=apicurio,strimzi.io/kind=Kafka,strimzi.io/name=apicurio-entity-operator
+      Allowing ingress traffic:
+        To Port: 8080/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         apicurio-network-policy-kafka
+    Namespace:    bna-kafka-prod01
+    Created on:   2025-06-25 12:30:01 -0300 -03
+    Labels:       app=apicurio
+                  app.kubernetes.io/instance=apicurio
+                  app.kubernetes.io/managed-by=strimzi-cluster-operator
+                  app.kubernetes.io/name=kafka
+                  app.kubernetes.io/part-of=strimzi-apicurio
+                  strimzi.io/cluster=apicurio
+                  strimzi.io/component-type=kafka
+                  strimzi.io/kind=Kafka
+                  strimzi.io/name=apicurio-kafka
+    Annotations:  <none>
+    Spec:
+      PodSelector:     strimzi.io/cluster=apicurio,strimzi.io/kind=Kafka,strimzi.io/name=apicurio-kafka
+      Allowing ingress traffic:
+        To Port: 9090/TCP
+        From:
+          PodSelector: strimzi.io/cluster=apicurio,strimzi.io/kind=Kafka,strimzi.io/name=apicurio-kafka
+        ----------
+        To Port: 9091/TCP
+        From:
+          NamespaceSelector: <none>
+          PodSelector: strimzi.io/kind=cluster-operator
+        From:
+          PodSelector: strimzi.io/cluster=apicurio,strimzi.io/kind=Kafka,strimzi.io/name=apicurio-kafka
+        From:
+          PodSelector: strimzi.io/name=apicurio-entity-operator
+        From:
+          PodSelector: strimzi.io/name=apicurio-kafka-exporter
+        From:
+          PodSelector: strimzi.io/name=apicurio-cruise-control
+        ----------
+        To Port: 8443/TCP
+        From:
+          NamespaceSelector: <none>
+          PodSelector: strimzi.io/kind=cluster-operator
+        ----------
+        To Port: 9092/TCP
+        From: <any> (traffic not restricted by source)
+        ----------
+        To Port: 9093/TCP
+        From: <any> (traffic not restricted by source)
+        ----------
+        To Port: 9404/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         apicurio-network-policy-zookeeper
+    Namespace:    bna-kafka-prod01
+    Created on:   2025-06-25 12:29:22 -0300 -03
+    Labels:       app=apicurio
+                  app.kubernetes.io/instance=apicurio
+                  app.kubernetes.io/managed-by=strimzi-cluster-operator
+                  app.kubernetes.io/name=zookeeper
+                  app.kubernetes.io/part-of=strimzi-apicurio
+                  strimzi.io/cluster=apicurio
+                  strimzi.io/component-type=zookeeper
+                  strimzi.io/kind=Kafka
+                  strimzi.io/name=apicurio-zookeeper
+    Annotations:  <none>
+    Spec:
+      PodSelector:     strimzi.io/cluster=apicurio,strimzi.io/kind=Kafka,strimzi.io/name=apicurio-zookeeper
+      Allowing ingress traffic:
+        To Port: 2888/TCP
+        From:
+          PodSelector: strimzi.io/cluster=apicurio,strimzi.io/kind=Kafka,strimzi.io/name=apicurio-zookeeper
+        ----------
+        To Port: 3888/TCP
+        From:
+          PodSelector: strimzi.io/cluster=apicurio,strimzi.io/kind=Kafka,strimzi.io/name=apicurio-zookeeper
+        ----------
+        To Port: 2181/TCP
+        From:
+          PodSelector: strimzi.io/name=apicurio-kafka
+        From:
+          PodSelector: strimzi.io/cluster=apicurio,strimzi.io/kind=Kafka,strimzi.io/name=apicurio-zookeeper
+        From:
+          PodSelector: strimzi.io/name=apicurio-entity-operator
+        From:
+          NamespaceSelector: <none>
+          PodSelector: strimzi.io/kind=cluster-operator
+        ----------
+        To Port: 9404/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         bna-apicurioregistry-kafkasql-prod01-networkpolicy
+    Namespace:    bna-kafka-prod01
+    Created on:   2025-06-25 12:29:24 -0300 -03
+    Labels:       apicur.io/name=bna-apicurioregistry-kafkasql-prod01
+                  apicur.io/type=apicurio-registry
+                  apicur.io/version=2.6.12.redhat-00001
+                  app=bna-apicurioregistry-kafkasql-prod01
+                  app.kubernetes.io/instance=bna-apicurioregistry-kafkasql-prod01
+                  app.kubernetes.io/managed-by=apicurio-registry-operator
+                  app.kubernetes.io/name=apicurio-registry
+                  app.kubernetes.io/version=2.6.12.redhat-00001
+                  com.company=Red_Hat
+                  rht.comp=Service_Registry
+                  rht.comp_t=infrastructure
+                  rht.comp_ver=2.6
+                  rht.prod_name=Red_Hat_Integration
+                  rht.prod_ver=2.6
+    Annotations:  <none>
+    Spec:
+      PodSelector:     app=bna-apicurioregistry-kafkasql-prod01
+      Allowing ingress traffic:
+        To Port: 8080/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         bna-kafkacluster-prod01-entity-operator
+    Namespace:    bna-kafka-prod01
+    Created on:   2025-06-25 12:30:26 -0300 -03
+    Labels:       app.kubernetes.io/instance=bna-kafkacluster-prod01
+                  app.kubernetes.io/managed-by=strimzi-cluster-operator
+                  app.kubernetes.io/name=entity-operator
+                  app.kubernetes.io/part-of=strimzi-bna-kafkacluster-prod01
+                  strimzi.io/cluster=bna-kafkacluster-prod01
+                  strimzi.io/component-type=entity-operator
+                  strimzi.io/kind=Kafka
+                  strimzi.io/name=bna-kafkacluster-prod01-entity-operator
+    Annotations:  <none>
+    Spec:
+      PodSelector:     strimzi.io/cluster=bna-kafkacluster-prod01,strimzi.io/kind=Kafka,strimzi.io/name=bna-kafkacluster-prod01-entity-operator
+      Allowing ingress traffic:
+        To Port: 8080/TCP
+        From: <any> (traffic not restricted by source)
+        ----------
+        To Port: 8081/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         bna-kafkacluster-prod01-kafka-exporter
+    Namespace:    bna-kafka-prod01
+    Created on:   2025-06-25 12:30:48 -0300 -03
+    Labels:       app.kubernetes.io/instance=bna-kafkacluster-prod01
+                  app.kubernetes.io/managed-by=strimzi-cluster-operator
+                  app.kubernetes.io/name=kafka-exporter
+                  app.kubernetes.io/part-of=strimzi-bna-kafkacluster-prod01
+                  strimzi.io/cluster=bna-kafkacluster-prod01
+                  strimzi.io/component-type=kafka-exporter
+                  strimzi.io/kind=Kafka
+                  strimzi.io/name=bna-kafkacluster-prod01-kafka-exporter
+    Annotations:  <none>
+    Spec:
+      PodSelector:     strimzi.io/cluster=bna-kafkacluster-prod01,strimzi.io/kind=Kafka,strimzi.io/name=bna-kafkacluster-prod01-kafka-exporter
+      Allowing ingress traffic:
+        To Port: 9404/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         bna-kafkacluster-prod01-network-policy-kafka
+    Namespace:    bna-kafka-prod01
+    Created on:   2025-06-25 12:29:54 -0300 -03
+    Labels:       app.kubernetes.io/instance=bna-kafkacluster-prod01
+                  app.kubernetes.io/managed-by=strimzi-cluster-operator
+                  app.kubernetes.io/name=kafka
+                  app.kubernetes.io/part-of=strimzi-bna-kafkacluster-prod01
+                  strimzi.io/cluster=bna-kafkacluster-prod01
+                  strimzi.io/component-type=kafka
+                  strimzi.io/kind=Kafka
+                  strimzi.io/name=bna-kafkacluster-prod01-kafka
+    Annotations:  <none>
+    Spec:
+      PodSelector:     strimzi.io/cluster=bna-kafkacluster-prod01,strimzi.io/kind=Kafka,strimzi.io/name=bna-kafkacluster-prod01-kafka
+      Allowing ingress traffic:
+        To Port: 9090/TCP
+        From:
+          PodSelector: strimzi.io/cluster=bna-kafkacluster-prod01,strimzi.io/kind=Kafka,strimzi.io/name=bna-kafkacluster-prod01-kafka
+        ----------
+        To Port: 9091/TCP
+        From:
+          NamespaceSelector: <none>
+          PodSelector: strimzi.io/kind=cluster-operator
+        From:
+          PodSelector: strimzi.io/cluster=bna-kafkacluster-prod01,strimzi.io/kind=Kafka,strimzi.io/name=bna-kafkacluster-prod01-kafka
+        From:
+          PodSelector: strimzi.io/name=bna-kafkacluster-prod01-entity-operator
+        From:
+          PodSelector: strimzi.io/name=bna-kafkacluster-prod01-kafka-exporter
+        From:
+          PodSelector: strimzi.io/name=bna-kafkacluster-prod01-cruise-control
+        ----------
+        To Port: 8443/TCP
+        From:
+          NamespaceSelector: <none>
+          PodSelector: strimzi.io/kind=cluster-operator
+        ----------
+        To Port: 9092/TCP
+        From: <any> (traffic not restricted by source)
+        ----------
+        To Port: 9093/TCP
+        From: <any> (traffic not restricted by source)
+        ----------
+        To Port: 9404/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         bna-kafkacluster-prod01-network-policy-zookeeper
+    Namespace:    bna-kafka-prod01
+    Created on:   2025-06-25 12:29:22 -0300 -03
+    Labels:       app.kubernetes.io/instance=bna-kafkacluster-prod01
+                  app.kubernetes.io/managed-by=strimzi-cluster-operator
+                  app.kubernetes.io/name=zookeeper
+                  app.kubernetes.io/part-of=strimzi-bna-kafkacluster-prod01
+                  strimzi.io/cluster=bna-kafkacluster-prod01
+                  strimzi.io/component-type=zookeeper
+                  strimzi.io/kind=Kafka
+                  strimzi.io/name=bna-kafkacluster-prod01-zookeeper
+    Annotations:  <none>
+    Spec:
+      PodSelector:     strimzi.io/cluster=bna-kafkacluster-prod01,strimzi.io/kind=Kafka,strimzi.io/name=bna-kafkacluster-prod01-zookeeper
+      Allowing ingress traffic:
+        To Port: 2888/TCP
+        From:
+          PodSelector: strimzi.io/cluster=bna-kafkacluster-prod01,strimzi.io/kind=Kafka,strimzi.io/name=bna-kafkacluster-prod01-zookeeper
+        ----------
+        To Port: 3888/TCP
+        From:
+          PodSelector: strimzi.io/cluster=bna-kafkacluster-prod01,strimzi.io/kind=Kafka,strimzi.io/name=bna-kafkacluster-prod01-zookeeper
+        ----------
+        To Port: 2181/TCP
+        From:
+          PodSelector: strimzi.io/name=bna-kafkacluster-prod01-kafka
+        From:
+          PodSelector: strimzi.io/cluster=bna-kafkacluster-prod01,strimzi.io/kind=Kafka,strimzi.io/name=bna-kafkacluster-prod01-zookeeper
+        From:
+          PodSelector: strimzi.io/name=bna-kafkacluster-prod01-entity-operator
+        From:
+          NamespaceSelector: <none>
+          PodSelector: strimzi.io/kind=cluster-operator
+        ----------
+        To Port: 9404/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         openshift-gitops-redis-ha-network-policy
+    Namespace:    openshift-gitops
+    Created on:   2024-12-22 07:01:01 -0300 -03
+    Labels:       <none>
+    Annotations:  <none>
+    Spec:
+      PodSelector:     app.kubernetes.io/name=openshift-gitops-redis-ha-haproxy
+      Allowing ingress traffic:
+        To Port: 6379/TCP
+        To Port: 26379/TCP
+        From:
+          PodSelector: app.kubernetes.io/name=openshift-gitops-application-controller
+        From:
+          PodSelector: app.kubernetes.io/name=openshift-gitops-repo-server
+        From:
+          PodSelector: app.kubernetes.io/name=openshift-gitops-server
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         openshift-gitops-redis-network-policy
+    Namespace:    openshift-gitops
+    Created on:   2024-12-22 07:01:01 -0300 -03
+    Labels:       <none>
+    Annotations:  <none>
+    Spec:
+      PodSelector:     app.kubernetes.io/name=openshift-gitops-redis
+      Allowing ingress traffic:
+        To Port: 6379/TCP
+        From:
+          PodSelector: app.kubernetes.io/name=openshift-gitops-application-controller
+        From:
+          PodSelector: app.kubernetes.io/name=openshift-gitops-repo-server
+        From:
+          PodSelector: app.kubernetes.io/name=openshift-gitops-server
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         admission-control-no-ingress
+    Namespace:    stackrox
+    Created on:   2025-07-01 01:28:02 -0300 -03
+    Labels:       app.kubernetes.io/component=admission-control
+                  app.kubernetes.io/instance=stackrox-secured-cluster-services
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=stackrox
+                  app.kubernetes.io/part-of=stackrox-secured-cluster-services
+                  app.kubernetes.io/version=4.8.4
+                  app.stackrox.io/managed-by=operator
+                  auto-upgrade.stackrox.io/component=sensor
+                  helm.sh/chart=stackrox-secured-cluster-services-400.8.4
+    Annotations:  email: support@stackrox.com
+                  meta.helm.sh/release-name: stackrox-secured-cluster-services
+                  meta.helm.sh/release-namespace: stackrox
+                  owner: stackrox
+    Spec:
+      PodSelector:     app=admission-control
+      Allowing ingress traffic:
+        To Port: 8443/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         collector-no-ingress
+    Namespace:    stackrox
+    Created on:   2025-07-01 01:28:02 -0300 -03
+    Labels:       app.kubernetes.io/component=collector
+                  app.kubernetes.io/instance=stackrox-secured-cluster-services
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=stackrox
+                  app.kubernetes.io/part-of=stackrox-secured-cluster-services
+                  app.kubernetes.io/version=4.8.4
+                  app.stackrox.io/managed-by=operator
+                  auto-upgrade.stackrox.io/component=sensor
+                  helm.sh/chart=stackrox-secured-cluster-services-400.8.4
+    Annotations:  email: support@stackrox.com
+                  meta.helm.sh/release-name: stackrox-secured-cluster-services
+                  meta.helm.sh/release-namespace: stackrox
+                  owner: stackrox
+    Spec:
+      PodSelector:     app=collector
+      Allowing ingress traffic:
+        <none> (Selected pods are isolated for ingress connectivity)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         scanner
+    Namespace:    stackrox
+    Created on:   2025-07-01 01:28:02 -0300 -03
+    Labels:       app.kubernetes.io/instance=stackrox-secured-cluster-services
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=stackrox
+                  app.kubernetes.io/part-of=stackrox-secured-cluster-services
+                  app.kubernetes.io/version=4.8.4
+                  app.stackrox.io/managed-by=operator
+                  helm.sh/chart=stackrox-secured-cluster-services-400.8.4
+    Annotations:  email: support@stackrox.com
+                  meta.helm.sh/release-name: stackrox-secured-cluster-services
+                  meta.helm.sh/release-namespace: stackrox
+                  owner: stackrox
+    Spec:
+      PodSelector:     app=scanner
+      Allowing ingress traffic:
+        To Port: 8080/TCP
+        To Port: 8443/TCP
+        From:
+          PodSelector: app=central
+        ----------
+        To Port: 8080/TCP
+        To Port: 8443/TCP
+        From:
+          PodSelector: app=sensor
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         scanner-db
+    Namespace:    stackrox
+    Created on:   2025-07-01 01:28:02 -0300 -03
+    Labels:       app.kubernetes.io/instance=stackrox-secured-cluster-services
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=stackrox
+                  app.kubernetes.io/part-of=stackrox-secured-cluster-services
+                  app.kubernetes.io/version=4.8.4
+                  app.stackrox.io/managed-by=operator
+                  helm.sh/chart=stackrox-secured-cluster-services-400.8.4
+    Annotations:  email: support@stackrox.com
+                  meta.helm.sh/release-name: stackrox-secured-cluster-services
+                  meta.helm.sh/release-namespace: stackrox
+                  owner: stackrox
+    Spec:
+      PodSelector:     app=scanner-db
+      Allowing ingress traffic:
+        To Port: 5432/TCP
+        From:
+          PodSelector: app=scanner
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         sensor
+    Namespace:    stackrox
+    Created on:   2025-07-01 01:28:02 -0300 -03
+    Labels:       app.kubernetes.io/component=sensor
+                  app.kubernetes.io/instance=stackrox-secured-cluster-services
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=stackrox
+                  app.kubernetes.io/part-of=stackrox-secured-cluster-services
+                  app.kubernetes.io/version=4.8.4
+                  app.stackrox.io/managed-by=operator
+                  auto-upgrade.stackrox.io/component=sensor
+                  helm.sh/chart=stackrox-secured-cluster-services-400.8.4
+    Annotations:  email: support@stackrox.com
+                  meta.helm.sh/release-name: stackrox-secured-cluster-services
+                  meta.helm.sh/release-namespace: stackrox
+                  owner: stackrox
+    Spec:
+      PodSelector:     app=sensor
+      Allowing ingress traffic:
+        To Port: 8443/TCP
+        From:
+          PodSelector: app=collector
+        From:
+          PodSelector: service=collector
+        From:
+          PodSelector: app=admission-control
+        From:
+          PodSelector: app=scanner
+        ----------
+        To Port: 9443/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+
+
+    Name:         sensor-monitoring-tls
+    Namespace:    stackrox
+    Created on:   2025-07-01 01:28:02 -0300 -03
+    Labels:       app.kubernetes.io/component=sensor
+                  app.kubernetes.io/instance=stackrox-secured-cluster-services
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=stackrox
+                  app.kubernetes.io/part-of=stackrox-secured-cluster-services
+                  app.kubernetes.io/version=4.8.4
+                  app.stackrox.io/managed-by=operator
+                  auto-upgrade.stackrox.io/component=sensor
+                  helm.sh/chart=stackrox-secured-cluster-services-400.8.4
+    Annotations:  email: support@stackrox.com
+                  meta.helm.sh/release-name: stackrox-secured-cluster-services
+                  meta.helm.sh/release-namespace: stackrox
+                  owner: stackrox
+    Spec:
+      PodSelector:     app=sensor
+      Allowing ingress traffic:
+        To Port: 9091/TCP
+        From: <any> (traffic not restricted by source)
+      Not affecting egress traffic
+      Policy Types: Ingress
+    ---

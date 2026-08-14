@@ -1,0 +1,67 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Proxy"
+  description: "Openshift Proxy Settings"
+  references: 
+  - title: "Creating cluster-wide proxy"
+    url: "https://docs.openshift.com/container-platform/latest/networking/enable-cluster-wide-proxy.html"
+  - title: "Configuring proxy override for Operators"
+    url: "https://docs.openshift.com/container-platform/latest/operators/admin/olm-configuring-proxy-support.html"
+  check_procedures:
+    - type: "command"
+      command: |
+        oc describe proxy/cluster
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "El proxy está configurado según las especificaciones del cliente."
+    description_long_text: "El proxy se ha configurado y los endpoints son los que el cliente espera."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "Proxy configuration has not been setup or has the wrong endpoints"
+    description_long_text: "The customer has not setup their proxy correctly."
+    impact_and_risk_text: "Customer may experience issues pulling images and pulling from SCM in their organization if proxying is not setup correctly."
+    remediation_text: "Work with customer to get proxy information and implement using the documentation linked."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc describe proxy/cluster
+    Name:         cluster
+    Namespace:    
+    Labels:       <none>
+    Annotations:  <none>
+    API Version:  config.openshift.io/v1
+    Kind:         Proxy
+    Metadata:
+      Creation Timestamp:  2022-08-24T17:34:58Z
+      Generation:          2
+      Resource Version:    14614788
+      UID:                 47190d06-0aed-4506-b7de-6091fd38c858
+    Spec:
+      Http Proxy:   http://10.2.248.246:8080/
+      Https Proxy:  http://10.2.248.246:8080/
+      No Proxy:     .oscdmzprd01.cc.bna.net,.cc.bna.net,.tcc.tbna.net,api.oscdmzprd01.cc.bna.net,.apps.oscdmzprd01.cc.bna.net,10.0.0.0/8
+      Trusted CA:
+        Name:  
+    Status:
+      Http Proxy:   http://10.2.248.246:8080/
+      Https Proxy:  http://10.2.248.246:8080/
+      No Proxy:     .apps.oscdmzprd01.cc.bna.net,.cc.bna.net,.cluster.local,.oscdmzprd01.cc.bna.net,.svc,.tcc.tbna.net,10.0.0.0/8,10.10.13.0/24,10.168.0.0/14,127.0.0.1,172.60.0.0/16,api-int.oscdmzprd01.cc.bna.net,api.oscdmzprd01.cc.bna.net,localhost
+    Events:         <none>
+    ---

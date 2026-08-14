@@ -1,0 +1,61 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Disaster Recovery"
+  severity_key: "Not defined"
+  tags: []
+  description: "OADP Operator"
+  references: 
+    - title: "Installing the OADP Operator"
+      url: "https://docs.openshift.com/container-platform/latest/backup_and_restore/application_backup_and_restore/installing/oadp-installing-operator.html"
+  check_procedures:
+    - type: survey
+      question: "Is the OADP Operator installed and in use?"
+    - type: survey
+      question: "How often are backups performed using the OADP Operator?"
+    - type: survey
+      question: "What is the recovery time objective (RTO) for applications using OADP?"
+    - type: survey
+      question: "Are there any challenges in managing backups with the OADP Operator?"
+    - type: survey
+      question: "How is the integrity of backups verified?"
+    - type: "command"
+      command: |
+        oc get subs -A -o jsonpath='{range .items[*]}{.metadata.namespace},{.status.currentCSV}{"\n"}{end}'
+        oc get backups.velero.io -A
+        oc get backupstoragelocations.velero.io -A
+        oc get schedules.velero.io -A
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "El operador OADP está correctamente configurado"
+      description_long_text: "El operador OADP está instalado y configurado correctamente, con copias de seguridad periódicas."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "El operador OADP no está instalado o esta mal configurado"
+      description_long_text: "El operador OADP no está instalado o esta mal configurado, lo que puede provocar problemas con las copias de seguridad"
+      impact_and_risk_text: "La falta de una configuración adecuada de las copias de seguridad puede provocar la pérdida de datos en caso de desastre"
+      remediation_text: "Asegúrese de que el operador OADP esté instalado y configurado según las mejores prácticas recomendadas"
+    - key: "advisory01"
+      scenario_description_short_text: "Revisar la frecuencia de las copias de seguridad"
+      description_long_text: "Se recomienda revisar periódicamente la frecuencia de las copias de seguridad para garantizar que se cumplan los objetivos de recuperación."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar la programación actual de las copias de seguridad y ajustarla según sea necesario."
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Desafíos en la gestión de copias de seguridad"
+      description_long_text: "Existen desafíos para gestionar las copias de seguridad eficazmente con el operador OADP."
+      impact_and_risk_text: "Una gestión inadecuada de las copias de seguridad puede provocar copias de seguridad incompletas o corruptas."
+      remediation_text: "Implemente las mejores prácticas para la gestión de copias de seguridad y garantice la verificación periódica de su integridad."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

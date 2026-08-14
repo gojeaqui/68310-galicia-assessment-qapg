@@ -1,0 +1,53 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Container Image Management"
+  severity_key: "Not defined"
+  tag_keys:
+    - "Operators"
+    - "Container Images"
+    - "OLM"
+    - "Registry"
+    - "OpenShift Cluster Configuration"
+  tags: []
+  description: "Container Image Pruning"
+  references: 
+    - title: "Image Registry Operator in OpenShift Container Platform"
+      url: "https://docs.openshift.com/container-platform/latest/registry/configuring-registry-operator.html"
+  check_procedures:
+    - type: command
+      command: |
+        oc get cronjobs -n openshift-image-registry
+        oc get jobs -n openshift-image-registry
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "El pruner de imágenes esta corriendo adecuadamente"
+      description_long_text: "De acuerdo a lo que se observa de los jobs el prunning esta corriendo correctamente"  # Consultant to fill in details
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "advisory01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    
+    [openshift@bastion ~]$ oc get cronjobs -n openshift-image-registry
+    NAME           SCHEDULE    SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+    image-pruner   0 0 * * *   False     0        19h             3y60d
+    ---
+
+    [openshift@bastion ~]$ oc get jobs -n openshift-image-registry
+    NAME                    COMPLETIONS   DURATION   AGE
+    image-pruner-29348640   1/1           6s         2d19h
+    image-pruner-29350080   1/1           6s         43h
+    image-pruner-29351520   1/1           6s         19h
+    ---

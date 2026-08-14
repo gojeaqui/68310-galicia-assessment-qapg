@@ -1,0 +1,45 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Tuning"
+  severity_key: "Medium"
+  tags: ["Performance", "Tuning", "Node Tuning Operator"]
+  tag_keys:
+    - "Performance"
+    - "Low Latency"
+  description: "Optimizing OpenShift Virtualization workloads with performance tuning."
+  references:
+    - title: "Node Tuning Operator Overview"
+      url: "https://docs.openshift.com/container-platform/latest/scalability_and_performance/using-node-tuning-operator.html"
+    - title: "Performance Tuning for OpenShift Virtualization"
+      url: "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html-single/virtualization_tuning_and_optimization_guide/index"
+  check_procedures:
+    - type: survey
+      question: "Do you use the Node Tuning Operator to apply performance profiles for OpenShift Virtualization workloads?"
+    - type: survey
+      question: "Are performance-critical workloads configured with custom tuning for low latency or high throughput?"
+    - type: survey
+      question: "Do you use CPU pinning or real-time kernels for optimized performance?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Performance tuning applied"
+      description_long_text: "The Node Tuning Operator is configured with optimized performance profiles for workloads."
+      impact_and_risk_text: "Performance-critical applications are running efficiently."
+      remediation_text: "No remediation needed."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Performance tuning not configured"
+      description_long_text: "Workloads are running without optimized tuning, which may affect performance under load."
+      impact_and_risk_text: "Workloads may experience higher latency, resource inefficiency, or performance degradation."
+      remediation_text: "Implement Node Tuning Operator with performance profiles to optimize performance."
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

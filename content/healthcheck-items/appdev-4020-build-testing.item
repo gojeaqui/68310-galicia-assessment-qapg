@@ -1,0 +1,48 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Build"
+  severity_key: "Not defined"
+  tags: []
+  description: "Container Build Testing"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Do you test deploying built container images?"
+    - type: survey
+      question: "What types of tests are performed on container images before deployment?"
+    - type: survey
+      question: "How do you ensure that container images are free from vulnerabilities?"
+    - type: survey
+      question: "Are there automated tests integrated into the container build process?"
+    - type: survey
+      question: "What challenges have you faced with testing container images?"
+  common_outcomes:
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Pruebas de contenedor incompletas"
+      description_long_text: "Las implementaciones de contenedores no se prueban antes de su lanzamiento a entornos superiores"
+      impact_and_risk_text: "Puede provocar problemas de implementación relacionados con la configuración del contenedor"
+      remediation_text: "Implementar una estrategia de pruebas para imágenes de contenedor"
+    - key: "advisory01"
+      scenario_description_short_text: "Falta de pruebas automatizadas"
+      description_long_text: "Falta de pruebas automatizadas para imágenes de contenedores."
+      impact_and_risk_text: "Las pruebas manuales pueden ser propensas a errores y consumir mucho tiempo."
+      remediation_text: "Integre un conjunto de pruebas automatizadas en el proceso de compilación de contenedores."
+    - key: "advisory02"
+      scenario_description_short_text: "Escaneo de vulnerabilidades no implementado"
+      description_long_text: "Las imágenes de contenedor no se escanean en busca de vulnerabilidades."
+      impact_and_risk_text: "Las imágenes sin escanear pueden contener vulnerabilidades que podrían explotarse."
+      remediation_text: "Implementar escaneo de vulnerabilidades para imágenes de contenedor."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

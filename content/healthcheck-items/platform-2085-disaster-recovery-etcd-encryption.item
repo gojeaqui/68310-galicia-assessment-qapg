@@ -1,0 +1,52 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Disaster Recovery"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "etcd"
+    - "Security"
+  description: "etcd Encryption Enabled"
+  references: 
+  - title: "Encrypting etcd data"
+    url: "https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html"
+  check_procedures:
+    - type: compliance_operator
+      profile: none
+      rule: none
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: "command"
+      question: ""
+      command: |
+        # If the return is blank then ECTD has not been encrypted
+        oc get openshiftapiserver -o=jsonpath='{range .items[0].status.conditions[?(@.type=="Encrypted")]}{.reason}{"\n"}{.message}{"\n"}'
+  common_outcomes:
+  - key: "nochange_01"
+    scenario_description_short_text: "ECTD encryption enabled"
+    description_long_text: "etcd data encryption is enabled and no further actions are required."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "recommend01"
+    scenario_description_short_text: "etcd encryption not enabled"
+    description_long_text: "etcd data encryption is not a default setting and must be configured per client"
+    impact_and_risk_text: "If etcd is not encrypted a loss of sensitive data can occur if an etcd backup is exposed to the incorrect parties"
+    remediation_text: "Each OpenShift cluster should have ECTD encryption set for the additional layer of security"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get openshiftapiserver -o=jsonpath='{range .items[0].status.conditions[?(@.type=="Encrypted")]}{.reason}{"\n"}{.message}{"\n"}'
+    ---

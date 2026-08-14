@@ -1,0 +1,57 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Storage"
+  description: "OpenShift Logging storage has sufficient space"
+  references: 
+  - title: "Configuring persistent storage for the log store"
+    url: "https://docs.openshift.com/container-platform/latest/observability/logging/log_storage/cluster-logging-loki.html"
+  check_procedures:
+    - type: gui_action
+      steps: |
+        1. From the OpenShift web console, select "Monitoring" and then "Dashboards"
+        2. In the Dashboards pane, click the "Dashboard" drop down and select "Logging"
+        3. Scroll down to the "System" section and review the "Disk space % used" graph
+        4. Utilization for all the pods should be below the "Cluster Flood", "Cluster High Water" and "Cluster Low Water" marks
+    - type: "survey"
+      question: "Is the disk space utilization on the logging pods sufficiently below the high watermark lines?"
+    - type: "survey"
+      question: "Is there sufficient free space to accommodate the expected growth of applications deployed or logs created in the cluster?"
+    - type: "survey"
+      question: "Does the current level of log retention meet the business requirements?"
+    - type: "survey"
+      question: "If using Loki, sizing matches a supported size https://docs.openshift.com/container-platform/latest/observability/logging/log_storage/cluster-logging-loki.html"       
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Configure storage and retention policy is good"
+    description_long_text: "The current level of free space on OpenShift Logging pods is sufficient for now and in the near future"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_required01"
+    scenario_description_short_text: "Storage needs to be resized to allow for retentions"
+    description_long_text: "The current level of free space on OpenShift Logging pods is not sufficient for now or in the near future"
+    impact_and_risk_text: "When the disk space reaches 95% used Logging has a protective function that locks the indices stopping new data from being written to them. This is to stop Elasticsearch from using any further disk causing the disk to become exhausted."
+    remediation_text: "Expand the available storage available to Logging or reduce the log retention period"
+  - key: "changes_required02"
+    scenario_description_short_text: "Storage needs to be resized to allow for retentions, need to move to the next size up"
+    description_long_text: "The current level of free space on OpenShift Logging pods is not sufficient for now or in the near future"
+    impact_and_risk_text: "When the disk space reaches 95% used Logging has a protective function that locks the indices stopping new data from being written to them. This is to stop Elasticsearch from using any further disk causing the disk to become exhausted."
+    remediation_text: "Expand the available storage available to Logging or reduce the log retention period"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

@@ -1,0 +1,70 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "GitOps"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Platform Engineering"
+    - "Disaster Recovery"
+    - "Backups"
+  description: "Deployment IaC Items Versioned"
+  references: 
+  - title: "Understanding OpenShift GitOps"
+    url: "https://docs.openshift.com/gitops/latest/understanding_openshift_gitops/about-redhat-openshift-gitops.html"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: survey
+      question: "What level of kubernetes resources are version controlled?"
+    - type: survey
+      question: "How frequently are the version-controlled resources updated in the repository?"
+    - type: survey
+      question: "Are there automated processes in place for deploying version-controlled resources?"
+    - type: survey
+      question: "What tools are used for managing GitOps processes in your environment?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "GitOps implementado"
+    description_long_text: "Los recursos de Kubernetes relacionados con la infraestructura están versionados y se guardan en un repositorio"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "GitOps parcialmente implementado"
+    description_long_text: "Algunos recursos de Kubernetes relacionados con la infraestructura están bajo control de versiones (GitOps)"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change02"
+    scenario_description_short_text: "GitOps no implementado"
+    description_long_text: "Los recursos de Kubernetes relacionados con la infraestructura no están bajo control de versiones"
+    impact_and_risk_text: "Mayor riesgo de que los diferentes entornos se desincronizan o de que la recuperación del clúster no alcance un estado anterior"
+    remediation_text: "Considere implementar un proceso de GitOps para versionar los recursos de Kubernetes"
+  - key: "advisory01"
+    scenario_description_short_text: "Mejores prácticas de GitOps"
+    description_long_text: "Asegurar el seguimiento y la revisión de todos los cambios en los recursos de Kubernetes"
+    impact_and_risk_text: "Mejora la trazabilidad y la rendición de cuentas"
+    remediation_text: "Implementar un proceso de revisión para los cambios en los recursos con control de versiones"
+  - key: "no_change02"
+    scenario_description_short_text: "Implementaciones automatizadas"
+    description_long_text: "Se han implementado procesos automatizados para implementar recursos con control de versiones"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Despliegues manuales"
+    description_long_text: "Los despliegues se realizan manualmente, lo que puede generar inconsistencias"
+    impact_and_risk_text: "Mayor riesgo de errores humanos e inconsistencias en la implementación"
+    remediation_text: "Considere automatizar el proceso de implementación para garantizar la consistencia"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

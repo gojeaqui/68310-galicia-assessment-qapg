@@ -1,0 +1,53 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  description: "Load Balancer VIPs Consistently Configured"
+  references: 
+  - title: "Configuring External Load Balancer"
+    url: "https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal_ipi/ipi-install-post-installation-configuration.html#nw-osp-configuring-external-load-balancer_ipi-install-post-installation-configuration"
+  check_procedures:
+    - type: survey
+      question: "Do the ingress controller and OpenShift APIs use the same VIP or different VIPs?"
+    - type: survey
+      question: "How is the VIP configuration managed and documented?"
+    - type: survey
+      question: "Are there any known issues with the current VIP setup?"
+    - type: survey
+      question: "Is there a backup mechanism for the VIP configuration?"
+  common_outcomes:
+  - key: "advisory01"
+    scenario_description_short_text: "Information Only"
+    description_long_text: ""  # Consultant to fill out findings
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "no_change01"
+    scenario_description_short_text: "Las VIPs están configuradas de manera consistente."
+    description_long_text: "Las VIP para el controlador de ingreso y las API OpenShift tienen una configuracion consistente, lo cual garantiza una gestión de tráfico de red confiable."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "La configuración de las VIP necesita revisión."
+    description_long_text: "La configuración VIP es inconsistente, lo que puede conducir a problemas de tráfico de red."
+    impact_and_risk_text: "La configuración VIP inconsistente puede causar problemas de enrutamiento de tráfico y un posible tiempo de inactividad."
+    remediation_text: "Revise y estandarice la configuración VIP para el controlador de ingreso y las API OpenShift."
+  - key: "advisory02"
+    scenario_description_short_text: "La configuración VIP está respaldada."
+    description_long_text: "Existe un mecanismo de respaldo para la configuración VIP, asegurando la recuperación de datos en caso de falla."
+    impact_and_risk_text: ""
+    remediation_text: "Continúe manteniendo copias de seguridad regulares de configuración VIP."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

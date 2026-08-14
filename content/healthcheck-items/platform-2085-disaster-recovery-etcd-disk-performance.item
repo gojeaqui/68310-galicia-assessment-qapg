@@ -1,0 +1,361 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "none"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "etcd"
+    - "Performance"
+  description: "etcd Disk Performance"
+  references: 
+  - title: "Recommended etcd practices"
+    url: "https://docs.openshift.com/container-platform/latest/scalability_and_performance/recommended-performance-scale-practices/recommended-etcd-practices.html"
+  - title: "etcd performance troubleshooting guide for OpenShift Container Platform"
+    url: "https://access.redhat.com/articles/6271341"
+  check_procedures:
+    - type: compliance_operator
+      profile: none
+      rule: none
+    - type: gui_action
+      steps: 
+      - "see metric etcd_disk_wal_fsync_duration_seconds_bucket in prom"
+    - type: "command"
+      command: |
+        # The output reports whether the disk is fast enough to host etcd by comparing the 99th percentile of the fsync metric captured from the run to see if it is less than 10 ms
+        oc debug node/$(oc get nodes -l node-role.kubernetes.io/master= -o jsonpath='{.items[0].metadata.name}') -- chroot /host bash -c "podman run --volume /var/lib/etcd:/var/lib/etcd:Z quay.io/openshift-scale/etcd-perf"
+  common_outcomes:
+  - key: "nochange_01"
+    scenario_description_short_text: "etcd cumple con los requisitos de rendimiento del disco"
+    description_long_text: "El percentil 99 de la métrica etcd_disk_wal_fsync_duration_seconds_bucket es inferior a 10 ms."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "recommend01"
+    scenario_description_short_text: "etcd disk performance requirements not met"
+    description_long_text: "Reported etcd_disk_wal_fsync_duration_seconds_bucket metric 99th percentile is more than 10ms."
+    impact_and_risk_text: "Loss of latency can cause etcd to miss heartbeats, not commit new proposals to the disk on time, and ultimately experience request timeouts and temporary leader loss. High write latencies also lead to an OpenShift API slowness, which affects cluster performance. Because of these reasons, avoid colocating other workloads on the control-plane nodes."
+    remediation_text: "etcd on machines that are backed by SSD or NVMe disks with low latency and high throughput. Consider single-level cell (SLC) solid-state drives (SSDs), which provide 1 bit per memory cell, are durable and reliable, and are ideal for write-intensive workloads."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "nochange_01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [a78506@oscbastion01 ~]$ oc debug node/$(oc get nodes -l node-role.kubernetes.io/master= -o jsonpath='{.items[0].metadata.name}') -- chroot /host bash -c "export https_proxy=http://10.2.248.246:8080; podman run --volume /var/lib/etcd:/var/lib/etcd:Z quay.io/openshift-scale/etcd-perf"
+    Starting pod/oscdmzprd01-n5xps-master-0-debug-fdjg4 ...
+    To use host binaries, run `chroot /host`
+    Trying to pull quay.io/openshift-scale/etcd-perf:latest...
+    Getting image source signatures
+    Copying blob sha256:5e5d3d18b1f8dabba931dc1988944e5e16cd3c15fc13337225a9d4592491df3c
+    Copying blob sha256:a4542beb22218d538888a5b5487affe0313f82ad66e23982c257b6fb5e6d4961
+    Copying blob sha256:207db4702aca98c95c0959d535ead312698f7a3b6c0f64f62164c6bad968d465
+    Copying config sha256:831981e46594ed182bcb6c61c6417359fed211e20db56565ae75ab353a249de2
+    Writing manifest to image destination
+    Storing signatures
+    ---------------------------------------------------------------- Running fio ---------------------------------------------------------------------------
+    {
+      "fio version" : "fio-3.35",
+      "timestamp" : 1762197940,
+      "timestamp_ms" : 1762197940211,
+      "time" : "Mon Nov  3 19:25:40 2025",
+      "global options" : {
+        "rw" : "write",
+        "ioengine" : "sync",
+        "fdatasync" : "1",
+        "directory" : "/var/lib/etcd",
+        "size" : "100m",
+        "bs" : "8000"
+      },
+      "jobs" : [
+        {
+          "jobname" : "etcd_perf",
+          "groupid" : 0,
+          "error" : 0,
+          "eta" : 0,
+          "elapsed" : 61,
+          "job options" : {
+            "name" : "etcd_perf",
+            "runtime" : "60",
+            "time_based" : "1"
+          },
+          "read" : {
+            "io_bytes" : 0,
+            "io_kbytes" : 0,
+            "bw_bytes" : 0,
+            "bw" : 0,
+            "iops" : 0.000000,
+            "runtime" : 0,
+            "total_ios" : 0,
+            "short_ios" : 58476,
+            "drop_ios" : 0,
+            "slat_ns" : {
+              "min" : 0,
+              "max" : 0,
+              "mean" : 0.000000,
+              "stddev" : 0.000000,
+              "N" : 0
+            },
+            "clat_ns" : {
+              "min" : 0,
+              "max" : 0,
+              "mean" : 0.000000,
+              "stddev" : 0.000000,
+              "N" : 0
+            },
+            "lat_ns" : {
+              "min" : 0,
+              "max" : 0,
+              "mean" : 0.000000,
+              "stddev" : 0.000000,
+              "N" : 0
+            },
+            "bw_min" : 0,
+            "bw_max" : 0,
+            "bw_agg" : 0.000000,
+            "bw_mean" : 0.000000,
+            "bw_dev" : 0.000000,
+            "bw_samples" : 0,
+            "iops_min" : 0,
+            "iops_max" : 0,
+            "iops_mean" : 0.000000,
+            "iops_stddev" : 0.000000,
+            "iops_samples" : 0
+          },
+          "write" : {
+            "io_bytes" : 467776000,
+            "io_kbytes" : 456812,
+            "bw_bytes" : 7796136,
+            "bw" : 7613,
+            "iops" : 974.517091,
+            "runtime" : 60001,
+            "total_ios" : 58472,
+            "short_ios" : 0,
+            "drop_ios" : 0,
+            "slat_ns" : {
+              "min" : 0,
+              "max" : 0,
+              "mean" : 0.000000,
+              "stddev" : 0.000000,
+              "N" : 0
+            },
+            "clat_ns" : {
+              "min" : 3403,
+              "max" : 29587861,
+              "mean" : 312283.607214,
+              "stddev" : 637714.176818,
+              "N" : 58472,
+              "percentile" : {
+                "1.000000" : 6048,
+                "5.000000" : 7456,
+                "10.000000" : 9152,
+                "20.000000" : 17536,
+                "30.000000" : 160768,
+                "40.000000" : 183296,
+                "50.000000" : 205824,
+                "60.000000" : 238592,
+                "70.000000" : 296960,
+                "80.000000" : 346112,
+                "90.000000" : 577536,
+                "95.000000" : 921600,
+                "99.000000" : 2179072,
+                "99.500000" : 3686400,
+                "99.900000" : 9502720,
+                "99.950000" : 11599872,
+                "99.990000" : 16711680
+              }
+            },
+            "lat_ns" : {
+              "min" : 3473,
+              "max" : 29588306,
+              "mean" : 312494.747708,
+              "stddev" : 637730.781030,
+              "N" : 58472
+            },
+            "bw_min" : 1265,
+            "bw_max" : 12953,
+            "bw_agg" : 99.653059,
+            "bw_mean" : 7587.680672,
+            "bw_dev" : 2711.278637,
+            "bw_samples" : 119,
+            "iops_min" : 162,
+            "iops_max" : 1658,
+            "iops_mean" : 971.277311,
+            "iops_stddev" : 347.046593,
+            "iops_samples" : 119
+          },
+          "trim" : {
+            "io_bytes" : 0,
+            "io_kbytes" : 0,
+            "bw_bytes" : 0,
+            "bw" : 0,
+            "iops" : 0.000000,
+            "runtime" : 0,
+            "total_ios" : 0,
+            "short_ios" : 0,
+            "drop_ios" : 0,
+            "slat_ns" : {
+              "min" : 0,
+              "max" : 0,
+              "mean" : 0.000000,
+              "stddev" : 0.000000,
+              "N" : 0
+            },
+            "clat_ns" : {
+              "min" : 0,
+              "max" : 0,
+              "mean" : 0.000000,
+              "stddev" : 0.000000,
+              "N" : 0
+            },
+            "lat_ns" : {
+              "min" : 0,
+              "max" : 0,
+              "mean" : 0.000000,
+              "stddev" : 0.000000,
+              "N" : 0
+            },
+            "bw_min" : 0,
+            "bw_max" : 0,
+            "bw_agg" : 0.000000,
+            "bw_mean" : 0.000000,
+            "bw_dev" : 0.000000,
+            "bw_samples" : 0,
+            "iops_min" : 0,
+            "iops_max" : 0,
+            "iops_mean" : 0.000000,
+            "iops_stddev" : 0.000000,
+            "iops_samples" : 0
+          },
+          "sync" : {
+            "total_ios" : 0,
+            "lat_ns" : {
+              "min" : 3681,
+              "max" : 17911817,
+              "mean" : 710951.283227,
+              "stddev" : 639282.916923,
+              "N" : 58476,
+              "percentile" : {
+                "1.000000" : 268288,
+                "5.000000" : 292864,
+                "10.000000" : 309248,
+                "20.000000" : 342016,
+                "30.000000" : 382976,
+                "40.000000" : 436224,
+                "50.000000" : 501760,
+                "60.000000" : 618496,
+                "70.000000" : 790528,
+                "80.000000" : 970752,
+                "90.000000" : 1269760,
+                "95.000000" : 1630208,
+                "99.000000" : 3063808,
+                "99.500000" : 4227072,
+                "99.900000" : 7569408,
+                "99.950000" : 9109504,
+                "99.990000" : 13303808
+              }
+            }
+          },
+          "job_runtime" : 60000,
+          "usr_cpu" : 0.458333,
+          "sys_cpu" : 2.360000,
+          "ctx" : 196152,
+          "majf" : 0,
+          "minf" : 15,
+          "iodepth_level" : {
+            "1" : 200.006841,
+            "2" : 0.000000,
+            "4" : 0.000000,
+            "8" : 0.000000,
+            "16" : 0.000000,
+            "32" : 0.000000,
+            ">=64" : 0.000000
+          },
+          "iodepth_submit" : {
+            "0" : 0.000000,
+            "4" : 100.000000,
+            "8" : 0.000000,
+            "16" : 0.000000,
+            "32" : 0.000000,
+            "64" : 0.000000,
+            ">=64" : 0.000000
+          },
+          "iodepth_complete" : {
+            "0" : 0.000000,
+            "4" : 100.000000,
+            "8" : 0.000000,
+            "16" : 0.000000,
+            "32" : 0.000000,
+            "64" : 0.000000,
+            ">=64" : 0.000000
+          },
+          "latency_ns" : {
+            "2" : 0.000000,
+            "4" : 0.000000,
+            "10" : 0.000000,
+            "20" : 0.000000,
+            "50" : 0.000000,
+            "100" : 0.000000,
+            "250" : 0.000000,
+            "500" : 0.000000,
+            "750" : 0.000000,
+            "1000" : 0.000000
+          },
+          "latency_us" : {
+            "2" : 0.000000,
+            "4" : 0.064988,
+            "10" : 11.778287,
+            "20" : 9.440416,
+            "50" : 2.262621,
+            "100" : 0.064988,
+            "250" : 38.669791,
+            "500" : 25.653304,
+            "750" : 4.988713,
+            "1000" : 2.751744
+          },
+          "latency_ms" : {
+            "2" : 3.179299,
+            "4" : 0.687509,
+            "10" : 0.371118,
+            "20" : 0.085511,
+            "50" : 0.010000,
+            "100" : 0.000000,
+            "250" : 0.000000,
+            "500" : 0.000000,
+            "750" : 0.000000,
+            "1000" : 0.000000,
+            "2000" : 0.000000,
+            ">=2000" : 0.000000
+          },
+          "latency_depth" : 1,
+          "latency_target" : 0,
+          "latency_percentile" : 100.000000,
+          "latency_window" : 0
+        }
+      ],
+      "disk_util" : [
+        {
+          "name" : "sda",
+          "read_ios" : 44567,
+          "write_ios" : 93342,
+          "read_merges" : 0,
+          "write_merges" : 7898,
+          "read_ticks" : 17666,
+          "write_ticks" : 80244,
+          "in_queue" : 97911,
+          "util" : 99.379617
+        }
+      ]
+    }
+    --------------------------------------------------------------------------------------------------------------------------------------------------------
+    INFO: 99th percentile of fsync is 3063808 ns
+    INFO: 99th percentile of the fsync is within the recommended threshold: - 10 ms, the disk can be used to host etcd
+
+    Removing debug pod ...

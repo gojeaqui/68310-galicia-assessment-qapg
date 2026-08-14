@@ -1,0 +1,51 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Introducción a Red Hat OpenShift Service on AWS (CS120)
+
+[.big]#*Descripción general del curso*#
+
+*Aprenda a realizar e implementar operaciones diarias en un clúster de ROSA, así como a acceder a ellas.*
+
+En este curso, el personal de operaciones de TI aprenderá a implementar un clúster público de Red Hat OpenShift Service on AWS (ROSA) para realizar pruebas y preparar proyectos en los que puedan trabajar los equipos de desarrollo. Además, podrá familiarizarse con las operaciones diarias de los clústeres de ROSA y ofrecer soporte a los equipos de aplicaciones que los utilizan. Luego, podrá emplear las mismas habilidades y procedimientos similares en los clústeres de ROSA privados que utilicen en sus empresas.
+
+[.big]#*Resumen del contenido del curso*#
+
+* Introducción a OpenShift gestionado
+* Identificación de los requisitos previos para crear e implementar un clúster de ROSA
+* Acceso a un clúster de ROSA como administrador
+* Configuración de las autenticaciones de GitHub
+* Conexión de clústeres de ROSA a los servicios de nube de Red Hat
+* Configuración de proyectos con recursos de protección para los equipos de aplicaciones
+* Preparación y configuración de proyectos declarativos con OpenShift GitOps
+* Actualización de las versiones de OpenShift
+* Limpieza de los recursos de AWS de los clústeres eliminados
+
+[.big]#*Público destinatario*#
+
+* *Destinatarios principales:*
+** Administradores de ROSA
+** Administradores de sistemas, ingenieros de plataformas, ingenieros de nube, otras funciones de TI relacionadas con la infraestructura que sean responsables de prepararla y brindarle soporte para las aplicaciones implementadas en AWS
+* *Destinatarios secundarios:*
+** Arquitectos empresariales
+** Especialistas en infraestructura de aplicaciones y desarrollo, como ingenieros de confiabilidad del sitio e ingenieros de DevOps
+
+[.big]#*Capacitación recomendada*#
+
+* Todos los estudiantes deben tener conocimientos sobre Amazon Web Services (AWS), lo cual incluye el funcionamiento y la gestión de los recursos informáticos, de almacenamiento y de red de AWS.
+* Se recomienda que los estudiantes que no estén familiarizados con Red Hat OpenShift realicen los siguientes cursos para adquirir las habilidades fundamentales de gestión de clústeres de dicha plataforma:
+** https://www.redhat.com/es/services/training/red-hat-openshift-administration-i-operating-a-production-cluster?sc_cid=7013a000003BknRAAS[Red Hat OpenShift I: Containers & Kubernetes (DO180)]
+** https://www.redhat.com/es/services/training/red-hat-openshift-administration-ii-configuring-a-production-cluster[Red Hat OpenShift Administration II: Operating a Production Kubernetes Cluster (DO280).]
+* Se aconseja que los estudiantes con experiencia previa en la gestión de clústeres de Kubernetes realicen los cursos DO180 y DO280; o bien, que adquieran las habilidades básicas para operar clústeres de Red Hat OpenShift utilizando los siguientes recursos gratuitos de Red Hat:
+** https://developers.redhat.com/developer-sandbox[Red Hat Developer Sandbox for OpenShift]
+** https://developers.redhat.com/learn/openshift[OpenShift and Kubernetes learning de Red Hat Developer]
+** https://www.redhat.com/es/services/training/do080-deploying-containerized-applications-technical-overview[Containers, Kubernetes and Red Hat OpenShift Technical Overview (DO080).]
+
+[.big]#*Aspectos tecnológicos que debe tener en cuenta*#
+
+* Se requiere Internet para acceder a los servicios de AWS mediante la consola y la CLI de AWS. También se necesita Internet para acceder a la consola Red Hat Hybrid Cloud Console y a los servicios en la nube de Red Hat asociados.
+* Los estudiantes deben poseer una cuenta de AWS activa con permiso para activar los servicios desde AWS Marketplace y con un método de pago asociado para los recursos de AWS que consumen los clústeres de ROSA.
+* Los estudiantes deben poseer una cuenta activa en el Portal de clientes Red Hat o una https://developers.redhat.com/about[suscripción gratuita al programa Red Hat Developer]
+.
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/cs120-introduction-red-hat-openshift-service-on-aws

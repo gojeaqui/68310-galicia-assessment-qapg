@@ -1,0 +1,46 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Deployment"
+  severity_key: "Not defined"
+  tags: []
+  description: "Container Deployment Process"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Can you describe how you deploy containerized applications today?"
+    - type: survey
+      question: "How do you manage environment-specific configurations during deployment?"
+    - type: survey
+      question: "Are there any automated processes for deploying applications?"
+    - type: survey
+      question: "What challenges have you faced with your current deployment process?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe container deployment strategy.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Falta de automatización en el proceso de despliegue (deployment)"
+      description_long_text: "El proceso de despliegue carece de automatización."
+      impact_and_risk_text: "Los despliegues manuales pueden ser propensos a errores y consumir mucho tiempo."
+      remediation_text: "Considere automatizar el proceso de despliegue para mejorar la eficiencia y reducir errores."
+    - key: "advisory03"
+      scenario_description_short_text: "Configuraciones de entorno inconsistentes"
+      description_long_text: "Las configuraciones de entorno son inconsistentes en las diferentes etapas."
+      impact_and_risk_text: "Las configuraciones inconsistentes pueden provocar un comportamiento inesperado en diferentes entornos."
+      remediation_text: "Implementar una estrategia para garantizar configuraciones consistentes en todos los entornos."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

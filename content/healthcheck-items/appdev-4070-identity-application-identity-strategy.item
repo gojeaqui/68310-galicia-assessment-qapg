@@ -1,0 +1,62 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Identity"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Security"
+  description: "Application Authorization"
+  references:
+    - title: "Application Authorization"
+      url: "https://docs.openshift.com/"
+  check_procedures:
+    - type: survey
+      question: "Describe application authentication approach"
+    - type: survey
+      question: "What methods are used to manage user roles and permissions?"
+    - type: survey
+      question: "How often are authorization policies reviewed and updated?"
+    - type: survey
+      question: "Are there any challenges in managing access controls?"
+    - type: survey
+      question: "How is compliance with authorization policies ensured?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe app auth approach.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Políticas de autorización obsoletas"
+      description_long_text: "Las políticas de autorización no se revisan periódicamente."
+      impact_and_risk_text: "Las políticas obsoletas pueden generar vulnerabilidades de seguridad."
+      remediation_text: "Establecer un programa regular para revisar y actualizar las políticas de autorización."
+    - key: "advisory02"
+      scenario_description_short_text: "Revisar los métodos de control de acceso"
+      description_long_text: "Se recomienda revisar periódicamente los métodos de control de acceso para garantizar que satisfagan las necesidades actuales."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar los métodos actuales y explorar nuevas opciones si es necesario."
+    - key: "no_change01"
+      scenario_description_short_text: "Prácticas de autorización adecuadas"
+      description_long_text: "Las prácticas de autorización actuales son suficientes"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Desafíos en la gestión del control de acceso"
+      description_long_text: "Existen desafíos para gestionar eficazmente los controles de acceso."
+      impact_and_risk_text: "Una gestión inadecuada de los controles de acceso puede provocar accesos no autorizados."
+      remediation_text: "Implementar las mejores prácticas para la gestión del control de acceso y garantizar una auditoría adecuada."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

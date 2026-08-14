@@ -1,0 +1,50 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Disaster Recovery"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "etcd"
+    - "Backup"
+  description: "etcd backup defined"
+  references: 
+  - title: "Backing up etcd"
+    url: "https://docs.openshift.com/container-platform/latest/backup_and_restore/control_plane_backup_and_restore/backing-up-etcd.html#backing-up-etcd-data_backup-etcd"
+  - title: "Automate etcd backup with a cronjob"
+    url: "https://access.redhat.com/solutions/5843611"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: "survey"
+      question: "Has a etcd backup been run on the Openshift cluster?"
+  common_outcomes:
+  - key: "nochange_01"
+    scenario_description_short_text: "Existen copias de seguridad automatizadas de etcd"
+    description_long_text: "Los datos de etcd se respaldan de forma automatizada utilizando un cronjob en el bastion"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "recommend01"
+    scenario_description_short_text: "etcd backups do not exist"
+    description_long_text: "Back up your cluster’s etcd data regularly and store in a secure location ideally outside the OpenShift Container Platform environment. Do not take an etcd backup before the first certificate rotation completes, which occurs 24 hours after installation, otherwise the backup will contain expired certificates. It is also recommended to take etcd backups during non-peak usage hours because the etcd snapshot has a high I/O cost."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "recommend03"
+    scenario_description_short_text: "Manual etcd backups exist"
+    description_long_text: "etcd backups are regulary created through a manual process."
+    impact_and_risk_text: ""
+    remediation_text: "Automate etcd backups"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "nochange_01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

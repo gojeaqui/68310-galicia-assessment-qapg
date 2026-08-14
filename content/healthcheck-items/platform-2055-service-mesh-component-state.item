@@ -1,0 +1,87 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Service Mesh"
+  severity_key: "Not defined"
+  tags: []
+  description: "Service Mesh Installed"
+  references: 
+  - title: "About OpenShift Service Mesh"
+    url: "https://docs.openshift.com/container-platform/latest/service_mesh/v2x/ossm-about.html"
+  - title: "Preparing to install Red Hat OpenShift Service Mesh"
+    url: "https://docs.openshift.com/container-platform/latest/service_mesh/v2x/preparing-ossm-installation.html"
+  - title: "Installing the Operators"
+    url: "https://docs.openshift.com/container-platform/latest/service_mesh/v2x/installing-ossm.html"
+  check_procedures:
+    - type: "command"
+      command: |
+        oc get smcp -A
+        oc get operators
+        oc get csv -A -o jsonpath='{range .items[*]}{"|"}{.metadata.name}{"|"}{.spec.displayName}{"|"}{.spec.version}{"\n"}{end}'|sort -u
+  common_outcomes:
+  - key: "nochange_01"
+    scenario_description_short_text: "No se utiliza Service Mesh"
+    description_long_text: "No se va a utilizar Service Mesh por el momento."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "recommend01"
+    scenario_description_short_text: "Dependencies not met"
+    description_long_text: "If Service Mesh is being used, the 3 critical operators may have dependency issues. See reference documentation for installing operators"
+    impact_and_risk_text: "Service Mesh will not function as intended."
+    remediation_text: "All dependent operators should be installed and healthy"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "nochange_01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+
+  outcome_evidence: |
+    
+    [openshift@bastion ~]$ oc get smcp -A
+    error: the server doesn't have a resource type "smcp"
+    ---
+
+    [openshift@bastion ~]$ oc get operators
+    NAME                                                AGE
+    amq-streams.openshift-operators                     3y59d
+    cluster-logging.openshift-logging                   3y59d
+    devworkspace-operator.openshift-operators           2y355d
+    elasticsearch-operator.openshift-operators-redhat   3y59d
+    grafana-operator.bna-observability                  357d
+    local-storage-operator.openshift-local-storage      56d
+    loki-operator.openshift-operators-redhat            57d
+    mcg-operator.openshift-storage                      57d
+    ocs-operator.openshift-storage                      57d
+    odf-csi-addons-operator.openshift-storage           57d
+    odf-operator.openshift-storage                      57d
+    openshift-gitops-operator.openshift-operators       3y17d
+    redhat-oadp-operator.openshift-adp                  2y355d
+    rhacs-operator.rhacs-operator                       113d
+    service-registry-operator.openshift-operators       3y38d
+    web-terminal.openshift-operators                    2y355d
+    ---
+
+    [guillermo@darkstar BNA]$ omc get csv -A -o jsonpath='{range .items[*]}{"|"}{.metadata.name}{"|"}{.spec.displayName}{"|"}{.spec.version}{"\n"}{end}'|sort -u
+    |amqstreams.v2.7.0-7|Streams for Apache Kafka|2.7.0-7
+    |cluster-logging.v6.0.9|Red Hat OpenShift Logging|6.0.9
+    |elasticsearch-operator.v5.8.21|OpenShift Elasticsearch Operator|5.8.21
+    |grafana-operator.v5.18.0|Grafana Operator|5.18.0
+    |local-storage-operator.v4.14.0-202508051136|Local Storage|4.14.0-202508051136
+    |loki-operator.v6.0.9|Loki Operator|6.0.9
+    |mcg-operator.v4.14.22-rhodf|NooBaa Operator|4.14.22-rhodf
+    |oadp-operator.v1.4.6|OADP Operator|1.4.6
+    |ocs-operator.v4.14.22-rhodf|OpenShift Container Storage|4.14.22-rhodf
+    |odf-csi-addons-operator.v4.14.22-rhodf|CSI Addons|4.14.22-rhodf
+    |odf-operator.v4.14.22-rhodf|OpenShift Data Foundation|4.14.22-rhodf
+    |openshift-gitops-operator.v1.13.3-0.1741683398.p|Red Hat OpenShift GitOps|1.13.3+0.1741683398.p
+    |packageserver|Package Server|0.0.1-snapshot
+    |rhacs-operator.v4.8.4|Advanced Cluster Security for Kubernetes|4.8.4
+    |service-registry-operator.v2.6.12-r1|Red Hat build of Apicurio Registry|2.6.12-r1

@@ -1,0 +1,15 @@
+////
+Proposito
+-------
+In the "Base" directory, this section is a placeholder which is to be
+overwritten by architecture specific to the product or products being
+delivered.
+
+If "TODO" appears in your document after the init script has been run, then your product directory is missing a corresponding "architecture.adoc" which should be implemented to provide a basic architecture framework for that product.
+////
+
+= Configuración del entorno
+Pasos para preparar o crear el entorno de la arquitectura propuesta.
+
+:context: architecture
+include::arquitectura/cluster_info.adoc[leveloffset=+0]

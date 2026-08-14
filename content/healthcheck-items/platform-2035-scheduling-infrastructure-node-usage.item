@@ -1,0 +1,177 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Scheduling"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Infrastructure Node Usage"
+  references: 
+  - title: "Checking for infrastructure workload scheduling"
+    url: "https://access.redhat.com/solutions/5034771"
+  - title: "About scheduling"
+    url: "https://docs.openshift.com/container-platform/latest/nodes/scheduling/nodes-scheduler-about.html"
+  check_procedures:
+    - type: command
+      command: |
+        oc get nodes -l node-role.kubernetes.io/infra -o json | jq '.items[] | {name: .metadata.name, taints: .spec.taints}'
+        # oc get nodes -o jsonpath='{range .items[*]}{"name: "}{.metadata.name}{"\ntaints: "}{.spec.taints}{"\n\n"}{end}'
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "NodeSelectors y taints necesarios en vigor"
+    description_long_text: "Los nodos de infraestructura tienen las restricciones necesarias para evitar que las cargas de trabajo de los usuarios se ejecuten en ellos."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Taints missing from infra nodes"
+    description_long_text: "Infrastructure nodes may have user workloads running."
+    impact_and_risk_text: "Billing and subscription costs may incur. Maintenance and management costs may increase."
+    remediation_text: "Add taints and nodeSelectors as outlined here https://access.redhat.com/solutions/5034771"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get nodes -l node-role.kubernetes.io/infra -o json | jq '.items[] | {name: .metadata.name, taints: .spec.taints}'
+    {
+      "name": "oscdmzprd01-n5xps-infra-6bjvr",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node-role.kubernetes.io/infra"
+        },
+        {
+          "effect": "NoExecute",
+          "key": "node-role.kubernetes.io/infra"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-infra-hdwjx",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node-role.kubernetes.io/infra"
+        },
+        {
+          "effect": "NoExecute",
+          "key": "node-role.kubernetes.io/infra"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-infra-xggmf",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node-role.kubernetes.io/infra"
+        },
+        {
+          "effect": "NoExecute",
+          "key": "node-role.kubernetes.io/infra"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-infra-xstc7",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node-role.kubernetes.io/infra"
+        },
+        {
+          "effect": "NoExecute",
+          "key": "node-role.kubernetes.io/infra"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-loki-9c5z2",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node.ocs.openshift.io/loki",
+          "value": "true"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-loki-tj4bh",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node.ocs.openshift.io/loki",
+          "value": "true"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-loki-z852k",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node.ocs.openshift.io/loki",
+          "value": "true"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-storage-1-dj9c9",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node.ocs.openshift.io/storage",
+          "value": "true"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-storage-2-nrhkd",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node.ocs.openshift.io/storage",
+          "value": "true"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-storage-3-wnsfn",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node.ocs.openshift.io/storage",
+          "value": "true"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-storage-4-d6p6k",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node.ocs.openshift.io/storage",
+          "value": "true"
+        }
+      ]
+    }
+    {
+      "name": "oscdmzprd01-n5xps-storage-5-642cg",
+      "taints": [
+        {
+          "effect": "NoSchedule",
+          "key": "node.ocs.openshift.io/storage",
+          "value": "true"
+        }
+      ]
+    }

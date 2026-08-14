@@ -1,0 +1,51 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Red Hat System Administration II (RH134)
+
+[.big]#*Descripción general del curso*#
+
+*Adquiera las habilidades que le permitirán desempeñar las tareas principales que necesita para convertirse en administrador de Linux a tiempo completo.*
+
+Red Hat System Administration II (RH134) es la segunda parte del plan de capacitación RHCSA para los especialistas en TI que realizaron el curso https://www.redhat.com/es/services/training/rh124-red-hat-system-administration-i[Red Hat System Administration I]. Se abordan con más detalle las habilidades básicas para administrar los sistemas Linux: la configuración y la gestión del almacenamiento; la instalación y la implementación de Red Hat Enterprise Linux; la gestión de las funciones de seguridad, como SELinux; el control de las tareas frecuentes del sistema; la gestión del proceso de arranque y la resolución de problemas; la configuración básica del sistema; y la productividad y la automatización de la línea de comandos. Para este curso, se supone que los estudiantes ya realizaron el curso https://www.redhat.com/es/services/training/rh124-red-hat-system-administration-i[Red Hat System Administration I (RH124)].
+
+Sin embargo, los administradores de Linux con experiencia que busquen agilizar su proceso de preparación para obtener la certificación RHCSA deben comenzar con el curso https://www.redhat.com/es/services/training/rh199-red-hat-certified-system-administrator-rapid-track-course[RHCSA Rapid Track (RH199)].
+
+El curso se basa en Red Hat Enterprise Linux 9.3.
+
+Después de completar el curso, tendrás acceso a los laboratorios prácticos hasta por 45 días para cualquier curso persencial que incluya un entorno virtual.
+
+*Nota:* Este curso se ofrece en modalidad presencial o virtual con una duración de cinco días o como curso autorregulado. Los tiempos pueden variar conforme lo realice. Para obtener la información completa sobre el curso, el cronograma y los precios, seleccione su ubicación y, luego, "Explorar ahora" en el menú de la derecha.
+
+[.big]#*Resumen del curso*#
+
+* Instalación de Red Hat Enterprise Linux usando métodos flexibles
+* Acceso a los archivos de seguridad, los sistemas de archivos y las redes
+* Ejecución de los scripts de shell y las técnicas de automatización
+* Gestión de los dispositivos de almacenamiento, los sistemas de archivos y los volúmenes lógicos
+* Gestión de la seguridad y el acceso al sistema
+* Control de los servicios del sistema y el proceso de arranque
+* Ejecución de contenedores
+
+[.big]#*Público al que va dirigido el curso*#
+
+Este curso se pensó para los administradores de redes, de sistemas Windows y otros administradores de sistemas que estén interesados en complementar sus habilidades actuales o en brindar soporte a otros miembros del equipo, además de los administradores de sistemas Linux que se encargan de las siguientes tareas:
+
+* Configurar, instalar y actualizar los sistemas Linux con los procedimientos y los estándares establecidos, así como realizar tareas de mantenimiento en ellos
+* Brindar asistencia operativa
+* Gestionar los sistemas para supervisar su disponibilidad y rendimiento
+* Escribir e implementar scripts para la automatización de las tareas y la administración de los sistemas
+
+[.big]#*Capacitación recomendada*#
+
+* Se recomienda completar con éxito el curso https://www.redhat.com/es/services/training/rh124-red-hat-system-administration-i[Red Hat System Administration I (RH124)].
+* Los administradores de Linux con experiencia que busquen acelerar el proceso para obtener la certificación Red Hat Certified System Administrator deben comenzar con el curso https://www.redhat.com/es/services/training/rh199-red-hat-certified-system-administrator-rapid-track-course[RHCSA Rapid Track Course (RH199).]
+* https://skills.ole.redhat.com/[Realice una evaluación sin costo] para determinar si esta oferta es la más conveniente en función de sus habilidades.
+
+[.big]#*Aspectos tecnológicos que debe tener en cuenta*#
+
+* No hay requisitos tecnológicos especiales.
+* No necesita llevar su propio dispositivo (la modalidad no es BYOD).
+* Si bien no es obligatorio contar con acceso a Internet, es recomendable para que los estudiantes puedan investigar y acceder a los recursos en línea de Red Hat.
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/rh134-red-hat-system-administration-ii

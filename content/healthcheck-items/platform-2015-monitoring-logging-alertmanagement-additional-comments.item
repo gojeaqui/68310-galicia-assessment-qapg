@@ -1,0 +1,73 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Alert Management Additional Comments"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Is there anything else you would like to add regarding OpenShift alerting practices within your organization?"
+    - type: survey
+      question: "Are there any specific challenges with current alert management?"
+    - type: survey
+      question: "What improvements would you like to see in alert handling?"
+    - type: survey
+      question: "Are there any unique alert configurations specific to your environment?"
+    - type: survey
+      question: "How do you handle alert fatigue in your organization?"
+    - type: survey
+      question: "What custom alerting rules have been implemented?"
+    - type: survey
+      question: "Are there any integration gaps in your alert management system?"
+    - type: survey
+      question: "How do you measure alert effectiveness?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: "Additional alert management considerations noted"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Alert management feedback received"
+      description_long_text: "Specific feedback on alert management practices provided"
+      impact_and_risk_text: "Potential areas for improvement identified"
+      remediation_text: "Review and assess feedback for implementation"
+    - key: "no_change01"
+      scenario_description_short_text: "Comprehensive alert management"
+      description_long_text: "Alert management practices are well-established"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current alert management practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Effective alert handling"
+      description_long_text: "Alert management meets organizational needs"
+      impact_and_risk_text: "Minimal risk in alert management"
+      remediation_text: "Maintain existing alert framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Alert improvements needed"
+      description_long_text: "Areas for alert management enhancement identified"
+      impact_and_risk_text: "Risk of missed or ineffective alerts"
+      remediation_text: "Implement suggested alert management improvements"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Alert system optimization required"
+      description_long_text: "Current alert management needs optimization"
+      impact_and_risk_text: "Alert effectiveness could be improved"
+      remediation_text: "Optimize alert management system based on feedback"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

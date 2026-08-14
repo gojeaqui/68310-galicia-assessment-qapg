@@ -1,0 +1,55 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  description: "Node Network Topology"
+  references: 
+  - title: "Network topology requirements"
+    url: "https://docs.openshift.com/container-platform/latest/installing/installing_platform_agnostic/installing-platform-agnostic.html#installation-network-user-infra_installing-platform-agnostic"
+  check_procedures:
+    - type: survey
+      question: "Are all nodes on the same VLAN?"
+    - type: survey
+      question: "How is network segmentation implemented between different node types?"
+    - type: survey
+      question: "What is the network latency between nodes?"
+    - type: survey
+      question: "Are there any bandwidth constraints between nodes?"
+    - type: survey
+      question: "How is network redundancy implemented at the node level?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Solo informativo"
+      description_long_text: "La topología de la red sigue las prácticas estándar con todos los nodos correctamente conectados."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "La topología de la red es óptima"
+      description_long_text: "La topología de la red está bien diseñada con la segmentación y redundancia adecuadas."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "La topologia de la red necesita revisión"
+      description_long_text: "La actual topología de la red puede no ser óptima para el rendimiento y la confiabilidad del clúster."
+      impact_and_risk_text: "Una topología de red subóptima puede conducir a problemas de rendimiento y posibles puntos de falla."
+      remediation_text: "Revise y optimice la topología de la red de acuerdo con las mejores prácticas."
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Posibles problemas de latencia en la red"
+      description_long_text: "La alta latencia de la red entre los nodos puede afectar el rendimiento del clúster."
+      impact_and_risk_text: "La alta latencia puede afectar las operaciones del clúster y el rendimiento de la aplicación."
+      remediation_text: "Investigue y aborde las fuentes de latencia de red entre nodos."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

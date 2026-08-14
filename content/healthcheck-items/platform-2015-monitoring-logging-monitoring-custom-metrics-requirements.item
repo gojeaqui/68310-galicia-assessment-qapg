@@ -1,0 +1,54 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"
+  description: "Application specific metrics are monitored on OpenShift"
+  references: 
+  - title: "Configure metrics collection for applications deployed on OCP using metrics collection for user defined projects"
+    url: "https://docs.openshift.com/container-platform/latest/monitoring/managing-metrics.html#setting-up-metrics-collection-for-user-defined-projects_managing-metrics"
+  - title: "Monitor applications deployed to OpenShift using 3rd party tools such as Dynatrace"
+    url: "https://www.dynatrace.com/technologies/openshift-monitoring/"
+  - title: "Monitor applications deployed to OpenShift using 3rd party tools such as AppDynamics"
+    url: "https://www.appdynamics.com/solutions/openshift"
+  - title: "Monitor applications deployed to OpenShift using 3rd party tools such as NewRelic"
+    url: "https://newrelic.com/blog/how-to-relic/red-hat-openshift-monitor"
+  check_procedures:
+    - type: gui_action
+      steps: |
+        1. see alertmanager-main secret in openshift-monitoring namespace
+        2. see cluster-monitoring-config configMap in openshift-monitoring namespace
+        3. see alerts on external systems
+        4. review configuration of routes
+        5. ensure monitoring is not bombarded to a point where people just ignore it . [ example: unnecessary alerts configured]
+    - type: "survey"
+      question: "Does the organization monitor application specific metrics to ensure they are functioning and performing as expected?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Monitoring is enabled"
+    description_long_text: "Sufficient tooling and processes are in place to ensure that applications deployed to OpenShift are performing as expected"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Monitoring needs to address organizational needs"
+    description_long_text: "Insufficient tooling and processes are in place to ensure that applications deployed to OpenShift are performing as expected"
+    impact_and_risk_text: "OpenShift can monitor that application pods are started, and pass basic checks. Additional consideration should be given to capturing application specific metrics to identify performance and reliability issues for applications deployed to OCP."
+    remediation_text: "Deploy and configure application specific metrics tools"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

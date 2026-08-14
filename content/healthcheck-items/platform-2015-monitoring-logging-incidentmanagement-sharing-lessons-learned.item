@@ -1,0 +1,73 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Incident Management Sharing Lessons Learned"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "How are lessons learned from incidents on OpenShift clusters shared within the organization?"
+    - type: survey
+      question: "Is there a formal process for documenting and sharing post-incident learnings?"
+    - type: survey
+      question: "How frequently are incident retrospectives conducted?"
+    - type: survey
+      question: "What platforms or tools are used to share incident knowledge?"
+    - type: survey
+      question: "Are there regular team meetings to discuss past incidents and improvements?"
+    - type: survey
+      question: "How are incident patterns and trends analyzed?"
+    - type: survey
+      question: "Is there a knowledge base for common incident resolutions?"
+    - type: survey
+      question: "How are incident-related improvements tracked and implemented?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: "E) Others Please Specify"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Informal knowledge sharing exists"
+      description_long_text: "Lessons learned are shared but process needs formalization"
+      impact_and_risk_text: "Risk of knowledge loss or inconsistent sharing"
+      remediation_text: "Establish formal knowledge sharing procedures"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective knowledge sharing process"
+      description_long_text: "Well-established system for sharing incident learnings"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current knowledge sharing practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Strong learning culture"
+      description_long_text: "Regular retrospectives and effective knowledge distribution"
+      impact_and_risk_text: "Minimal risk of repeated incidents"
+      remediation_text: "Maintain current knowledge sharing framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited knowledge sharing"
+      description_long_text: "Insufficient process for sharing incident learnings"
+      impact_and_risk_text: "Risk of recurring incidents and missed improvement opportunities"
+      remediation_text: "Implement structured knowledge sharing system"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Knowledge base improvements needed"
+      description_long_text: "Incident knowledge not effectively cataloged or accessible"
+      impact_and_risk_text: "Delayed incident resolution due to knowledge gaps"
+      remediation_text: "Establish centralized incident knowledge repository"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

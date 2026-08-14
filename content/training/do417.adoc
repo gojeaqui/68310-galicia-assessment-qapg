@@ -1,0 +1,51 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Microsoft Windows Automation with Red Hat Ansible Automation Platform (DO417)
+
+[.big]#*Descripción del curso*#
+
+*Introducción a la realización de tareas básicas de administración del sistema creando y ejecutando tareas automatizadas para Windows Server con Red Hat Ansible Automation Platform.*
+
+Microsoft Windows Automation with Red Hat Ansible Automation Platform (DO417) está diseñado para los administradores de sistemas, los ingenieros de DevOps y los desarrolladores que deseen aprender a automatizar la implementación y la gestión de los servidores de Microsoft Windows y las aplicaciones alojadas en ellos con Red Hat Ansible Automation Platform.
+
+El curso se basa en Red Hat® Ansible Automation Platform 2.4.
+
+Después de completar el curso, tendrás acceso a los laboratorios prácticos hasta por 45 días para cualquier curso persencial que incluya un entorno virtual.
+
+*Nota:* Este curso se ofrece en modalidad presencial con una duración de cuatro días, en modalidad virtual con una duración de cinco días o como curso autorregulado. Los tiempos pueden variar conforme lo realice. Para obtener la información completa sobre el curso, el cronograma y los precios, seleccione su ubicación y, luego, "Explorar ahora" en el menú de la derecha.
+
+[.big]#*Resumen del contenido del curso*#
+
+* Redacción de playbooks de Ansible que automaticen las tareas en los servidores de Microsoft Windows
+* Gestión de los playbooks de Ansible que estén almacenados en un sistema de control de versiones basado en Git
+* Ejecución de los playbooks de Ansible usando la interfaz de usuario basada en la Web del controlador de la automatización
+* Gestión del software y las características de Windows y confirmación de que estén instalados y actualizados con la automatización de Ansible
+* Escritura de tareas eficientes en los playbooks de Ansible usando ciclos, pruebas condicionales y controladores
+* Redacción de playbooks de Ansible que garanticen que los plays se puedan recuperar cuando fallen las tareas
+* Implementación, modificación y gestión de los archivos con Ansible en los servidores de Windows usando archivos completos y plantillas Jinja2
+* Administración de los usuarios locales y de dominio, gestión de los dominios de Active Directory y generación de inventarios dinámicos de los hosts gestionados en el controlador de la automatización en función de la pertenencia a los dominios
+* Automatización de las tareas de administración comunes y específicas de Windows Server
+* Reutilización del código de automatización actual usando Ansible Content Collections, las funciones de Ansible y su integración en los recursos de Desired State Configuration (DSC) de PowerShell
+
+[.big]#*Público destinatario*#
+
+* Administradores de sistemas, ingenieros de DevOps y desarrolladores que sean responsables de automatizar la implementación y la gestión de los servidores de Microsoft Windows y las aplicaciones alojadas en ellos con Red Hat Ansible Automation Platform
+
+[.big]#*Capacitación recomendada*#
+
+* https://skills.ole.redhat.com/en[Realice una evaluación sin costo] para determinar si esta oferta es la más conveniente en función de sus habilidades.
+* Se espera que cuente con un conocimiento básico de la administración de Windows Server.
+* Los estudiantes no necesitan tener ninguna experiencia previa con Ansible ni Linux.
+* La realización de este curso no supone requisitos previos.
+
+[.big]#*Aspectos tecnológicos que debe tener en cuenta*#
+
+* Para los estudiantes de modalidad virtual o autorregulada:
+** Debe tener conexión a Internet para acceder a ROLE.
+** No se admite BYOD/BYDW.
+* Para los estudiantes de modalidad presencial:
+** Debe tener conexión a Internet para acceder a ROLE.
+** No se admite BYOD/BYDW.
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/do417-microsoft-windows-automation-red-hat-ansible-automation-platform

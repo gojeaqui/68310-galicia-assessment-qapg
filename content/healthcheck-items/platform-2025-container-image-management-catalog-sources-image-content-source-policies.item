@@ -1,0 +1,44 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Container Image Management"
+  severity_key: "Not defined"
+  tag_keys:
+    - "Operators"
+    - "Container Images"
+    - "OLM"
+    - "Registry"
+    - "OpenShift Cluster Configuration"
+  tags: []
+  description: "Document catalogsources and imagecontent source policies"
+  references: 
+    - title: "Managing custom catalogs"
+      url: "https://docs.openshift.com/container-platform/latest/operators/admin/olm-managing-custom-catalogs.html"
+    - title: "ImageContentSourcePolicy API"
+      url: "https://docs.openshift.com/container-platform/latest/rest_api/operator_apis/imagecontentsourcepolicy-operator-openshift-io-v1alpha1.html"
+  check_procedures:
+    - type: survey
+      question: "What are the catalogsources and ImageContentSourcePolicies?"
+    - type: "command"
+      command: |
+        oc get imagecontentpolicies.config.openshift.io -A
+        oc get imagecontentsourcepolicies.operator.openshift.io -A
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill in details
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

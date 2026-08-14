@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Adoption"
+  severity_key: "Not defined"
+  tags: ["Adoption", "OpenShift Virtualization"]
+  tag_keys:
+    - "OpenShift Virt"
+    - "Usage Check"
+  description: "Determine if OpenShift Virtualization is in use"
+  references:
+    - title: "Getting started with OpenShift Virtualization"
+      url: "https://docs.openshift.com/container-platform/4.16/virt/about_virt/about-virt.html"
+  check_procedures:
+    - type: survey
+      question: "Do you currently use OpenShift Virtualization for managing virtual machines?"
+    - type: survey
+      question: "If not, are you planning to adopt OpenShift Virtualization in the future?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "OpenShift Virtualization in use"
+      description_long_text: "OpenShift Virtualization is currently being used to manage virtual machines."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "OpenShift Virtualization not in use"
+      description_long_text: "OpenShift Virtualization is not being used for managing virtualized workloads."
+      impact_and_risk_text: "Not using OpenShift Virtualization could limit integration and management benefits for virtualized workloads."
+      remediation_text: "Explore OpenShift Virtualization for managing virtual machines more efficiently within OpenShift."
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

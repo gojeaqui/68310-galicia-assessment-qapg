@@ -1,0 +1,61 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Common"
+  severity_key:  high
+  tag_keys:
+    - "blah"
+    - "blah"
+    - "blah"
+  tags: [] (default: false)
+  description: "Short Item description"
+  references:
+    - title: "OpenShift Documentation"
+      url: "https://docs.openshift.com"
+  check_procedures:
+    - type: compliance_operator
+      profile: asdf
+      rule: asdf
+    - type: survey
+      question: "Please have the client provide a description of their current automation?"
+    - type: command
+      command: |
+        oc get pods 
+    - type: gui_action
+      steps: |
+        1.  Step 1
+        2.  Step 2
+        3.  Step 3
+  common_outcomes:
+    - key: scenario1
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: |
+         blah blah blah
+      remediation_text: |
+         blah blah blah
+    - key: scenario2
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: |
+         blah blah blah
+      remediation_text: |
+         blah blah blah
+customer_environment_findings:
+  # pass, advisory,fail, inconclusive, na (=not applicable), 
+  status: tbe
+  common_outcome_key: scenario2
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: |
+         blah blah blah
+      remediation_text: |
+         blah blah blah
+  additional_comments:
+    impact_risk_additional_text: |
+      blah blah blah
+    remediation_additional_text: |
+      blah blah blah
+    additional_comments_text: |
+      blah blah blah 

@@ -1,0 +1,64 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "generic"
+  severity_key: "Not defined"
+  tags: []
+  description: "Security Groups"
+  tag_keys:
+    - "Azure"
+    - "AWS"
+  references: []
+  check_procedures:
+    - type: "survey"
+      question: "Document AMIS."
+    - type: "survey"
+      question: "What base AMIs are currently in use for cluster nodes?"
+    - type: "survey"
+      question: "How frequently are AMIs updated with security patches?"
+    - type: "survey"
+      question: "What is the process for AMI validation and testing?"
+    - type: "survey"
+      question: "Are custom AMIs being used for specific workloads?"
+    - type: "survey"
+      question: "How are AMI versions tracked and managed?"
+    - type: "survey"
+      question: "What is the backup strategy for custom AMIs?"   
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out details
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "AMI Documentation Needed"
+      description_long_text: "AMI management process lacks documentation"
+      impact_and_risk_text: "Risk of inconsistent AMI management"
+      remediation_text: "Document AMI lifecycle management procedures"
+    - key: "no_change01"
+      scenario_description_short_text: "Optimal AMI Management"
+      description_long_text: "AMIs properly managed and updated regularly"
+      impact_and_risk_text: "Low risk profile with current AMI strategy"
+      remediation_text: "Maintain current AMI management process"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "AMI Update Required"
+      description_long_text: "Outdated AMIs identified in use"
+      impact_and_risk_text: "Security and performance risks from outdated images"
+      remediation_text: "Update to latest validated AMIs"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "AMI Standardization Needed"
+      description_long_text: "Multiple AMI versions in use across similar workloads"
+      impact_and_risk_text: "Complex management and potential inconsistencies"
+      remediation_text: "Standardize AMI usage across workload types"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

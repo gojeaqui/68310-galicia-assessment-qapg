@@ -1,0 +1,74 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Resource Requests"
+  severity_key: "Not defined"
+  tags: []
+  description: "Resource Request Management"
+  references:
+    - title: "Resources managed by quotas"
+      url: "https://docs.openshift.com/container-platform/latest/applications/quotas/quotas-setting-per-project.html"
+    - title: "Restrict resource consumption with limit ranges"
+      url: "https://docs.openshift.com/container-platform/latest/nodes/clusters/nodes-cluster-limit-ranges.html"
+  check_procedures:
+    - type: survey
+      question: "How are required LimitsRanges and ResourceQuotas implemented?"
+    - type: survey
+      question: "How are required resources for deployed workloads calculated?"
+    - type: survey
+      question: "Are there any automated processes for monitoring resource usage?"
+    - type: survey
+      question: "How frequently are resource quotas and limits reviewed and adjusted?"
+    - type: "command"
+      command: |
+        oc get limitrange -A
+        oc get resourcequota -A
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "No se están utilizando LimitsRanges y ResourceQuotas"
+      description_long_text: "Si bien no se están utilizando LimitsRanges y ResourceQuotas, en este caso no es un problema porque se espera que corra una sola aplicación en el cluster y por lo tanto no tiene sentido ponerle limites"  # Consultant to describe limits and quotas.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "No se están utilizando LimitsRanges y ResourceQuotas"
+      description_long_text: "Los usuarios del clúster no tienen límite en el consumo de recursos"
+      impact_and_risk_text: "Esto podría afectar a otros usuarios que intenten usar los mismos recursos y también podría afectar la planificación de la capacidad (capacity planning)"
+      remediation_text: "Implementar LimitsRanges y ResourceQuotas para los namespaces y las cargas de trabajo de los usuarios"
+    - key: "advisory02"
+      scenario_description_short_text: "Se recomienda monitoreo periódico"
+      description_long_text: "Se recomienda monitorear periódicamente el uso de los recursos para garantizar su uso eficiente"
+      impact_and_risk_text: ""
+      remediation_text: "Implementar herramientas de monitoreo para rastrear el uso de los recursos"
+    - key: "no_change01"
+      scenario_description_short_text: "Prácticas de gestión de recursos implementadas"
+      description_long_text: "Las prácticas actuales de gestión de recursos son adecuadas"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended02"
+      scenario_description_short_text: "LimitsRanges y ResourceQuotas obsoletos"
+      description_long_text: "Los LimitsRanges y ResourceQuotas no se han revisado recientemente"
+      impact_and_risk_text: "Las configuraciones obsoletas pueden provocar un uso ineficiente de los recursos"
+      remediation_text: "Revise y actualice los LimitsRanges y ResourceQuotas periódicamente"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "advisory01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get limitrange -A
+    No resources found
+    ---
+
+    [openshift@bastion ~]$ oc get resourcequota -A
+    NAMESPACE                NAME                            AGE      REQUEST                                                              LIMIT
+    bna-trident-dmzprd01     trident-csi                     2y279d                                                                        
+    openshift-host-network   host-network-namespace-quotas   3y60d    count/daemonsets.apps: 0/0, count/deployments.apps: 0/0, pods: 0/0   limits.cpu: 0/0, limits.memory: 0/0
+    ---

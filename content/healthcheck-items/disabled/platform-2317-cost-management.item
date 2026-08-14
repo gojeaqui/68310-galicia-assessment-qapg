@@ -1,0 +1,41 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Cost Management"
+  severity_key:  low
+  tag_keys: []
+  tags: []
+  description: "Cost Management"
+  references:
+    - title: "Improve Cloud Cost Visibility"
+      url: https://www.redhat.com/en/blog/improve-your-cloud-cost-visibility-red-hat-insight
+    - title: "Bean Counting for OpenShift"
+      url: https://www.redhat.com/en/blog/cost-management-bean-counting-for-openshift
+    - title: "OpenShift Cost Management"
+      url: https://access.redhat.com/products/red-hat-cost-management
+  check_procedures:
+    - type: survey
+      question: "Do you oversee the management of costs and chargebacks for projects across the organization?"
+    - type: survey
+      question: "Do you predict future spending and create budgets accordingly?"  
+    - type: survey
+      question: "Do you have any third-party tools that can be used to gather data on resource utilization?"  
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Software Supply Chain" # Understand organizations software supply chain.
+      description_long_text: ""  
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

@@ -1,0 +1,61 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Automation"
+  severity_key: "Not defined"
+  tags: []
+  description: "Pipeline Code Review"
+  references:
+    - title: "CI/CD Overview"
+      url: "https://docs.openshift.com/container-platform/latest/cicd/index.html"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: survey
+      question: "How often are pipeline code reviews conducted?"
+    - type: survey
+      question: "What tools are used for code review in your CI/CD pipelines?"
+    - type: survey
+      question: "Are there any automated checks in place for pipeline code quality?"
+    - type: survey
+      question: "What challenges have you faced in maintaining pipeline code quality?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to document code review findings.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Revisiones de código poco frecuentes"
+      description_long_text: "Las revisiones de código del pipeline no se realizan con regularidad."
+      impact_and_risk_text: "Las revisiones poco frecuentes pueden provocar problemas no detectados en el pipeline."
+      remediation_text: "Establecer un programa regular para las revisiones de código del pipeline."
+    - key: "advisory02"
+      scenario_description_short_text: "Revisar las herramientas de revisión de código (Code Review)"
+      description_long_text: "Se recomienda revisar periódicamente las herramientas de revisión de código para garantizar que satisfagan las necesidades actuales."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar las herramientas actuales y explorar nuevas opciones si es necesario."
+    - key: "no_change01"
+      scenario_description_short_text: "Prácticas de revisión de código adecuadas"
+      description_long_text: "Las prácticas actuales de revisión de código son suficientes para mantener la calidad del pipeline"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Falta de comprobaciones automatizadas"
+      description_long_text: "No existen comprobaciones automatizadas de la calidad del código del pipeline."
+      impact_and_risk_text: "Las comprobaciones manuales pueden generar inconsistencias y problemas que se pasan por alto."
+      remediation_text: "Implementar comprobaciones automatizadas de la calidad del código del pipeline."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

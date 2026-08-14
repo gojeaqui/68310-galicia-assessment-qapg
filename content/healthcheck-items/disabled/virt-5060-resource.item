@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Resource Management"
+  severity_key: "Medium"
+  tags: ["Resource Management", "Quotas"]
+  tag_keys:
+    - "Resource Limits"
+    - "CPU and Memory"
+  description: "Enforcing resource quotas for virtualized workloads"
+  references:
+    - title: "Configuring resource quotas"
+      url: "https://docs.openshift.com/container-platform/4.16/virt/virtual_machines/advanced_vm_management/virt-working-with-resource-quotas-for-vms.html"
+  check_procedures:
+    - type: survey
+      question: "Do you define CPU and memory resource quotas for virtual machines?"
+    - type: survey
+      question: "How do you prevent resource overutilization by VMs?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Resource quotas configured"
+      description_long_text: "CPU and memory quotas are enforced to ensure fair resource allocation."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Resource quotas not configured"
+      description_long_text: "Resource quotas for virtual machines are not defined or enforced."
+      impact_and_risk_text: "Lack of quotas can lead to resource exhaustion, impacting other workloads."
+      remediation_text: "Configure resource quotas to manage CPU and memory allocation effectively."
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

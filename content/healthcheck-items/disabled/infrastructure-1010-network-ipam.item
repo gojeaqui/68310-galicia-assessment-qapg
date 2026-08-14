@@ -1,0 +1,60 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "IPAM"
+  description: "IP Address Management"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Are you using IPAM?"
+    - type: survey
+      question: "What IPAM tool is currently in use, if any?"
+    - type: survey
+      question: "How frequently is the IPAM database updated?"
+    - type: survey
+      question: "Are there any challenges faced with the current IPAM solution?"
+    - type: survey
+      question: "Is there a backup mechanism for the IPAM data?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Herramienta IPAM en uso"
+      description_long_text: "Las direcciones IP se rastrean mediante una herramienta de administración de direcciones IP"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Las direcciones IP se rastrean de manera ineficiente"
+      description_long_text: "Las direcciones IP se rastrean en un software que debe actualizarse manualmente"
+      impact_and_risk_text: "El seguimiento de IPS disponible puede tener errores, causando confusión"
+      remediation_text: "Use una herramienta IPAM"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Las direcciones IP no se rastrean"
+      description_long_text: "Las direcciones IP no se rastrean."
+      impact_and_risk_text: "El seguimiento de IPS disponible puede tener errores, causando confusión"
+      remediation_text: "Use una herramienta IPAM"
+    - key: "advisory01"
+      scenario_description_short_text: "La copia de seguridad de datos de IPAM está en su lugar."
+      description_long_text: "Existe un mecanismo de respaldo para los datos de IPAM, lo que garantiza la recuperación de datos en caso de falla."
+      impact_and_risk_text: ""
+      remediation_text: "Continúe manteniendo copias de seguridad regulares de datos de IPAM."
+    - key: "changes_recommended03"
+      scenario_description_short_text: "La frecuencia de actualización de IPAM es insuficiente."
+      description_long_text: "La base de datos IPAM no se actualiza con la frecuencia suficiente, lo que puede conducir a información anticuada."
+      impact_and_risk_text: "Las actualizaciones poco frecuentes pueden dar lugar a conflictos de IP y problemas de asignación."
+      remediation_text: "Aumente la frecuencia de las actualizaciones de la base de datos IPAM para garantizar la precisión."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

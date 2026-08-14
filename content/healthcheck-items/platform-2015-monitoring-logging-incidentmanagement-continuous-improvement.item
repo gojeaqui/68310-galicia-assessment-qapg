@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Incident Management Continuous Improvement"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "What steps are taken to continuously improve incident management practices specific to OpenShift clusters?"
+    - type: survey
+      question: "How frequently are incident management processes reviewed and updated?"
+    - type: survey
+      question: "What metrics are used to measure incident management effectiveness?"
+    - type: survey
+      question: "How are incident patterns analyzed for systemic improvements?"
+    - type: survey
+      question: "What feedback mechanisms exist for incident response team members?"
+    - type: survey
+      question: "How are automation opportunities identified and implemented?"
+    - type: survey
+      question: "What training programs exist for incident management skills?"
+    - type: survey
+      question: "How are industry best practices incorporated into improvement plans?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Regular process reviews, B) Incident metrics analysis, C) Team feedback sessions, D) External consultancy, E) Others Please Specify"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic improvement process exists"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Some improvement practices in place but need structure"
+      impact_and_risk_text: "Risk of stagnant incident management practices"
+      remediation_text: "Formalize improvement process"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective improvement program"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-structured continuous improvement process"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current improvement practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Strong improvement culture"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Regular reviews and updates to incident management"
+      impact_and_risk_text: "Minimal risk in process improvement"
+      remediation_text: "Maintain current improvement framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited improvement process"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Insufficient focus on continuous improvement"
+      impact_and_risk_text: "Risk of outdated incident management practices"
+      remediation_text: "Implement structured improvement program"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Metrics-driven improvements needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Lack of data-driven improvement decisions"
+      impact_and_risk_text: "Ineffective improvements due to lack of metrics"
+      remediation_text: "Establish metrics-based improvement process"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

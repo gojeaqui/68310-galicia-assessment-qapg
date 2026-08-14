@@ -1,0 +1,57 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Common"
+  severity_key: "Not defined"
+  tag_keys: 
+    - Backups
+    - Platform Engineering
+    - GitOps
+  tags: []
+  description: "External Backup"
+  references: 
+  - title: "Overview of backup and restore operations"
+    url: "https://docs.openshift.com/container-platform/latest/backup_and_restore/index.html"
+  check_procedures:
+    - type: "survey"
+      question: "Is there an external backup solution?"
+    - type: "survey"
+      question: "How frequently are backups performed and tested?"
+    - type: "survey"
+      question: "What tools are used for managing and automating backup processes?"
+    - type: "survey"
+      question: "Are backup data encrypted and stored securely?"
+  common_outcomes:
+  - key: no_change01
+    scenario_description_short_text: "Existe una solución de backup"
+    description_long_text: "Se realiza una copia de seguridad de los recursos y se almacenan fuera del sitio; existe un proceso para restaurar el clúster"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: no_change02
+    scenario_description_short_text: "Recuperación mediante GitOps u otra automatización"
+    description_long_text: "El cliente ha invertido en el uso de GitOps u otra automatización y puede restaurar rápidamente un clúster a su estado deseado después de una reconstrucción."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: changes_recommended01
+    scenario_description_short_text: "No existe una solución de backup"
+    description_long_text: "No existe ningún proceso para respaldar o restaurar el clúster a un estado anterior."
+    impact_and_risk_text: "En caso de desastre, es posible que no haya forma de restaurar rápidamente un clúster."
+    remediation_text: "Implementar copias de seguridad externas."
+  - key: advisory01
+    scenario_description_short_text: "Mejores prácticas de copias de seguridad"
+    description_long_text: "Asegúrese de que las copias de seguridad se prueben y validen periódicamente."
+    impact_and_risk_text: "Reduce el riesgo de pérdida de datos y garantiza la fiabilidad de las copias de seguridad."
+    remediation_text: "Establezca una rutina para probar y validar las copias de seguridad."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

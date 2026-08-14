@@ -1,0 +1,559 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Security"
+  description: "OpenShift logging status"
+  references: 
+  - title: "OpenShift logging status"
+    url: "https://docs.openshift.com/container-platform/latest/logging/troubleshooting/cluster-logging-cluster-status.html"
+  - title: "OpenShift Loki"
+    url: "https://docs.openshift.com/container-platform/latest/observability/network_observability/installing-operators.html#network-observability-loki-installation_network_observability"
+  check_procedures:
+    - type: "survey"
+      question: "Is the logging operator reporting any issues?"
+    - type: "command"
+      question: ""
+      command: |
+        # 'Review the output under "status" for fluentd pods, logstore and visualization. Take note of any components in a not-ready status and details around the condition messages'
+        oc get clusterlogging instance -n openshift-logging -o yaml
+        oc get clusterlogforwarder -n openshift-logging -o yaml
+
+        # 'Review the output of the operator and the associated replicaset for errors'
+        oc get deployment cluster-logging-operator -n openshift-logging -o yaml
+        oc get replicaset -n openshift-logging
+
+        # 'Take note of the pod names and use in the command below'
+        oc get pods -n openshift-logging
+
+        # 'Review the events in namespace "openshift-logging"'
+        oc get events -n openshift-logging|grep -v Normal
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "El estado del stack de Logging es verde"
+    description_long_text: "El estado de salud del stack de OpenShift Logging es verde. Sin embargo falta llevarlo completamente a la ultima version y desprenderse del ElasticSearch."
+    impact_and_risk_text: ""
+    remediation_text: "Se recomienda terminar de actualizar el stack de Logging una vez actualizado el Openshift a version 4.16 y dar de baja al ElasticSearch"
+  - key: "changes_required01"
+    scenario_description_short_text: "Logging health status yellow/red"
+    description_long_text: "OpenShift logging is not healthy.  It's health status is either yellow or red."
+    impact_and_risk_text: "An unhealthy logging system could lead to incomplete log collection and/or total loss of log data."
+    remediation_text: "Perform an investigation into the root cause of logging issue."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: changes_recommended
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get clusterlogging instance -n openshift-logging -o yaml
+    apiVersion: logging.openshift.io/v1
+    kind: ClusterLogging
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/last-applied-configuration: |
+          {"apiVersion":"logging.openshift.io/v1","kind":"ClusterLogging","metadata":{"annotations":{},"name":"instance","namespace":"openshift-logging"},"spec":{"collection":{"logs":{"fluentd":{},"type":"fluentd"}},"curation":{"curator":{"nodeSelector":{"node-role.kubernetes.io/infra":""},"schedule":"30 3 * * *","tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/infra","value":"reserved"},{"effect":"NoExecute","key":"node-role.kubernetes.io/infra","value":"reserved"}]},"type":"curator"},"logStore":{"elasticsearch":{"nodeCount":3,"nodeSelector":{"node-role.kubernetes.io/infra":""},"redundancyPolicy":"SingleRedundancy","storage":{"size":"500Gi","storageClassName":"thin"},"tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/infra","value":"reserved"},{"effect":"NoExecute","key":"node-role.kubernetes.io/infra","value":"reserved"}]},"type":"elasticsearch"},"managementState":"Managed","visualization":{"kibana":{"nodeSelector":{"node-role.kubernetes.io/infra":""},"replicas":1,"tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/infra","value":"reserved"},{"effect":"NoExecute","key":"node-role.kubernetes.io/infra","value":"reserved"}]},"type":"kibana"}}}
+      creationTimestamp: "2022-08-24T20:51:27Z"
+      generation: 25
+      name: instance
+      namespace: openshift-logging
+      resourceVersion: "1039306392"
+      uid: fb0f4611-f11e-4618-9947-3eb686739d9a
+    spec:
+      collection:
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
+          operator: Exists
+        - effect: NoExecute
+          key: node-role.kubernetes.io/infra
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        type: vector
+      curation:
+        curator:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          schedule: 30 3 * * *
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/infra
+            operator: Exists
+          - effect: NoExecute
+            key: node-role.kubernetes.io/infra
+            operator: Exists
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/master
+            operator: Exists
+          - effect: NoExecute
+            key: node-role.kubernetes.io/master
+            operator: Exists
+        type: curator
+      logStore:
+        lokistack:
+          name: logging-loki
+        type: lokistack
+      managementState: Managed
+      visualization:
+        kibana:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          replicas: 1
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/infra
+          - effect: NoExecute
+            key: node-role.kubernetes.io/infra
+        type: kibana
+    status:
+      collection:
+        logs:
+          fluentdStatus:
+            daemonSet: collector
+            nodes:
+              collector-9cgxg: oscdmzprd01-n5xps-master-0
+              collector-b8chr: oscdmzprd01-n5xps-master-2
+              collector-fzfhn: oscdmzprd01-n5xps-worker-cx9kl
+              collector-jq5w8: oscdmzprd01-n5xps-worker-bqb24
+              collector-jvtnw: oscdmzprd01-n5xps-master-1
+              collector-n5lh8: oscdmzprd01-n5xps-worker-2f4z2
+              collector-p9vxj: oscdmzprd01-n5xps-worker-g988l
+            pods:
+              failed: []
+              notReady: []
+              ready:
+              - collector-9cgxg
+              - collector-b8chr
+              - collector-fzfhn
+              - collector-jq5w8
+              - collector-jvtnw
+              - collector-n5lh8
+              - collector-p9vxj
+      conditions:
+      - lastTransitionTime: "2022-08-24T20:53:48Z"
+        status: "False"
+        type: CollectorDeadEnd
+      - lastTransitionTime: "2022-08-24T20:53:36Z"
+        message: curator is deprecated in favor of defining retention policy
+        reason: ResourceDeprecated
+        status: "True"
+        type: CuratorRemoved
+      - lastTransitionTime: "2025-08-26T00:58:49Z"
+        status: "True"
+        type: Ready
+      curation: {}
+      logStore:
+        elasticsearchStatus:
+        - cluster:
+            activePrimaryShards: 254
+            activeShards: 508
+            initializingShards: 0
+            numDataNodes: 3
+            numNodes: 3
+            pendingTasks: 0
+            relocatingShards: 0
+            status: green
+            unassignedShards: 0
+          clusterName: elasticsearch
+          nodeConditions:
+            elasticsearch-cdm-0l2d423c-1: []
+            elasticsearch-cdm-0l2d423c-2: []
+            elasticsearch-cdm-0l2d423c-3: []
+          nodeCount: 3
+          pods:
+            client:
+              failed: []
+              notReady: []
+              ready:
+              - elasticsearch-cdm-0l2d423c-1-6b45db6847-4n2hb
+              - elasticsearch-cdm-0l2d423c-2-6c886bf4c6-4srgm
+              - elasticsearch-cdm-0l2d423c-3-5bcff975f7-wnlsm
+            data:
+              failed: []
+              notReady: []
+              ready:
+              - elasticsearch-cdm-0l2d423c-1-6b45db6847-4n2hb
+              - elasticsearch-cdm-0l2d423c-2-6c886bf4c6-4srgm
+              - elasticsearch-cdm-0l2d423c-3-5bcff975f7-wnlsm
+            master:
+              failed: []
+              notReady: []
+              ready:
+              - elasticsearch-cdm-0l2d423c-1-6b45db6847-4n2hb
+              - elasticsearch-cdm-0l2d423c-2-6c886bf4c6-4srgm
+              - elasticsearch-cdm-0l2d423c-3-5bcff975f7-wnlsm
+          shardAllocationEnabled: all
+      visualization:
+        kibanaStatus:
+        - deployment: kibana
+          pods:
+            failed: []
+            notReady: []
+            ready:
+            - kibana-586c95fcd-srhq5
+          replicaSets:
+          - kibana-586c95fcd
+          - kibana-6f4f5689db
+          replicas: 1
+    ---
+
+    [openshift@bastion ~]$ oc get clusterlogforwarder -n openshift-logging -o yaml
+    apiVersion: v1
+    items: []
+    kind: List
+    metadata:
+      resourceVersion: ""
+    ---
+
+    [openshift@bastion ~]$ oc get deployment cluster-logging-operator -n openshift-logging -o yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        deployment.kubernetes.io/revision: "25"
+      creationTimestamp: "2022-08-24T20:50:50Z"
+      generation: 191
+      labels:
+        olm.deployment-spec-hash: 5dbd6899c9
+        olm.owner: cluster-logging.v6.0.9
+        olm.owner.kind: ClusterServiceVersion
+        olm.owner.namespace: openshift-logging
+        operators.coreos.com/cluster-logging.openshift-logging: ""
+      name: cluster-logging-operator
+      namespace: openshift-logging
+      ownerReferences:
+      - apiVersion: operators.coreos.com/v1alpha1
+        blockOwnerDeletion: false
+        controller: false
+        kind: ClusterServiceVersion
+        name: cluster-logging.v6.0.9
+        uid: 3576e5f0-1f2b-4a1b-9e6b-e942d1104f20
+      resourceVersion: "1039311738"
+      uid: 36bc4283-3718-4760-9dc1-2c72f4688887
+    spec:
+      progressDeadlineSeconds: 600
+      replicas: 1
+      revisionHistoryLimit: 1
+      selector:
+        matchLabels:
+          name: cluster-logging-operator
+      strategy:
+        rollingUpdate:
+          maxSurge: 25%
+          maxUnavailable: 25%
+        type: RollingUpdate
+      template:
+        metadata:
+          annotations:
+            alm-examples: |-
+              [
+                {
+                  "apiVersion": "logging.openshift.io/v1alpha1",
+                  "kind": "LogFileMetricExporter",
+                  "metadata": {
+                    "name": "instance",
+                    "namespace": "openshift-logging"
+                  },
+                  "spec": {
+                    "resources": {
+                      "limits": {
+                        "cpu": "500m"
+                      },
+                      "requests": {
+                        "cpu": "200m",
+                        "memory": "128Mi"
+                      }
+                    },
+                    "tolerations": [
+                      {
+                        "effect": "NoSchedule",
+                        "key": "node-role.kubernetes.io/master",
+                        "operator": "Exists"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "apiVersion": "observability.openshift.io/v1",
+                  "kind": "ClusterLogForwarder",
+                  "metadata": {
+                    "name": "logging",
+                    "namespace": "openshift-logging"
+                  },
+                  "spec": {
+                    "outputs": [
+                      {
+                        "lokiStack": {
+                          "authentication": {
+                            "token": {
+                              "from": "serviceAccount"
+                            }
+                          },
+                          "target": {
+                            "name": "logging-loki"
+                          }
+                        },
+                        "name": "logging-loki",
+                        "tls": {
+                          "ca": {
+                            "configMapName": "openshift-service-ca.crt",
+                            "key": "service-ca.crt"
+                          }
+                        },
+                        "type": "lokiStack"
+                      }
+                    ],
+                    "pipelines": [
+                      {
+                        "inputRefs": [
+                          "application",
+                          "infrastructure"
+                        ],
+                        "name": "logs-to-loki",
+                        "outputRefs": [
+                          "logging-loki"
+                        ]
+                      }
+                    ],
+                    "serviceAccount": {
+                      "name": "log-collector"
+                    }
+                  }
+                }
+              ]
+            capabilities: Seamless Upgrades
+            categories: OpenShift Optional, Logging & Tracing
+            certified: "false"
+            containerImage: registry.redhat.io/openshift-logging/cluster-logging-rhel9-operator@sha256:78b7ffa6caef8f4f7b8af9dd661c739acb20b6a51026384c4405377c765fae8b
+            createdAt: "2025-05-14T12:32:39Z"
+            description: The Red Hat OpenShift Logging Operator for OCP provides a means
+              for configuring and managing log collection and forwarding.
+            features.operators.openshift.io/cnf: "false"
+            features.operators.openshift.io/cni: "false"
+            features.operators.openshift.io/csi: "false"
+            features.operators.openshift.io/disconnected: "true"
+            features.operators.openshift.io/fips-compliant: "true"
+            features.operators.openshift.io/proxy-aware: "true"
+            features.operators.openshift.io/tls-profiles: "true"
+            features.operators.openshift.io/token-auth-aws: "false"
+            features.operators.openshift.io/token-auth-azure: "false"
+            features.operators.openshift.io/token-auth-gcp: "false"
+            kubectl.kubernetes.io/default-container: cluster-logging-operator
+            olm.operatorGroup: logging-operatorgroup
+            olm.operatorNamespace: openshift-logging
+            olm.skipRange: '>=5.8.0-0 <6.0.9'
+            olm.targetNamespaces: openshift-logging
+            operatorframework.io/cluster-monitoring: "true"
+            operatorframework.io/initialization-resource: |
+              {
+                "apiVersion": "observability.openshift.io/v1",
+                "kind": "ClusterLogForwarder",
+                "metadata": {
+                  "name": "logging"
+                }
+              }
+            operatorframework.io/properties: '{"properties":[{"type":"olm.gvk","value":{"group":"logging.openshift.io","kind":"LogFileMetricExporter","version":"v1alpha1"}},{"type":"olm.gvk","value":{"group":"observability.openshift.io","kind":"ClusterLogForwarder","version":"v1"}},{"type":"olm.maxOpenShiftVersion","value":4.17},{"type":"olm.package","value":{"packageName":"cluster-logging","version":"6.0.9"}}]}'
+            operatorframework.io/suggested-namespace: openshift-logging
+            operators.openshift.io/infrastructure-features: '["disconnected","proxy-aware"]'
+            operators.openshift.io/valid-subscription: '["OpenShift Kubernetes Engine",
+              "OpenShift Container Platform", "OpenShift Platform Plus"]'
+            operators.operatorframework.io/builder: operator-sdk-unknown
+            operators.operatorframework.io/project_layout: go.kubebuilder.io/v4
+            support: AOS Logging (aos-logging@redhat.com)
+            target.workload.openshift.io/management: '{"effect": "PreferredDuringScheduling"}'
+          creationTimestamp: null
+          labels:
+            name: cluster-logging-operator
+        spec:
+          containers:
+          - command:
+            - cluster-logging-operator
+            env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.annotations['olm.targetNamespaces']
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: cluster-logging-operator
+            - name: RELATED_IMAGE_VECTOR
+              value: registry.redhat.io/openshift-logging/vector-rhel9@sha256:c718ab7b12f053f979800414ffd44a0f59fa6e36afa8e0d681b10b6aa08be19f
+            - name: RELATED_IMAGE_LOG_FILE_METRIC_EXPORTER
+              value: registry.redhat.io/openshift-logging/log-file-metric-exporter-rhel9@sha256:4fd009c9d12a15855f3a54ec8eea5d5aab2923ff19ad25f3cb58f6e71f22d7f2
+            - name: HTTP_PROXY
+              value: http://10.2.248.246:8080/
+            - name: HTTPS_PROXY
+              value: http://10.2.248.246:8080/
+            - name: NO_PROXY
+              value: .apps.oscdmzprd01.cc.bna.net,.cc.bna.net,.cluster.local,.oscdmzprd01.cc.bna.net,.svc,.tcc.tbna.net,10.0.0.0/8,10.10.13.0/24,10.168.0.0/14,127.0.0.1,172.60.0.0/16,api-int.oscdmzprd01.cc.bna.net,api.oscdmzprd01.cc.bna.net,localhost
+            - name: OPERATOR_CONDITION_NAME
+              value: cluster-logging.v6.0.9
+            image: registry.redhat.io/openshift-logging/cluster-logging-rhel9-operator@sha256:78b7ffa6caef8f4f7b8af9dd661c739acb20b6a51026384c4405377c765fae8b
+            imagePullPolicy: IfNotPresent
+            name: cluster-logging-operator
+            resources: {}
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          nodeSelector:
+            kubernetes.io/os: linux
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext:
+            runAsNonRoot: true
+          serviceAccount: cluster-logging-operator
+          serviceAccountName: cluster-logging-operator
+          terminationGracePeriodSeconds: 30
+    status:
+      availableReplicas: 1
+      conditions:
+      - lastTransitionTime: "2025-08-26T18:23:29Z"
+        lastUpdateTime: "2025-08-26T18:23:29Z"
+        message: Deployment has minimum availability.
+        reason: MinimumReplicasAvailable
+        status: "True"
+        type: Available
+      - lastTransitionTime: "2025-04-02T21:04:10Z"
+        lastUpdateTime: "2025-08-28T14:05:01Z"
+        message: ReplicaSet "cluster-logging-operator-55fd7ddddf" has successfully progressed.
+        reason: NewReplicaSetAvailable
+        status: "True"
+        type: Progressing
+      observedGeneration: 191
+      readyReplicas: 1
+      replicas: 1
+      updatedReplicas: 1
+    ---
+
+    [openshift@bastion ~]$ oc get replicaset -n openshift-logging
+    NAME                                      DESIRED   CURRENT   READY   AGE
+    cluster-logging-operator-55fd7ddddf       1         1         1       55d
+    cluster-logging-operator-65b6555774       0         0         0       82d
+    elasticsearch-cdm-0l2d423c-1-56b586fd78   0         0         0       364d
+    elasticsearch-cdm-0l2d423c-1-5cdb9745f    0         0         0       119d
+    elasticsearch-cdm-0l2d423c-1-665784f46    0         0         0       391d
+    elasticsearch-cdm-0l2d423c-1-698f66974c   0         0         0       335d
+    elasticsearch-cdm-0l2d423c-1-6b45db6847   1         1         1       113d
+    elasticsearch-cdm-0l2d423c-1-6b484cdf65   0         0         0       280d
+    elasticsearch-cdm-0l2d423c-1-6cf9587b4b   0         0         0       202d
+    elasticsearch-cdm-0l2d423c-1-75489564f8   0         0         0       161d
+    elasticsearch-cdm-0l2d423c-1-767b47575    0         0         0       230d
+    elasticsearch-cdm-0l2d423c-1-9f8648f87    0         0         0       353d
+    elasticsearch-cdm-0l2d423c-1-cb6c956b8    0         0         0       252d
+    elasticsearch-cdm-0l2d423c-2-564c884d9b   0         0         0       230d
+    elasticsearch-cdm-0l2d423c-2-58bd89699c   0         0         0       364d
+    elasticsearch-cdm-0l2d423c-2-5b87ddd569   0         0         0       161d
+    elasticsearch-cdm-0l2d423c-2-5cb7d78f     0         0         0       391d
+    elasticsearch-cdm-0l2d423c-2-5f6db4bb67   0         0         0       252d
+    elasticsearch-cdm-0l2d423c-2-6c886bf4c6   1         1         1       113d
+    elasticsearch-cdm-0l2d423c-2-6db66695fd   0         0         0       280d
+    elasticsearch-cdm-0l2d423c-2-77885fdfdd   0         0         0       353d
+    elasticsearch-cdm-0l2d423c-2-7f4f46857c   0         0         0       202d
+    elasticsearch-cdm-0l2d423c-2-7fb8c5b544   0         0         0       335d
+    elasticsearch-cdm-0l2d423c-2-cf6b685f6    0         0         0       119d
+    elasticsearch-cdm-0l2d423c-3-577885569c   0         0         0       335d
+    elasticsearch-cdm-0l2d423c-3-5bcff975f7   1         1         1       113d
+    elasticsearch-cdm-0l2d423c-3-5c6fccb77d   0         0         0       252d
+    elasticsearch-cdm-0l2d423c-3-66c9794577   0         0         0       230d
+    elasticsearch-cdm-0l2d423c-3-6848d55b68   0         0         0       391d
+    elasticsearch-cdm-0l2d423c-3-688b88f599   0         0         0       280d
+    elasticsearch-cdm-0l2d423c-3-69558656fc   0         0         0       353d
+    elasticsearch-cdm-0l2d423c-3-69f9bb7884   0         0         0       202d
+    elasticsearch-cdm-0l2d423c-3-6f84d66bd    0         0         0       364d
+    elasticsearch-cdm-0l2d423c-3-6ff5656669   0         0         0       119d
+    elasticsearch-cdm-0l2d423c-3-6ffffff6b4   0         0         0       161d
+    kibana-586c95fcd                          1         1         1       113d
+    kibana-6f4f5689db                         0         0         0       119d
+    logging-loki-distributor-549b7d85dd       2         2         2       55d
+    logging-loki-gateway-79965776cb           2         2         2       55d
+    logging-loki-querier-9b8895547            3         3         3       55d
+    logging-loki-query-frontend-788f4dcfb7    2         2         2       55d
+    logging-view-plugin-57b96c4569            1         1         1       55d
+    ---
+
+    [openshift@bastion ~]$ # 'Take note of the pod names and use in the command below'
+
+    ---
+
+    [openshift@bastion ~]$ oc get pods -n openshift-logging
+    NAME                                            READY   STATUS      RESTARTS   AGE
+    cluster-logging-operator-55fd7ddddf-ltcwz       1/1     Running     0          55d
+    elasticsearch-cdm-0l2d423c-1-6b45db6847-4n2hb   2/2     Running     2          113d
+    elasticsearch-cdm-0l2d423c-2-6c886bf4c6-4srgm   2/2     Running     2          113d
+    elasticsearch-cdm-0l2d423c-3-5bcff975f7-wnlsm   2/2     Running     2          113d
+    elasticsearch-im-app-29352705-sjjdt             0/1     Completed   0          8m46s
+    elasticsearch-im-audit-29352705-frl62           0/1     Completed   0          8m46s
+    elasticsearch-im-infra-29352705-tbdqx           0/1     Completed   0          8m46s
+    kibana-586c95fcd-srhq5                          2/2     Running     2          113d
+    logging-652wl                                   1/1     Running     0          55d
+    logging-6k8d4                                   1/1     Running     0          55d
+    logging-89xk4                                   1/1     Running     0          55d
+    logging-8j7fh                                   1/1     Running     0          55d
+    logging-8xsfl                                   1/1     Running     0          55d
+    logging-ckcj7                                   1/1     Running     0          16d
+    logging-dqqv9                                   1/1     Running     0          16d
+    logging-g44ss                                   1/1     Running     0          55d
+    logging-g7sv6                                   1/1     Running     0          55d
+    logging-gt825                                   1/1     Running     0          55d
+    logging-h8rnb                                   1/1     Running     0          55d
+    logging-hcsnk                                   1/1     Running     0          55d
+    logging-jgggc                                   1/1     Running     0          55d
+    logging-l9jxq                                   1/1     Running     0          55d
+    logging-loki-compactor-0                        1/1     Running     0          55d
+    logging-loki-distributor-549b7d85dd-54xs2       1/1     Running     0          55d
+    logging-loki-distributor-549b7d85dd-dpkfm       1/1     Running     0          55d
+    logging-loki-gateway-79965776cb-8pd4x           2/2     Running     0          55d
+    logging-loki-gateway-79965776cb-xzcx7           2/2     Running     0          55d
+    logging-loki-index-gateway-0                    1/1     Running     0          55d
+    logging-loki-index-gateway-1                    1/1     Running     0          55d
+    logging-loki-ingester-0                         1/1     Running     0          55d
+    logging-loki-ingester-1                         1/1     Running     0          55d
+    logging-loki-ingester-2                         1/1     Running     0          55d
+    logging-loki-querier-9b8895547-2jwnt            1/1     Running     0          55d
+    logging-loki-querier-9b8895547-bzwdm            1/1     Running     0          55d
+    logging-loki-querier-9b8895547-v72bf            1/1     Running     0          55d
+    logging-loki-query-frontend-788f4dcfb7-fxvgx    1/1     Running     0          55d
+    logging-loki-query-frontend-788f4dcfb7-rttdr    1/1     Running     0          55d
+    logging-mxpw4                                   1/1     Running     0          55d
+    logging-r5mb9                                   1/1     Running     0          55d
+    logging-sr6ql                                   1/1     Running     0          48d
+    logging-ssqzc                                   1/1     Running     0          55d
+    logging-swn4f                                   1/1     Running     0          55d
+    logging-tp7tf                                   1/1     Running     0          55d
+    logging-vddp5                                   1/1     Running     0          55d
+    logging-view-plugin-57b96c4569-hjhd9            1/1     Running     0          55d
+    logging-znbt2                                   1/1     Running     0          55d
+    ---
+
+    [openshift@bastion ~]$ oc get events -n openshift-logging|grep -v Normal
+    LAST SEEN   TYPE     REASON             OBJECT                                      MESSAGE
+    ---

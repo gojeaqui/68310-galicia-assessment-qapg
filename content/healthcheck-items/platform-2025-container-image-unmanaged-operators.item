@@ -1,0 +1,64 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Container Image Management"
+  severity_key: "Not defined"
+  tag_keys:
+    - "Operators"
+    - "Container Images"
+    - "OLM"
+    - "Registry"
+    - "OpenShift Cluster Configuration"
+  tags: []
+  description: "Unmanaged Operators"
+  references: 
+    - title: "Support policy for unmanaged Operators"
+      url: "https://docs.openshift.com/container-platform/latest/observability/logging/cluster-logging-support.html#unmanaged-operators_cluster-logging-support"
+    - title: "Managing Operator conditions"
+      url: "https://docs.openshift.com/container-platform/latest/operators/admin/olm-managing-operatorconditions.html#olm-operatorconditions"
+    - title: "Image Registry Operator configuration parameters"
+      url: "https://docs.openshift.com/container-platform/4.15/registry/configuring-registry-operator.html#registry-operator-configuration-resource-overview_configuring-registry-operator"
+  check_procedures:
+    - type: survey
+      question: "Are there any operators in an unmanaged state?"
+    - type: command
+      command: |
+        oc get configs.imageregistry.operator.openshift.io/cluster -o yaml | grep -i manage
+        oc get ClusterLogging -n openshift-logging -o yaml | grep -i manage
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Todos los operadores están en estado 'managed'"
+      description_long_text: "Todos los operadores están gestionados y responderán a los cambios de configuración, además de recibir actualizaciones"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "One or more operators are unmanaged"
+      description_long_text: "Operators with a managementState of unmanaged will not respond to changes in configuration nor receive updates"  
+      impact_and_risk_text: "Unmanaged operators are not supported."
+      remediation_text: "Set the managementState to managed where possible"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    
+    [openshift@bastion ~]$ oc get configs.imageregistry.operator.openshift.io/cluster -o yaml | grep -i manage
+      managementState: Managed
+        managementState: Managed
+        managementState: Managed
+      storageManaged: true
+    ---
+
+    [openshift@bastion ~]$ oc get ClusterLogging -n openshift-logging -o yaml | grep -i manage
+            {"apiVersion":"logging.openshift.io/v1","kind":"ClusterLogging","metadata":{"annotations":{},"name":"instance","namespace":"openshift-logging"},"spec":{"collection":{"logs":{"fluentd":{},"type":"fluentd"}},"curation":{"curator":{"nodeSelector":{"node-role.kubernetes.io/infra":""},"schedule":"30 3 * * *","tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/infra","value":"reserved"},{"effect":"NoExecute","key":"node-role.kubernetes.io/infra","value":"reserved"}]},"type":"curator"},"logStore":{"elasticsearch":{"nodeCount":3,"nodeSelector":{"node-role.kubernetes.io/infra":""},"redundancyPolicy":"SingleRedundancy","storage":{"size":"500Gi","storageClassName":"thin"},"tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/infra","value":"reserved"},{"effect":"NoExecute","key":"node-role.kubernetes.io/infra","value":"reserved"}]},"type":"elasticsearch"},"managementState":"Managed","visualization":{"kibana":{"nodeSelector":{"node-role.kubernetes.io/infra":""},"replicas":1,"tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/infra","value":"reserved"},{"effect":"NoExecute","key":"node-role.kubernetes.io/infra","value":"reserved"}]},"type":"kibana"}}}
+        managementState: Managed
+    ---

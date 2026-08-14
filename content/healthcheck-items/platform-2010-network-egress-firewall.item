@@ -1,0 +1,42 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  description: "Egress Firewall Configuration"
+  tag_keys:
+    - "Egress"
+    - "Openshift Cluster Configuration"
+  references: 
+  - title: "Configuring an egress firewall for a project"
+    url: "https://docs.openshift.com/container-platform/latest/networking/openshift_sdn/configuring-egress-firewall.html"
+  check_procedures:
+    - type: command
+      command: |
+        oc get EgressNetworkPolicy --all-namespaces -o yaml
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "No se esta utilizando EgressNetworkPolicy" 
+      description_long_text: ""  # Consultant to provide details
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "advisory01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+
+  outcome_evidence: |
+    
+    [openshift@bastion ~]$ oc get EgressNetworkPolicy --all-namespaces -o yaml
+    error: the server doesn't have a resource type "EgressNetworkPolicy"
+    ---

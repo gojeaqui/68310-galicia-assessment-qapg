@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Image Management"
+  severity_key: "Medium"
+  tags: ["Images", "Updates"]
+  tag_keys:
+    - "Base Images"
+    - "Image Updates"
+  description: "Managing and updating VM base images"
+  references:
+    - title: "Managing VM templates and images"
+      url: "https://docs.openshift.com/container-platform/4.16/virt/virtual_machines/creating_vms_custom/virt-creating-vms-from-custom-images-overview.html"
+  check_procedures:
+    - type: survey
+      question: "Are VM images regularly updated with security patches?"
+    - type: survey
+      question: "Do you maintain a catalog of standardized base images?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Image management in place"
+      description_long_text: "VM images are standardized and regularly updated for security and compliance."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Image management not in place"
+      description_long_text: "VM images are not updated regularly, or image management processes are lacking."
+      impact_and_risk_text: "Outdated images can introduce security vulnerabilities and compliance issues."
+      remediation_text: "Implement a process for updating and managing VM base images."
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

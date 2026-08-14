@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Alert Management Escalation Process"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Is there a defined escalation process for OpenShift alerts?"
+    - type: survey
+      question: "How are different alert severity levels escalated?"
+    - type: survey
+      question: "What is the on-call rotation structure for alert escalations?"
+    - type: survey
+      question: "How are unacknowledged alerts automatically escalated?"
+    - type: survey
+      question: "What tools are used to manage alert escalations?"
+    - type: survey
+      question: "How are cross-team escalations handled?"
+    - type: survey
+      question: "What is the escalation path for after-hours alerts?"
+    - type: survey
+      question: "How are escalation timeouts configured?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Using an automated on-call scheduling tool, B) Manual assignment of on-call responsibilities, C) No specific on-call rotation process"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic escalation process"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Simple alert escalation procedures in place"
+      impact_and_risk_text: "Risk of delayed escalations"
+      remediation_text: "Enhance escalation procedures"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective escalation system"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-defined alert escalation process"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current escalation practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Robust escalation framework"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Clear and automated escalation paths"
+      impact_and_risk_text: "Minimal risk in alert escalation"
+      remediation_text: "Maintain existing escalation framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited escalation process"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Insufficient alert escalation procedures"
+      impact_and_risk_text: "Risk of missed critical alerts"
+      remediation_text: "Implement structured escalation system"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Escalation automation needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Manual escalation process causing delays"
+      impact_and_risk_text: "Delayed response to critical alerts"
+      remediation_text: "Deploy automated escalation tools"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

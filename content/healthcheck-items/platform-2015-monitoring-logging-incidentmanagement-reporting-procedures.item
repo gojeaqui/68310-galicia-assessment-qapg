@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Incident Management Reporting Procedures"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "How are incidents typically reported within your team/organization regarding OpenShift clusters?"
+    - type: survey
+      question: "What monitoring tools are used to detect and report cluster incidents?"
+    - type: survey
+      question: "How are critical alerts configured and reported?"
+    - type: survey
+      question: "What is the process for reporting security-related incidents?"
+    - type: survey
+      question: "How are infrastructure-level incidents distinguished from application incidents?"
+    - type: survey
+      question: "What metrics and thresholds trigger automatic incident reports?"
+    - type: survey
+      question: "How are cross-team incidents coordinated and reported?"
+    - type: survey
+      question: "What is the SLA for initial incident reporting?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Through a centralized incident management platform, B) Via email communication, C) Through direct messaging on collaboration tools like Slack, D) By phone calls to designated incident responders E) Others Please Specify"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic reporting tools in place"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Basic incident reporting mechanisms exist but need enhancement"
+      impact_and_risk_text: "Potential delays in incident response"
+      remediation_text: "Enhance reporting tools and procedures"
+    - key: "no_change01"
+      scenario_description_short_text: "Robust reporting system"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Comprehensive incident reporting system with automated alerts"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current reporting practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Well-defined reporting workflow"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Clear incident reporting channels and procedures"
+      impact_and_risk_text: "Minimal risk in incident reporting"
+      remediation_text: "Maintain existing reporting framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Reporting system needs improvement"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Current reporting process is manual and inefficient"
+      impact_and_risk_text: "Risk of delayed incident detection and response"
+      remediation_text: "Implement automated reporting tools and standardized procedures"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Missing critical reporting components"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Gaps in incident reporting coverage and tools"
+      impact_and_risk_text: "Risk of unreported or misclassified incidents"
+      remediation_text: "Deploy comprehensive incident reporting solution"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

@@ -1,0 +1,45 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Software Supplied Chain"
+  severity_key:  low
+  tag_keys: []
+  tags: []
+  description: "Software Supplied Chain"
+  references:
+    - title: "Understanding open source software supply chain risks"
+      url: https://www.redhat.com/en/blog/understanding-open-source-software-supply-chain-risks
+    - title: "Red Hat Trusted Software Supply Chain"
+      url: https://developers.redhat.com/products/trusted-software-supply-chain/overview
+    - title: "Red Hat Trusted Application Pipeline"
+      url: https://developers.redhat.com/articles/2023/07/18/introduction-red-hat-trusted-application-pipeline
+    - title: "Strengthen security in your software supply chain"
+      url: https://www.redhat.com/en/solutions/trusted-software-supply-chain
+  check_procedures:
+    - type: survey
+      question: "How does your organization currently address software security within the development lifecycle?"
+    - type: survey
+      question: "Are there established processes for regular security audits, vulnerability assessments, and compliance checks?"  
+    - type: survey
+      question: "What tools or practices are currently in place for managing and securing your software supply chain?"  
+    - type: survey
+      question: "What mechanisms are in place for ensuring the integrity and security of third-party components and libraries used in your software?"  
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Software Supply Chain" # Understand organizations software supply chain.
+      description_long_text: ""  
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

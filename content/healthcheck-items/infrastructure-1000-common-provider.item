@@ -1,0 +1,49 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Common"
+  severity_key: "Not defined"
+  tag_keys: []
+  tags: []
+  description: "Infrastructure Provider(s)"
+  references: 
+  - title: "Infrastructure Provider(s)"
+    url: "https://docs.openshift.com/container-platform/latest/installing/installing-preparing.html"
+  check_procedures:
+    - type: "survey"
+      question: "What infrastructure provider(s) are being used to host the OpenShift Cluster(s)?"
+    - type: "survey"
+      question: "Are there any challenges faced with the current infrastructure provider(s)?"
+    - type: "survey"
+      question: "How is the performance and reliability of the infrastructure provider(s) monitored?"
+    - type: "survey"
+      question: "What is the process for scaling infrastructure resources as demand changes?"
+  common_outcomes:
+  - key: "scenario1"
+    scenario_description_short_text: "Infraestructura soportada"
+    description_long_text: "El proveedor de infraestructura es compatible con Red Hat: Bare-metal, vSphere, RHOSP, AWS, GCP, Azure, IBM Z o LinuxONE, IBM Power Systems, RHV."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "scenario2"
+    scenario_description_short_text: "Infraestructura sin soporte"
+    description_long_text: "El proveedor de infraestructura no cuenta con soporte. Se recomienda cambiar a un proveedor de infraestructura probado por Red Hat."
+    impact_and_risk_text: "Implementar clústeres de OpenShift en proveedores de infraestructura sin soporte limita la capacidad del soporte técnico de Red Hat para ayudar a los clientes cuando solicitan asistencia. El uso de infraestructura sin soporte puede provocar comportamientos impredecibles o la ausencia de las capacidades necesarias para las funciones críticas de OpenShift."
+    remediation_text: "Considere implementar clústeres de OpenShift en proveedores de infraestructura con soporte de Red Hat."
+  - key: "advisory01"
+    scenario_description_short_text: "Mejores prácticas de monitorización de infraestructura"
+    description_long_text: "Garantizar la monitorización continua del rendimiento y la fiabilidad de los proveedores de infraestructura."
+    impact_and_risk_text: "Ayuda a la gestión proactiva y a evitar posibles problemas."
+    remediation_text: "Implementar soluciones de monitorización para monitorizar el rendimiento y la fiabilidad de la infraestructura."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "scenario1"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

@@ -1,0 +1,73 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Incident Management SLA"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Are there any SLAs defined for the different incident categories? If so, could you please provide details on what those SLAs entail?"
+    - type: survey
+      question: "What is the current incident classification criteria for P1/P2/P3/P4 incidents?"
+    - type: survey
+      question: "What is the escalation process for different severity incidents?"
+    - type: survey
+      question: "How are incidents tracked and documented in the organization?"
+    - type: survey
+      question: "What monitoring tools are in place to detect and alert on potential incidents?"
+    - type: survey
+      question: "Is there a defined incident response team structure?"
+    - type: survey
+      question: "What is the communication plan during major incidents?"
+    - type: survey
+      question: "Are post-incident reviews (PIRs) conducted? What is the process?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: "Please specify SLAs(if any) for P1, P2, P3 and P4"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "SLAs are defined but need documentation"
+      description_long_text: "Incident management SLAs exist but require formal documentation"
+      impact_and_risk_text: "Risk of inconsistent incident response"
+      remediation_text: "Document and communicate existing SLAs"
+    - key: "no_change01"
+      scenario_description_short_text: "Well-defined SLA structure"
+      description_long_text: "Comprehensive SLAs exist for all incident priorities"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue with current SLA framework"
+    - key: "no_change02"
+      scenario_description_short_text: "Effective incident management process"
+      description_long_text: "Clear SLAs with proper escalation and tracking mechanisms"
+      impact_and_risk_text: "Minimal risk in incident handling"
+      remediation_text: "Maintain current incident management framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Missing or inadequate SLAs"
+      description_long_text: "Incident management SLAs are not properly defined"
+      impact_and_risk_text: "Risk of delayed incident response and resolution"
+      remediation_text: "Define and implement comprehensive SLAs for all incident priorities"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "SLA monitoring improvements needed"
+      description_long_text: "SLA compliance tracking and reporting needs enhancement"
+      impact_and_risk_text: "Difficulty in measuring and improving incident response"
+      remediation_text: "Implement SLA monitoring and reporting mechanisms"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

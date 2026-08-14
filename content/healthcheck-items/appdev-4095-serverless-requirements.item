@@ -1,0 +1,53 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Serverless"
+  severity_key: "Not defined"
+  tags: []
+  description: "Serverless Applications"
+  references:
+    - title: "Serverless Overview"
+      url: "https://docs.openshift.com/container-platform/latest/serverless/about/about-serverless.html"
+  check_procedures:
+    - type: survey
+      question: "Have you considered using serverless technologies alongside containers for certain workloads?"
+    - type: survey
+      question: "What serverless platforms are currently being evaluated or used?"
+    - type: survey
+      question: "How do you manage the scaling of serverless applications?"
+    - type: survey
+      question: "Are there specific workloads that benefit most from serverless architecture?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe serverless tech.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Adopción de tecnologías Serverless"
+      description_long_text: "Considere los beneficios de adoptar tecnologías Serverless para cargas de trabajo adecuadas."
+      impact_and_risk_text: "Potencial de ahorro de costos y mejora de la escalabilidad."
+      remediation_text: "Evalúe las plataformas Serverless e identifique las cargas de trabajo adecuadas."
+    - key: "no_change01"
+      scenario_description_short_text: "Tecnologias Serverless implementadas"
+      description_long_text: "Las tecnologías Serverless se implementan eficazmente para cargas de trabajo adecuadas"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Tecnologias Serverless no utilizadas"
+      description_long_text: "Actualmente no se utilizan tecnologías Serverless, lo que puede limitar la escalabilidad y la eficiencia."
+      impact_and_risk_text: "Oportunidades perdidas de ahorro de costes y mejoras de escalabilidad."
+      remediation_text: "Explorar opciones Serverless para cargas de trabajo que podrían beneficiarse de esta arquitectura."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

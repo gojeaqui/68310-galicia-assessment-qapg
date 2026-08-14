@@ -1,0 +1,154 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Time"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Time Server Configuration"
+  references:
+  - title: "Configuring chrony time service"
+    url: "https://docs.openshift.com/container-platform/latest/installing/install_config/installing-customizing.html#installation-special-config-chrony_installing-customizing"
+  check_procedures:
+    - type: survey
+      question: "What time servers are currently configured in the cluster?"
+    - type: survey
+      question: "Is chrony service properly configured across all nodes?"
+    - type: survey
+      question: "Are there any time synchronization issues reported in the cluster?"
+    - type: survey
+      question: "What is the current time offset between nodes?"
+    - type: survey
+      question: "Are there any specific time zones requirements for the cluster?"
+    - type: survey
+      question: "Is there a custom chrony.conf being used via machineConfig?"
+    - type: survey
+      question: "Are the configured NTP servers accessible from all nodes?"
+    - type: survey
+      question: "Have there been any time-drift related incidents?"
+    - type: command
+      command: |
+        oc get machineconfig
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out details
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Time configuration needs monitoring"
+      description_long_text: "Time synchronization is functional but requires monitoring"
+      impact_and_risk_text: "Potential for minor time drifts"
+      remediation_text: "Implement regular monitoring of time synchronization status"
+    - key: "no_change01"
+      scenario_description_short_text: "La configuración horaria es óptima"
+      description_long_text: "El servicio Chrony está configurado correctamente con servidores de hora fiables"
+      impact_and_risk_text: "No se han identificado riesgos de sincronización horaria"
+      remediation_text: "Continuar con la configuración actual"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Time synchronization issues detected"
+      description_long_text: "Nodes showing significant time drift or synchronization problems"
+      impact_and_risk_text: "Risk of application issues due to time inconsistencies"
+      remediation_text: "Review and adjust chrony configuration, verify NTP server accessibility"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Time server configuration needs update"
+      description_long_text: "Current time servers are not optimal or accessible"
+      impact_and_risk_text: "Potential for time synchronization failures"
+      remediation_text: "Update chrony configuration with more reliable time servers"
+customer_environment_findings:
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get machineconfig
+    NAME                                                    GENERATEDBYCONTROLLER                      IGNITIONVERSION   AGE
+    00-master                                               555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             3y60d
+    00-worker                                               555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             3y60d
+    01-master-container-runtime                             555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             3y60d
+    01-master-kubelet                                       555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             3y60d
+    01-worker-container-runtime                             555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             3y60d
+    01-worker-kubelet                                       555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             3y60d
+    97-infra-generated-kubelet                              555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             120d
+    97-master-generated-kubelet                             555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             120d
+    97-worker-generated-kubelet                             555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             120d
+    98-infra-generated-kubelet                              555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             304d
+    98-master-generated-kubelet                             555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             304d
+    98-worker-generated-kubelet                             555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             304d
+    99-infras-chrony-configuration                                                                     3.2.0             3y59d
+    99-master-generated-crio-add-inheritable-capabilities                                              3.2.0             543d
+    99-master-generated-crio-seccomp-use-default                                                       3.2.0             3y60d
+    99-master-generated-registries                          555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             3y60d
+    99-master-ssh                                                                                      3.2.0             3y60d
+    99-masters-chrony-configuration                                                                    3.2.0             3y59d
+    99-worker-generated-crio-add-inheritable-capabilities                                              3.2.0             543d
+    99-worker-generated-crio-seccomp-use-default                                                       3.2.0             3y60d
+    99-worker-generated-registries                          555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             3y60d
+    99-worker-ssh                                                                                      3.2.0             3y60d
+    99-workers-chrony-configuration                                                                    3.2.0             3y59d
+    rendered-infra-0ec3c2da04d01eaadb0eac9f1179e8ec         4f8b6f2a0e1a8ec475e5ef1dd8effd9306804518   3.4.0             304d
+    rendered-infra-1b29b7504b7834f13dc8b5c81e5be9d1         be815b38adf693db9f6def6747fe5542bdd67f36   3.2.0             3y59d
+    rendered-infra-1d79f53b408efd41304fa40cf4e942d1         555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             113d
+    rendered-infra-207d6e2ac74b0b8d1837f4bb9027a974         555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             120d
+    rendered-infra-282b81cf668faebbcf2d5bada5fb381f         555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             41d
+    rendered-infra-2e7c1a50bbad8dd7886b5b47de654111         dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             2y60d
+    rendered-infra-40eebd4fcc24781992ac34fc4dd5c879         dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             2y133d
+    rendered-infra-425aad2fcfbdcda66c126901ef26f84b         555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             119d
+    rendered-infra-459cea28ea5358f9fb869a91df3150a8         39e3612071458fb2d876b9b8fb0d3517bcb1c7cc   3.2.0             304d
+    rendered-infra-4b28d595ee32524b4efb439ab24bceb7         15d0b0288a4330b90ac89f14c781dfa7349af52c   3.2.0             543d
+    rendered-infra-637bb069c50b9a96b65f77ddd2821b06         555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             86d
+    rendered-infra-63c46d77ce67e0c4658a7da74563a0fd         dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             3y32d
+    rendered-infra-796b7f7bc3615a4a4fb29bfc53d6614f         4f8b6f2a0e1a8ec475e5ef1dd8effd9306804518   3.4.0             304d
+    rendered-infra-8609a7e04e961fc257f887d95c58a547         be815b38adf693db9f6def6747fe5542bdd67f36   3.2.0             3y38d
+    rendered-infra-95fa503328ff64a36fc3c9aa2f3426a7         33a010772d604aff2cb625d04a9469a47f53c96e   3.2.0             543d
+    rendered-infra-9c3b4704f844361f55fc7142be1f50e8         be815b38adf693db9f6def6747fe5542bdd67f36   3.2.0             3y59d
+    rendered-infra-d1ebe031ce78ab6c3fe94d0057416770         dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             571d
+    rendered-infra-d6d799c1cddb2a80f13d9ab938b36111         be815b38adf693db9f6def6747fe5542bdd67f36   3.2.0             3y59d
+    rendered-infra-e924a2b404d764fb412dacb75fd06785         33a010772d604aff2cb625d04a9469a47f53c96e   3.2.0             498d
+    rendered-master-039aaa451bf4ffa918f38e913d02c52b        555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             120d
+    rendered-master-09bf7231b17234f2ef27af9848cb427d        be815b38adf693db9f6def6747fe5542bdd67f36   3.2.0             3y60d
+    rendered-master-1945cc53463b953c85443126e79c15b6        dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             3y32d
+    rendered-master-2daa488458a5815df59a1135c318db72        33a010772d604aff2cb625d04a9469a47f53c96e   3.2.0             543d
+    rendered-master-3589a8e14e2ac285eb6131fdf15f150b        dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             2y60d
+    rendered-master-3732e6e70c7bdfe9cd02701921d63ebf        555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             41d
+    rendered-master-439c2c64bd80e317555f99c91897c7d9        be815b38adf693db9f6def6747fe5542bdd67f36   3.2.0             3y38d
+    rendered-master-54284bfc2e8c2739e03166da9d78f777        39e3612071458fb2d876b9b8fb0d3517bcb1c7cc   3.2.0             304d
+    rendered-master-6dcf1c6ce36e2be350755a1e850b9a3d        555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             86d
+    rendered-master-6f8e49b6670348fce843baf30132946a        4f8b6f2a0e1a8ec475e5ef1dd8effd9306804518   3.4.0             304d
+    rendered-master-736cce10fc9628f7122fcff28a7db960        555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             113d
+    rendered-master-9007377ed397fc8e2cc97f405ac19147        15d0b0288a4330b90ac89f14c781dfa7349af52c   3.2.0             543d
+    rendered-master-ab9828278dbb93abe24118296e2be00e        dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             571d
+    rendered-master-df3275bfada4e228d9d4587287529e47        dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             2y133d
+    rendered-master-dfa4816a183acedb9a1d2fabaf851a74        4f8b6f2a0e1a8ec475e5ef1dd8effd9306804518   3.4.0             304d
+    rendered-master-e1d301a2121ab7fbc62ecfc7c35db97d        7152adb176e7ff4bf6c1d3a2e7b0aae4fd2794b6   3.2.0             3y60d
+    rendered-master-e87916a1b905f991afaf6221dd548d01        33a010772d604aff2cb625d04a9469a47f53c96e   3.2.0             498d
+    rendered-master-ee8d82b3b3f64a96d3f022eafafc80d0        555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             119d
+    rendered-master-fe509de12ee1853146b7475be1bb0342        be815b38adf693db9f6def6747fe5542bdd67f36   3.2.0             3y59d
+    rendered-worker-02fb1eecde7f86962c56a879fd2683d2        15d0b0288a4330b90ac89f14c781dfa7349af52c   3.2.0             543d
+    rendered-worker-0b28ae6e8ec102fa7bc9d8b109b66d3c        555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             119d
+    rendered-worker-1b29b7504b7834f13dc8b5c81e5be9d1        be815b38adf693db9f6def6747fe5542bdd67f36   3.2.0             3y60d
+    rendered-worker-1dee8cffe347eae3ea75e9e29494b098        555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             113d
+    rendered-worker-3da12453337526c98afca94dcc1df335        33a010772d604aff2cb625d04a9469a47f53c96e   3.2.0             543d
+    rendered-worker-41a9d67e6777fdf7252cbad1a7ba1738        4f8b6f2a0e1a8ec475e5ef1dd8effd9306804518   3.4.0             304d
+    rendered-worker-4434164fba736a5475d8fdacad99f0ee        555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             120d
+    rendered-worker-4c490c3ced9e6dbb4d06150edc407d54        be815b38adf693db9f6def6747fe5542bdd67f36   3.2.0             3y38d
+    rendered-worker-4dfe478de39e4128655853ce7018397e        33a010772d604aff2cb625d04a9469a47f53c96e   3.2.0             498d
+    rendered-worker-6210110d894edf90bb0058e205cdc70c        4f8b6f2a0e1a8ec475e5ef1dd8effd9306804518   3.4.0             304d
+    rendered-worker-659f44c43ca1b66156b3466bca24a69e        39e3612071458fb2d876b9b8fb0d3517bcb1c7cc   3.2.0             304d
+    rendered-worker-6f81b5bac9ab7492e624b861448430c7        dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             2y60d
+    rendered-worker-c84e975c993e43db238deae39ec99dc5        be815b38adf693db9f6def6747fe5542bdd67f36   3.2.0             3y59d
+    rendered-worker-cac588dd49225f923ca862b453cea9ae        555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             41d
+    rendered-worker-d342d56c2818b24d55e78f0532e808e3        555364e98951e9e316aaf91d021b61fe17340bda   3.4.0             86d
+    rendered-worker-d4ffdf9cb63a073e3a628cddbbd5dc30        dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             571d
+    rendered-worker-de18800bb24878025473cfd8114abb59        7152adb176e7ff4bf6c1d3a2e7b0aae4fd2794b6   3.2.0             3y60d
+    rendered-worker-de4ab4ed9596a36896cc1959bdf3879d        dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             3y32d
+    rendered-worker-f77e9af4970c724729207db48830fe71        dc29945da95a65f460ad50ad1bbc10e1918a9c61   3.2.0             2y133d
+    ---

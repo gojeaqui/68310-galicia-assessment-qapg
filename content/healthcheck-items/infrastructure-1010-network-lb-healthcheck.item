@@ -1,0 +1,61 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  description: "Load Balancer Health Checks Enabled"
+  references: 
+  - title: "Configuring Health Checks on External Load Balancer"
+    url: "https://docs.openshift.com/container-platform/4.14/installing/installing_bare_metal_ipi/ipi-install-post-installation-configuration.html#nw-osp-configuring-external-load-balancer_ipi-install-post-installation-configuration"
+  - title: "Health Check Solution Article"
+    url: "https://access.redhat.com/solutions/4677531"
+  check_procedures:
+    - type: "survey"
+      question: "Are URL based health checks enabled in your external load balancer for the OpenShift API, MachineConfig API and Ingress Controller?"
+    - type: "survey"
+      question: "How frequently are the health check configurations reviewed and updated?"
+    - type: "survey"
+      question: "Are there any known issues with the current health check setup?"
+    - type: "survey"
+      question: "Is there a backup mechanism for the load balancer health check configuration?"
+  common_outcomes:
+  - key: "nochange_01"
+    scenario_description_short_text: "Comprobacion de salud del Load Balancer habilitados"
+    description_long_text: "Las verificaciones de salud del Load Balancer están habilitados en API, MachineConfig, puntos finales (endpoints) de enrutadores."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "recommend01"
+    scenario_description_short_text: "Recommend LB Health Checks on MachineConfig or routers"
+    scenario_description_short_text: "Faltan comprobaciones de salud en MachineConfig o enrutadores"
+    description_long_text: "Las verificaciones de salud del Load Balancer están habilitados en API pero no en MachineConfig o enrutadores."
+    impact_and_risk_text: "Si las verificaciones de salud del Load Balancer no están habilitados en MachineConfig o en puntos finales de enrutadores, entonces el sistema no podrá dejar de enviar tráfico a las vainas hacia abajo."
+    remediation_text: "La verificación de salud debe habilitarse en MachineConfig y los puntos finales de enrutadores también."
+  - key: "notapplicable01"
+    scenario_description_short_text: "N/A"
+    description_long_text: "No se utiliza un Load Balancer externo."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "advisory01"
+    scenario_description_short_text: "La configuración de verificación de salud está respaldada."
+    description_long_text: "Existe un mecanismo de respaldo para la configuración de verificación de salud del Load Balancer, asegurando la recuperación de datos en caso de falla."
+    impact_and_risk_text: "None"
+    remediation_text: "Continúe manteniendo copias de seguridad regulares de la configuración de verificación de salud."
+  - key: "changes_recommended01"
+    scenario_description_short_text: "La frecuencia de revisión de control de salud es insuficiente."
+    description_long_text: "Las configuraciones de verificación de salud no se revisan con la frecuencia suficiente, lo que puede conducir a configuraciones obsoletas."
+    impact_and_risk_text: "Las revisiones poco frecuentes pueden dar lugar a configuraciones erróneas y posibles problemas de red."
+    remediation_text: "Aumente la frecuencia de las revisiones de configuración de verificación de salud para garantizar que permanezcan actuales y efectivos."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

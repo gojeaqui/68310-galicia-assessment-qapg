@@ -1,0 +1,58 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Disaster Recovery"
+  severity_key: "Not defined"
+  tags: []
+  description: "Disaster Recovery Deployments"
+  references: 
+    - title: "Disaster Recovery Strategies for Applications Running on OpenShift"
+      url: "https://cloud.redhat.com/blog/disaster-recovery-strategies-for-applications-running-on-openshift"
+  check_procedures:
+    - type: compliance_operator
+      profile: none
+      rule: none
+    - type: survey
+      question: "What tools and processes are in place for restoring applications after a disaster?"
+    - type: survey
+      question: "How often are disaster recovery plans tested and updated?"
+    - type: survey
+      question: "What is the recovery point objective (RPO) for critical applications?"
+    - type: survey
+      question: "Are there any challenges in executing disaster recovery plans?"
+    - type: survey
+      question: "How is data integrity ensured during the recovery process?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Los planes de recuperación ante desastres son adecuados"
+      description_long_text: "Los planes y procesos actuales de recuperación ante desastres son suficientes para restaurar las aplicaciones eficazmente"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Los planes de recuperación ante desastres necesitan mejoras"
+      description_long_text: "Los planes de recuperación ante desastres están obsoletos o son insuficientes para satisfacer las necesidades actuales"
+      impact_and_risk_text: "Los planes de recuperación ante desastres inadecuados pueden provocar tiempos de inactividad prolongados y pérdida de datos"
+      remediation_text: "Revise y actualice periódicamente los planes de recuperación ante desastres para garantizar que cumplan los objetivos de recuperación"
+    - key: "advisory01"
+      scenario_description_short_text: "Revisar los objetivos de recuperación"
+      description_long_text: "Se recomienda revisar periódicamente los objetivos de recuperación para garantizar que se ajusten a las necesidades del negocio."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar los objetivos de recuperación actuales y ajustarlos según sea necesario."
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Desafíos en la Ejecución de la Recuperación"
+      description_long_text: "Existen desafíos para ejecutar eficazmente los planes de recuperación ante desastres."
+      impact_and_risk_text: "La ejecución incorrecta de los planes de recuperación puede provocar una recuperación incompleta y problemas de integridad de los datos."
+      remediation_text: "Implementar las mejores prácticas para la ejecución de la recuperación y garantizar la prueba periódica de los planes de recuperación."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

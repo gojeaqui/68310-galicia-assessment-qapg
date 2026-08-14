@@ -1,0 +1,53 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Artifacts"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "GitOps"
+    - "Version Control"
+  description: "Container Image tagging strategy"
+  references:
+    - title: "Tagging Images"
+      url: "https://docs.openshift.com/container-platform/latest/openshift_images/managing_images/tagging-images.html"
+  check_procedures:
+    - type: survey
+      question: "Are container images tagged effectively? E.g. not using latest"
+    - type: survey
+      question: "What is the strategy for updating image tags in production?"
+    - type: survey
+      question: "How do you ensure consistency in image tagging across different environments?"
+    - type: survey
+      question: "Are there any automated processes in place for managing image tags?"
+    - type: survey
+      question: "What challenges have you faced with image tagging in your current setup?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out load balancer type
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "change01"
+      scenario_description_short_text: "Las imágenes no están etiquetadas correctamente"
+      description_long_text: "Las etiquetas de imagen son imprecisas o inexistentes"
+      impact_and_risk_text: "Las malas prácticas pueden provocar la implementación de imágenes incorrectas en sistemas de producción y dificultar la resolución de problemas"
+      remediation_text: "Implementar etiquetas de versión para las imágenes"
+    - key: "change02"
+      scenario_description_short_text: "Estrategia de etiquetado de imágenes inconsistente"
+      description_long_text: "Estrategia de etiquetado de imágenes inconsistente en todos los entornos"
+      impact_and_risk_text: "Las inconsistencias pueden provocar problemas de implementación y dificultar el seguimiento de las versiones de las imágenes"
+      remediation_text: "Desarrolle una estrategia de etiquetado de imágenes consistente y asegure su cumplimiento en todos los entornos"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

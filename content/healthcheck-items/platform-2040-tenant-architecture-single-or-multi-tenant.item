@@ -1,0 +1,79 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Tenant Architecture"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Single or Multi-tenant workloads"
+  references: 
+    - title: "Multitenant OpenShift Container Platform clusters"
+      url: "https://docs.openshift.com/container-platform/latest/authentication/using-rbac.html#rbac-projects-namespaces_using-rbac"
+  check_procedures:
+    - type: survey
+      question: "Is this a single-tenant or multi-tenant environment? Use 'oc get namespaces' to review namespace structure"
+    - type: survey
+      question: "What isolation mechanisms are in place between tenants? (NetworkPolicies, ResourceQuotas, etc.)"
+    - type: survey
+      question: "How are RBAC policies configured for different tenants? Use 'oc get rolebindings,clusterrolebindings'"
+    - type: survey
+      question: "Are there resource quotas defined for tenants? Use 'oc get resourcequotas --all-namespaces'"
+    - type: survey
+      question: "How is monitoring and logging segregated between tenants?"
+    - type: survey
+      question: "What is the namespace naming convention for different tenants?"
+    - type: "command"
+      question: ""
+      command: |
+        oc get resourcequotas --all-namespaces
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Review tenant isolation"
+      description_long_text: "Current tenant isolation configuration may need enhancement"
+      impact_and_risk_text: "Potential security risks due to insufficient tenant isolation"
+      remediation_text: "Review and strengthen tenant isolation mechanisms"
+    - key: "no_change01"
+      scenario_description_short_text: "No hay aislación entre los namespaces en términos del uso de recursos"
+      description_long_text: "Si bien no hay aislación entre los namespaces en términos de limites de recursos, no se espera que corran otras aplicaciones en el cluster asi que no lo vemos como un problema"
+      impact_and_risk_text: "None"
+      remediation_text: "None required"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Enhance tenant isolation"
+      description_long_text: "Tenant isolation mechanisms require strengthening"
+      impact_and_risk_text: "Insufficient isolation between tenants could lead to security issues"
+      remediation_text: "Implement additional isolation measures between tenants"
+    - key: "advisory02"
+      scenario_description_short_text: "Review resource management"
+      description_long_text: "Resource allocation and quotas need review"
+      impact_and_risk_text: "Potential resource contention between tenants"
+      remediation_text: "Evaluate and adjust resource quotas and limits"
+    - key: "no_change02"
+      scenario_description_short_text: "Resource management is appropriate"
+      description_long_text: "Current resource management configuration is suitable"
+      impact_and_risk_text: "None"
+      remediation_text: "None required"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Update resource management"
+      description_long_text: "Resource management policies need updates"
+      impact_and_risk_text: "Inefficient resource utilization across tenants"
+      remediation_text: "Implement updated resource management policies"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get resourcequotas --all-namespaces
+    NAMESPACE                NAME                            AGE      REQUEST                                                              LIMIT
+    bna-trident-dmzprd01     trident-csi                     2y279d                                                                        
+    openshift-host-network   host-network-namespace-quotas   3y60d    count/daemonsets.apps: 0/0, count/deployments.apps: 0/0, pods: 0/0   limits.cpu: 0/0, limits.memory: 0/0
+    ---

@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Lifecycle Management"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Patch"
+    - "Upgrade"
+  description: "Patch and upgrade process"
+  references: 
+  - title: "Preparing to update to OpenShift Container Platform"
+    url: "https://docs.openshift.com/container-platform/latest/updating/preparing_for_updates/updating-cluster-prepare.html"
+  - title: "Updating a cluster using the web console"
+    url: "https://docs.openshift.com/container-platform/latest/updating/updating_a_cluster/updating-cluster-web-console.html"
+  check_procedures:
+    - type: "survey"
+      question: "If disconnected, what's the cluster life cycle process to upgrade?"
+    - type: "survey"
+      question: "What is the upgrade and patch frequency?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "No hay una política de ciclo de upgrade definida"
+      description_long_text: "Al momento no se definió una política de upgrade"  # Consultant to fill out details
+      impact_and_risk_text: "Los clusters pueden quedar en versiones viejas lo cual genera problemas al actualizarlos ya que se convierte en un proceso mas complejo"
+      remediation_text: "Se recomienda actualizar al menos cada 3 meses"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: changes_recommended
+  common_outcome_key: "advisory01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

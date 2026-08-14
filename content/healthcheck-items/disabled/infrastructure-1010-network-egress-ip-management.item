@@ -1,0 +1,58 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Egress"
+    - "OpenShift Cluster Configuration"
+  description: "Managing Egress IP's"
+  references: 
+  - title: "Configuring an egress IP address"
+    url: "https://docs.openshift.com/container-platform/latest/networking/ovn_kubernetes_network_provider/configuring-egress-ips-ovn.html"
+  check_procedures:
+    - type: survey
+      question: "How are egress IPs managed?"
+    - type: survey
+      question: "What tools or methods are used to assign egress IPs in the OpenShift cluster?"
+    - type: survey
+      question: "Are there any automation processes in place for managing egress IPs?"
+    - type: survey
+      question: "How often are egress IP configurations reviewed and updated?"
+    - type: survey
+      question: "Are there any known issues with the current egress IP setup?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "La gestión de Egress IP es estable."
+    description_long_text: "La configuración actual de gestión de Egress IP de salida es estable sin problemas informados."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "La gestión de Egress IP necesita mejora."
+    description_long_text: "Hay áreas en el proceso de gestión de Egress IP que requieren mejoras para mejorar la eficiencia y la confiabilidad."
+    impact_and_risk_text: "La gestión ineficiente de Egress IP puede conducir a cuellos de botella de la red y posibles riesgos de seguridad."
+    remediation_text: "Revise y optimice el proceso de administración de Egress IP, considerando la automatización y las actualizaciones regulares."
+  - key: "advisory01"
+    scenario_description_short_text: "Existe una automatización para la gestión de Egress IP."
+    description_long_text: "Las herramientas de automatización se utilizan para administrar Egress IP, asegurando la consistencia y la reducción de los errores manuales."
+    impact_and_risk_text: ""
+    remediation_text: "Continúe monitoreando y actualizando los scripts de automatización según sea necesario."
+  - key: "changes_recommended01"
+    scenario_description_short_text: "La frecuencia de revisión de Egress IP es insuficiente."
+    description_long_text: "Las configuraciones Egress IP no se revisan con la frecuencia suficiente, lo que puede conducir a configuraciones obsoletas."
+    impact_and_risk_text: "Las revisiones poco frecuentes pueden dar lugar a configuraciones erróneas y posibles problemas de red."
+    remediation_text: "Aumente la frecuencia de las revisiones de configuración de Egress IP para garantizar que permanezcan actuales y efectivos."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

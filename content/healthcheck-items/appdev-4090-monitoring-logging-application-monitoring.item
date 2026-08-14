@@ -1,0 +1,59 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Security"
+  description: "Monitoring Containerized Applications"
+  references: 
+  - title: "Monitoring application health by using health checks"
+    url: "https://docs.openshift.com/container-platform/latest/applications/application-health.html"
+  check_procedures:
+    - type: compliance_operator
+      profile: none
+      rule: none
+    - type: survey
+      question: "How are running containerized applications monitored?"
+    - type: survey
+      question: "What tools are used for monitoring application performance and health?"
+    - type: survey
+      question: "Are there automated alerts for application performance issues?"
+    - type: survey
+      question: "How is monitoring data secured and who has access to it?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Monitoreo efectivo"
+    description_long_text: "Las aplicaciones en contenedores se monitorean eficazmente con las herramientas y los procesos adecuados."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "Monitorización parcial"
+    description_long_text: "Algunos aspectos de la monitorización de aplicaciones no están completamente implementados."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Monitoreo no implementado"
+    description_long_text: "Las aplicaciones no se monitorean, lo que puede provocar que se pasen por alto problemas de rendimiento."
+    impact_and_risk_text: "Mayor riesgo de degradación del rendimiento e interrupciones no detectadas."
+    remediation_text: "Implementar una estrategia integral de monitoreo con las herramientas adecuadas."
+  - key: "advisory01"
+    scenario_description_short_text: "Mejores prácticas de monitorización"
+    description_long_text: "Asegurarse de que los datos de monitorización se revisen y analicen periódicamente para obtener información valiosa."
+    impact_and_risk_text: "Mejora la fiabilidad y el rendimiento de la aplicación."
+    remediation_text: "Establecer una rutina para la revisión y el análisis de datos de monitorización."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

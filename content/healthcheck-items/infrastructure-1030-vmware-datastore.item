@@ -1,0 +1,57 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "vSphere"
+  severity_key: "Not defined"
+  tag_keys:
+    - "Capacity Management"
+  tags: []
+  description: "VMware Datastore Configuration"
+  references:
+  - title: "VMware vSphere storage concepts"
+    url: "https://docs.openshift.com/container-platform/latest/storage/container_storage_interface/persistent-storage-csi-vsphere.html"
+  check_procedures:
+    - type: survey
+      question: "What datastore is OpenShift using for node storage and persistent storage?"
+    - type: survey
+      question: "Is the datastore shared or dedicated to OpenShift?"
+    - type: survey
+      question: "What is the current capacity utilization of the datastore?"
+    - type: survey
+      question: "How is datastore capacity monitored and managed?"
+    - type: survey
+      question: "Are there growth projections for storage requirements?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "DataStore configurado correctamente"
+      description_long_text: "El DataStore de VMware está dedicado a OpenShift con una capacidad adecuada para el crecimiento"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Planificación de capacidad necesaria"
+      description_long_text: "La capacidad del DataStore puede no ser suficiente para el crecimiento futuro"
+      impact_and_risk_text: "La capacidad insuficiente puede afectar las operaciones y la escala del clúster"
+      remediation_text: "Revise los requisitos de capacidad y planifique la expansión"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Riesgos asociados a un datastore compartido."
+      description_long_text: "El DataStore se comparte con cargas de trabajo diferentes a OpenShift"
+      impact_and_risk_text: "Los recursos compartidos pueden conducir a conflictos de capacidad"
+      remediation_text: "Considere dedicar los DataStore para uso exclusivo de OpenShift"
+    - key: "advisory01"
+      scenario_description_short_text: "Monitoreo de la capacidad implementada"
+      description_long_text: "Existe un monitoreo y alerta adecuados para la capacidad del almacén de datos (DataStore)"
+      impact_and_risk_text: ""
+      remediation_text: "Continuar monitoreando las tendencias de capacidad"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

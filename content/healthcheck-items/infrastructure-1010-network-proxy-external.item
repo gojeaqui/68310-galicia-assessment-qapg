@@ -1,0 +1,82 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Proxy"
+  description: "External Network Proxy Architecture & Configuration"
+  references: 
+  - title: "Cluster-wide proxy"
+    url: "https://docs.openshift.com/container-platform/latest/networking/enable-cluster-wide-proxy.html"
+  check_procedures:
+    - type: survey
+      question: "Are they connected or disconnected to the internet?"
+    - type: survey
+      question: "Are they using a proxy yes/no?"
+    - type: survey
+      question: "How is the proxy configured to work?"
+    - type: survey
+      question: "Does the openshift proxy config align to what the external proxy is configured with?"
+    - type: survey
+      question: "What protocols are supported by the proxy (e.g., HTTP, HTTPS, FTP)?"
+    - type: survey
+      question: "How often is the proxy configuration reviewed and updated?"
+    - type: command
+      command: |
+        oc describe proxy
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out proxy configuration details
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "La configuración proxy está alineada."
+      description_long_text: "La configuración del proxy OpenShift se alinea con la configuración de proxy externa, asegurando una gestión de tráfico de red sin problemas."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "La configuración del proxy necesita revision."
+      description_long_text: "La configuración del proxy OpenShift no se alinea con la configuración de proxy externa, lo que puede conducir a problemas de tráfico de red."
+      impact_and_risk_text: "Una configuración de proxy desalineada puede causar problemas de conectividad y un tiempo de inactividad potencial."
+      remediation_text: "Revise y alinee la configuración proxy de OpenShift con la configuración de proxy externa."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc describe proxy
+    Name:         cluster
+    Namespace:    
+    Labels:       <none>
+    Annotations:  <none>
+    API Version:  config.openshift.io/v1
+    Kind:         Proxy
+    Metadata:
+      Creation Timestamp:  2022-08-24T17:34:58Z
+      Generation:          2
+      Resource Version:    14614788
+      UID:                 47190d06-0aed-4506-b7de-6091fd38c858
+    Spec:
+      Http Proxy:   http://10.2.248.246:8080/
+      Https Proxy:  http://10.2.248.246:8080/
+      No Proxy:     .oscdmzprd01.cc.bna.net,.cc.bna.net,.tcc.tbna.net,api.oscdmzprd01.cc.bna.net,.apps.oscdmzprd01.cc.bna.net,10.0.0.0/8
+      Trusted CA:
+        Name:  
+    Status:
+      Http Proxy:   http://10.2.248.246:8080/
+      Https Proxy:  http://10.2.248.246:8080/
+      No Proxy:     .apps.oscdmzprd01.cc.bna.net,.cc.bna.net,.cluster.local,.oscdmzprd01.cc.bna.net,.svc,.tcc.tbna.net,10.0.0.0/8,10.10.13.0/24,10.168.0.0/14,127.0.0.1,172.60.0.0/16,api-int.oscdmzprd01.cc.bna.net,api.oscdmzprd01.cc.bna.net,localhost
+    Events:         <none>
+    ---

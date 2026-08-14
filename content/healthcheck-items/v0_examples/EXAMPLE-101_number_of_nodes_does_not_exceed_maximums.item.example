@@ -1,0 +1,20 @@
+---
+version: v0
+metadata:
+  category_key: "ocp_config"
+  item_evaluated: "Number of Nodes does not exceed Red Hat Texted Maximum Value"
+  references:  
+    - title: "asdf asdf asdf"
+      url: "https://docs.openshift.com"
+  acceptance_criteria:
+    no_change:
+      - "Total nodes number <= 2000"
+    changes_required:
+      - "Total nodes number > 2000"
+results:
+  result_text: ""
+  recommendation: tbe
+  impact_risk_text: ""
+  remediation_text: ""
+  additional_comments_text: ""
+

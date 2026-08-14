@@ -1,0 +1,24 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Migrating Virtual Machines to Red Hat OpenShift Virtualization with Ansible Automation Platform (DO346)
+
+[.big]#*Resumen del curso*#
+
+[.big]#*Red Hat OpenShift Virtualization*#
+
+Distingue Red Hat OpenShift Virtualization de las tecnologías de contenedores y de las tecnologías tradicionales de máquinas virtuales. Describe las funciones y los casos prácticos de OpenShift Virtualization. Implementa el operador de OpenShift Virtualization en un entorno de Red Hat OpenShift actual.
+
+[.big]#*Configuración de la red para las máquinas virtuales*#
+
+Configura los objetos de la red de Kubernetes para las máquinas virtuales y las aplicaciones que se ejecutan en ellas. Prepara las redes de nodos para poder conectar máquinas virtuales y nodos con redes fuera del clúster mediante plugins de Multus CNI y el operador NMState.
+
+[.big]#*Configuración del almacenamiento para las máquinas virtuales*#
+
+Gestiona el almacenamiento y los discos de las máquinas virtuales en Red Hat OpenShift con Kubernetes.
+
+[.big]#*Migración de máquinas virtuales a Red Hat OpenShift Virtualization*#
+
+Migra máquinas virtuales de un hipervisor compatible a Red Hat OpenShift Virtualization con el operador del kit de herramientas de migración para la virtualización (MTV) y el operador de Ansible Automation Platform (AAP).
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/do346-migrating-virtual-machines-to-red-hat-openshift-virtualization-ansible-automation-platform

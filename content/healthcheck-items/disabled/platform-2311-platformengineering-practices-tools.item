@@ -1,0 +1,41 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Platform Engineering"
+  severity_key:  low
+  tag_keys: []
+  tags: []
+  description: "Platform Engineering: Practices and Tools"
+  references: 
+    - title: "Red Hat Developer Hub"
+      url: https://developers.redhat.com/rhdh/overview
+    - title: "Developer Portals"
+      url: https://developers.redhat.com/e-books/developer-portals
+    - title: "Getting started with the Red Hat Developer Hub"
+      url: https://youtu.be/tvVOC0mFR_4?si=ZrGmhDuWLWxyeRX5
+  check_procedures:
+    - type: survey
+      question: "What tools and technologies are currently being used in your platform engineering practices?"
+    - type: survey
+      question: "Do you have golden paths defined for different stacks?"
+    - type: survey
+      question: "How do you manage different golden paths?"      
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Platform Engineering Practices and Tools" 
+      description_long_text: ""  # We are trying to get an understanding of the organization's maturity and strategy in platform engineering. Here are trying to to bring in advantages of using developer hub and how it will fir into their organization goals
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

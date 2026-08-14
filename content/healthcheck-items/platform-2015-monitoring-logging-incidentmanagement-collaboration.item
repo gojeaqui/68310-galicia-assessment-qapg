@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Incident Management Collaboration"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Is there a documented process for collaboration with other teams or external support in the event of a major incident involving OpenShift clusters?"
+    - type: survey
+      question: "How are cross-team incident response activities coordinated?"
+    - type: survey
+      question: "What collaboration tools are used during incident management?"
+    - type: survey
+      question: "How are external vendors or support teams engaged during incidents?"
+    - type: survey
+      question: "What is the communication protocol for multi-team incidents?"
+    - type: survey
+      question: "How are incident war rooms or bridges established?"
+    - type: survey
+      question: "What documentation is shared during collaborative incident response?"
+    - type: survey
+      question: "How are incident handovers managed between teams?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Using collaboration platforms, B) Through incident management system, C) Via dedicated communication channels, D) Regular sync meetings, E) Others Please Specify"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic collaboration process exists"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Simple collaboration mechanisms in place but need structure"
+      impact_and_risk_text: "Risk of communication gaps"
+      remediation_text: "Formalize collaboration procedures"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective collaboration framework"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-established cross-team collaboration process"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current collaboration practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Strong collaboration culture"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Clear protocols for team coordination during incidents"
+      impact_and_risk_text: "Minimal risk in team collaboration"
+      remediation_text: "Maintain existing collaboration framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited collaboration process"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Insufficient structure for cross-team coordination"
+      impact_and_risk_text: "Risk of delayed incident resolution"
+      remediation_text: "Implement structured collaboration system"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Communication tools needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Lack of proper collaboration tools and channels"
+      impact_and_risk_text: "Ineffective team coordination during incidents"
+      remediation_text: "Deploy appropriate collaboration tools and protocols"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

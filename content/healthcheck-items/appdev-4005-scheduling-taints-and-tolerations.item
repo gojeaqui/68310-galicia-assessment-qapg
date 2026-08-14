@@ -1,0 +1,50 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Scheduling"
+  severity_key: "Not defined"
+  tags: []
+  description: "Node taints and tolerations"
+  references:
+    - title: "Controlling pod placement using node taints"
+      url: "https://docs.openshift.com/container-platform/latest/nodes/scheduling/nodes-scheduler-taints-tolerations.html"
+  check_procedures:
+    - type: survey
+      question: "Are pods scheduled based on node taints and tolerations?"
+    - type: survey
+      question: "Do you use taints and tolerations to isolate workloads on specific nodes?"
+    - type: survey
+      question: "How do you manage node taints and tolerations in your cluster?"
+    - type: survey
+      question: "Have you encountered any issues with pods being unschedulable due to taints?"
+    - type: survey
+      question: "What strategies do you use to ensure critical workloads are scheduled despite node taints?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out scheduling info
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "change01"
+      scenario_description_short_text: "Los Pods se programan (scheduled) con tolerancias y contaminaciones (taints)."
+      description_long_text: "Pods programados con tolerancias y contaminaciones (taints)."
+      impact_and_risk_text: "La complejidad en la programación aumenta el riesgo de pods no programables."
+      remediation_text: "Si corresponde, considere usar reglas de afinidad."
+    - key: "no_change01"
+      scenario_description_short_text: "Los Pods se programan (scheduled) mediante reglas de afinidad."
+      description_long_text: "Pods programados mediante reglas de afinidad."
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

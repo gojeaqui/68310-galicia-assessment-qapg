@@ -1,0 +1,72 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "vSphere"
+  tag_keys: []
+  severity_key: "Not defined"
+  tags: []
+  description: "Document Networking Types"
+  references: 
+  - title: "VMware Networking Overview"
+    url: "https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.networking.doc/GUID-2B11DBB8-CB3C-4AFF-8885-EFEA0FC562F4.html"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: "survey"
+      question: "Gather information on VMware networking within client environment: NSX Distributed Port Group, vSphere Distributed Switch (VDS), vSphere Standard Switch (VSS), etc"
+    - type: "survey"
+      question: "What is the current network topology for Kubernetes clusters in the vSphere environment?"
+    - type: "survey"
+      question: "How are pod networks configured and what CNI plugin is being used?"
+    - type: "survey"
+      question: "What load balancing solution is implemented for Kubernetes services?"
+    - type: "survey"
+      question: "Are there any network policies implemented for pod-to-pod communication?"
+    - type: "survey"
+      question: "How is ingress traffic handled in the current setup?"
+    - type: "survey"
+      question: "What network security measures are in place for cluster communication?"
+  common_outcomes:
+  - key: "advisory01"
+    scenario_description_short_text: "La configuración de red actual cumple con los requisitos básicos"
+    description_long_text: "La configuración de red existente proporciona la funcionalidad básica para las cargas de trabajo de Kubernetes"
+    impact_and_risk_text: "Escalabilidad limitada y posibles cuellos de botella de rendimiento"
+    remediation_text: "Monitorear el rendimiento de la red y el plan para la escala futura"
+  - key: "advisory02"
+    scenario_description_short_text: "Se necesitan mejoras de seguridad de red"
+    description_long_text: "Las medidas de seguridad de red actuales necesitan mejorar"
+    impact_and_risk_text: "Vulnerabilidades de seguridad potenciales en la comunicación entre pods"
+    remediation_text: "Implementar políticas de red y grupos de seguridad"
+  - key: "no_change01"
+    scenario_description_short_text: "Configuración de red óptima"
+    description_long_text: "La configuración actual de la red cumple con todos los requisitos y mejores prácticas"
+    impact_and_risk_text: "No se identifican riesgos inmediatos"
+    remediation_text: "Continuar con la configuración actual"
+  - key: "no_change02"
+    scenario_description_short_text: "Segmentación de red adecuada"
+    description_long_text: "Segmentación de red implementada correctamente"
+    impact_and_risk_text: "Perfil de bajo riesgo para la configuración actual"
+    remediation_text: "Mantener la estrategia de segmentación actual"
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Se requiere actualización de CNI"
+    description_long_text: "La versión actual del complemento CNI necesita actualización"
+    impact_and_risk_text: "Implicaciones de rendimiento y seguridad"
+    remediation_text: "Actualizar el complemento CNI a la última versión estable"
+  - key: "changes_recommended02"
+    scenario_description_short_text: "Se necesita optimización del Load Balancer"
+    description_long_text: "Solución de equilibrio de carga actual no es óptima para la carga de trabajo"
+    impact_and_risk_text: "Posibles interrupciones del servicio y problemas de rendimiento"
+    remediation_text: "Implementar una solución de equilibrio de carga más adecuada"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

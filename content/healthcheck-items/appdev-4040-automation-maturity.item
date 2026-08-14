@@ -1,0 +1,58 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Automation"
+  severity_key: "Not defined"
+  tags: []
+  description: "Application Automation Maturity"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "What is the level of automation in your containerized application deployment and management processes?"
+    - type: survey
+      question: "Which tools are currently used for automating application deployments?"
+    - type: survey
+      question: "How often are deployment processes reviewed and optimized?"
+    - type: survey
+      question: "Are there any manual steps in the deployment pipeline that could be automated?"
+    - type: survey
+      question: "What challenges have you faced in automating application management?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe deployment automation level and make recommendations accordingly.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "La implementación de aplicaciones no está automatizada"
+      description_long_text: "La implementación y la gestión de aplicaciones requieren un trabajo que podría automatizarse."
+      impact_and_risk_text: "La necesidad de intervención humana puede afectar la eficiencia y la estabilidad."
+      remediation_text: "Reduzca el trabajo aprovechando las herramientas existentes o introduciendo nuevas herramientas de automatización."
+    - key: "advisory02"
+      scenario_description_short_text: "Revisar las herramientas de automatización"
+      description_long_text: "Se recomienda revisar periódicamente las herramientas de automatización para garantizar que satisfagan las necesidades actuales."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar las herramientas actuales y explorar nuevas opciones si es necesario."
+    - key: "no_change01"
+      scenario_description_short_text: "Prácticas de automatización adecuadas"
+      description_long_text: "Las prácticas de automatización actuales son suficientes para la implementación de la aplicación"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Pasos manuales en el proceso de implementación"
+      description_long_text: "Hay pasos manuales en el proceso de implementación que podrían automatizarse."
+      impact_and_risk_text: "Los pasos manuales pueden generar errores e ineficiencias."
+      remediation_text: "Identificar y automatizar los pasos manuales en el proceso de implementación."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

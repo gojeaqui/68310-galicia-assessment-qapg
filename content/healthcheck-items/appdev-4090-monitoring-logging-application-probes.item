@@ -1,0 +1,62 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Security"
+  description: "Readiness and Liveness Probes"
+  references: 
+  - title: "Monitoring application health by using health checks"
+    url: "https://docs.openshift.com/container-platform/latest/applications/application-health.html"
+  check_procedures:
+    - type: compliance_operator
+      profile: none
+      rule: none
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: survey
+      question: "Are readiness and liveness probes configured for all critical applications?"
+    - type: survey
+      question: "What tools are used to monitor the status of readiness and liveness probes?"
+    - type: survey
+      question: "How frequently are probe configurations reviewed and updated?"
+    - type: survey
+      question: "Are there automated alerts for probe failures?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Sondas (Probes) configuradas"
+    description_long_text: "Las sondas de preparación (readiness) y actividad (liveness) están configuradas para todas las aplicaciones críticas"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "Sondas (Probes) parcialmente configuradas"
+    description_long_text: "Algunas aplicaciones críticas carecen de sondas de disponibilidad (readiness) o actividad (liveness)."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Sondas (Probes) no configuradas"
+    description_long_text: "Las sondas de preparación (readiness) y actividad (liveness) no están configuradas, lo que puede provocar fallos no detectados en las aplicaciones"
+    impact_and_risk_text: "Mayor riesgo de inactividad de las aplicaciones y fallos no detectados"
+    remediation_text: "Implementar sondas de preparación y actividad para todas las aplicaciones críticas"
+  - key: "advisory01"
+    scenario_description_short_text: "Mejores prácticas para la configuración de las sondas"
+    description_long_text: "Asegúrese de que las configuraciones de las sondas se revisen y actualicen periódicamente."
+    impact_and_risk_text: "Mejora la fiabilidad de la aplicación y reduce el tiempo de inactividad."
+    remediation_text: "Establezca una rutina para revisar y actualizar las configuraciones de las sondas."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

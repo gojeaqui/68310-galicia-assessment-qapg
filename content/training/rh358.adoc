@@ -1,0 +1,19 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Red Hat Services Management and Automation (RH358)
+
+[.big]#*Resumen del curso*#
+
+. *Gestión de los servicios de red*Analiza las herramientas y las habilidades básicas que se necesitan para gestionar los servicios de red.
+. *Configuración de la agregación de enlaces*Configura y soluciona los problemas relacionados con las funciones avanzadas de la interfaz de red, que incluye los enlaces de red.
+. *Gestión de DNS y servidores DNS*Comprende el funcionamiento del sistema de nombres de dominio (DNS), soluciona los problemas asociados a él y configura servidores de nombres que almacenen las consultas únicamente en caché o que estén autorizados para una zona DNS.
+. *Gestión de la asignación de direcciones IP y DHCP*Analiza los servicios que se asignan automáticamente a las direcciones IPv4 e IPv6, como los métodos DHCP, DHCPv6 y SLAAC, y aprende a configurarlos.
+. *Gestión de impresoras y archivos de impresión*Configura los sistemas para realizar impresiones en una impresora de red que admita el protocolo IPP Everywhere, y gestiona las colas de impresión actuales de los sistemas Linux.
+. *Configuración de la transmisión de correos electrónicos*Analiza el funcionamiento de los servidores de correo y configura uno para que utilice las herramientas del sistema y Postfix y envíe mensajes mediante la retransmisión de correos salientes.
+. *Configuración de las bases de datos SQL de MariaDB*Analiza el funcionamiento esencial de las bases de datos SQL relacionales, realiza consultas básicas de SQL para solucionar problemas y aprende a configurar un servicio de base de datos de MariaDB sencillo.
+. *Configuración de los servidores web*Proporciona contenido desde los servidores web Apache HTTPD o Nginx y configúralos con hosts virtuales y cifrado TLS.
+. *Almacenamiento de red basado en archivos*Proporciona a los clientes almacenamiento conectado a la red que se base en archivos con los protocolos NFS o SMB.
+. *Acceso al almacenamiento de red basado en bloques*Configura los iniciadores iSCSI en tus servidores para acceder a los dispositivos de almacenamiento en bloques que proporcionan los conjuntos de almacenamiento en red o los clústeres de almacenamiento de Ceph.
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/rh358-red-hat-services-management-automation

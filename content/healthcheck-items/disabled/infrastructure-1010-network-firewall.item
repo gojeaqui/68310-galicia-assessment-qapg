@@ -1,0 +1,57 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Firewall"
+  description: "OpenShift Firewall Rules"
+  references: 
+  - title: "Configuring your firewall for OpenShift Container Platform"
+    url: "https://docs.openshift.com/container-platform/latest/installing/install_config/configuring-firewall.html"
+  check_procedures:
+    - type: survey
+      question: "Describe Firewall Configuration"
+    - type: survey
+      question: "What specific ports are open for the OpenShift cluster?"
+    - type: survey
+      question: "Are there any custom firewall rules applied for the OpenShift environment?"
+    - type: survey
+      question: "How often is the firewall configuration reviewed and updated?"
+    - type: survey
+      question: "Are there any known issues with the current firewall setup?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "La configuración de firewall es estable."
+    description_long_text: "La configuración actual del firewall es estable sin problemas informados."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "La configuración del firewall necesita mejora."
+    description_long_text: "Hay áreas en la configuración del firewall que requieren mejoras para mejorar la seguridad y la eficiencia."
+    impact_and_risk_text: "La configuración ineficiente de firewall puede conducir a vulnerabilidades de seguridad y cuellos de botella de red."
+    remediation_text: "Revise y optimice la configuración del firewall, considerando la automatización y las actualizaciones regulares."
+  - key: "advisory01"
+    scenario_description_short_text: "Las reglas de firewall personalizadas estan documentadas."
+    description_long_text: "Las reglas de firewall personalizadas están bien documentadas, asegurando claridad y facilidad de gestión."
+    impact_and_risk_text: ""
+    remediation_text: "Continúe manteniendo documentación para cualquier regla de firewall personalizada."
+  - key: "changes_recommended01"
+    scenario_description_short_text: "La frecuencia de revisión del firewall es insuficiente."
+    description_long_text: "Las configuraciones de firewall no se revisan con suficiente frecuencia, lo que puede conducir a configuraciones obsoletas."
+    impact_and_risk_text: "Las revisiones poco frecuentes pueden dar lugar a configuraciones erróneas y posibles problemas de seguridad."
+    remediation_text: "Aumente la frecuencia de las revisiones de configuración de firewall para garantizar que permanezcan actuales y efectivos."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

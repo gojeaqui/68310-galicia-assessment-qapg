@@ -1,0 +1,59 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "DNS"
+  description: "DNS Provider"
+  references: 
+  - title: "User Provisioned DNS requirements"
+    url: "https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html#installation-dns-user-infra_installing-bare-metal"
+  - title: "IPI DNS Requirements"
+    url: "https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal_ipi/ipi-install-prerequisites.html#network-requirements-dns_ipi-install-prerequisites"
+  check_procedures:
+    - type: survey
+      question: "Ask customer about their DNS provider (e.g. Active Directory, Route 53)"
+    - type: survey
+      question: "What is the current DNS server version in use?"
+    - type: survey
+      question: "How is DNS redundancy and failover configured?"
+    - type: survey
+      question: "Are there any custom DNS configurations or records that need special attention?"
+    - type: survey
+      question: "How often is the DNS configuration reviewed and updated?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out DNS details
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "La versión DNS está actualizada."
+      description_long_text: "El servidor DNS está ejecutando la última versión, asegurando la compatibilidad y la seguridad."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "La redundancia está configurada correctamente."
+      description_long_text: "El servidor DNS tiene mecanismos de redundancia y conmutación por error, minimizando los riesgos de tiempo de inactividad."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Las configuraciones de DNS personalizadas necesitan revisión."
+      description_long_text: "Las configuraciones personalizadas en el servidor DNS pueden conducir a un comportamiento inesperado y deben revisarse."
+      impact_and_risk_text: "Las configuraciones personalizadas no revisadas pueden causar problemas de red."
+      remediation_text: "Revise y documente todas las configuraciones personalizadas aplicadas al servidor DNS."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

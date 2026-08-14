@@ -1,0 +1,50 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Project templating"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Default Project Template Set"
+  references: 
+  - title: "Resource Quotas Per Project"
+    url: "https://docs.openshift.com/container-platform/latest/applications/quotas/quotas-setting-per-project.html"
+  check_procedures:
+    - type: "command"
+      command: |
+          # Run oc describe on the template to validate desired quota/resource limits are set.
+          oc describe template -n openshift-config
+  common_outcomes:
+  - key: "nochange_01"
+    scenario_description_short_text: "Default template set"
+    description_long_text: "Default project template is set with default network policies and resources quota configured."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "nochange_02"
+    scenario_description_short_text: "No se estableció un template default"
+    description_long_text: "Si bien observamos que no se estableció un template default consideramos que en el caso de uso de este cluster/aplicación no tiene sentido configurar uno"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "recommend01"
+    scenario_description_short_text: "No default template set"
+    description_long_text: "No default project template is set with default network policies and resources quota configured."
+    impact_and_risk_text: "No new project created from the web console or CLI will have the settings to secure network flows and resources utilizations."
+    remediation_text: "Define a project template with resource quotas and limit ranges, which all new projects will use by default"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "nochange_02"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc describe template -n openshift-config
+    No resources found in openshift-config namespace.
+    ---

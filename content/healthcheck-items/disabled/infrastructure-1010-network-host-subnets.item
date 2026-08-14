@@ -1,0 +1,62 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  description: "Isolated or shared subnets"
+  references: 
+  - title: "OpenShift Container Platform deployment with multi subnet or network segments"
+    url: "https://access.redhat.com/solutions/2086813"
+  - title: "Configuring a shared VPC for ROSA clusters"
+    url: "https://docs.openshift.com/rosa/rosa_install_access_delete_clusters/rosa-shared-vpc-config.html"
+  - title: "Deploying Red Hat OpenShift Dedicated clusters to Shared Virtual Private Cloud on Google Cloud"
+    url: "https://www.redhat.com/en/blog/deploying-red-hat-openshift-dedicated-clusters"
+  - title: "Bare metal IPI - Establishing communication between subnets"
+    url: "https://docs.openshift.com/container-platform/4.15/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html#ipi-install-establishing-communication-between-subnets_ipi-install-installation-workflow"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: survey
+      question: "Are the subnets isolated or shared within the OpenShift deployment?"
+    - type: survey
+      question: "What are the security implications of using isolated versus shared subnets in your environment?"
+    - type: survey
+      question: "How is communication managed between different subnets in the OpenShift cluster?"
+    - type: survey
+      question: "Are there any performance considerations when using shared subnets?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Las subredes estan configuradas de manera óptima."
+    description_long_text: "La configuración actual de la subred es óptima sin problemas informados."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "La configuración de subred necesita mejora."
+    description_long_text: "Hay áreas en la configuración de la subred que requieren mejoras para mejorar la seguridad y el rendimiento."
+    impact_and_risk_text: "La configuración subóptima de la subred puede conducir a vulnerabilidades de seguridad y cuellos de botella de rendimiento."
+    remediation_text: "Revise y optimice la configuración de la subred, considerando la gestión de aislamiento y comunicación."
+  - key: "advisory01"
+    scenario_description_short_text: "La comunicación entre las subredes está bien administrada."
+    description_long_text: "La comunicación entre diferentes subredes se gestiona de manera efectiva, asegurando una operación perfecta."
+    impact_and_risk_text: ""
+    remediation_text: "Continúe monitoreando y administrando la comunicación de la subred de manera efectiva."
+  - key: "changes_recommended01"
+    scenario_description_short_text: "La frecuencia de revisión de la configuración de la subred es insuficiente."
+    description_long_text: "Las configuraciones de la subred no se revisan con la frecuencia suficiente, lo que puede conducir a configuraciones obsoletas."
+    impact_and_risk_text: "Las revisiones poco frecuentes pueden dar lugar a configuraciones erróneas y posibles problemas de red."
+    remediation_text: "Aumente la frecuencia de las revisiones de configuración de la subred para garantizar que permanezcan actuales y efectivas."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

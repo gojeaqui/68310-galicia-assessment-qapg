@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Alert Management Integration with Incident Management"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Are OpenShift alerts integrated with a broader incident management system?"
+    - type: survey
+      question: "What incident management platforms are integrated with OpenShift alerts?"
+    - type: survey
+      question: "How is alert data synchronized with the incident management system?"
+    - type: survey
+      question: "What automation exists between alerts and incident creation?"
+    - type: survey
+      question: "How are alert priorities mapped to incident priorities?"
+    - type: survey
+      question: "What integration testing procedures are in place?"
+    - type: survey
+      question: "How are integration failures handled?"
+    - type: survey
+      question: "What metrics track integration effectiveness?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Yes, integrated with incident management platform (e.g., ServiceNow, PagerDuty), B) No, alerts are managed solely within the OpenShift environment"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic integration exists"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Simple alert-to-incident integration with manual steps"
+      impact_and_risk_text: "Risk of delayed incident creation"
+      remediation_text: "Enhance integration automation"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective integration"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-established alert and incident management integration"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current integration practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Robust integration framework"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Fully automated alert-to-incident workflow"
+      impact_and_risk_text: "Minimal risk in alert handling"
+      remediation_text: "Maintain existing integration framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited integration"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Insufficient alert-to-incident system integration"
+      impact_and_risk_text: "Risk of manual handling errors"
+      remediation_text: "Implement comprehensive integration"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Integration reliability issues"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Integration failures affecting incident creation"
+      impact_and_risk_text: "Delayed incident response"
+      remediation_text: "Improve integration reliability"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

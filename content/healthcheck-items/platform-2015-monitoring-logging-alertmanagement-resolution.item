@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Alert Management Resolution Steps"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "What steps are taken to resolve OpenShift alerts once they're triggered?"
+    - type: survey
+      question: "Are there documented runbooks for common alert scenarios?"
+    - type: survey
+      question: "What automated remediation actions are in place?"
+    - type: survey
+      question: "How are resolution steps documented and tracked?"
+    - type: survey
+      question: "What is the process for validating alert resolution?"
+    - type: survey
+      question: "How are recurring alerts handled differently?"
+    - type: survey
+      question: "What tools are used in the resolution process?"
+    - type: survey
+      question: "How is resolution knowledge shared across teams?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Automated remediation actions, B) Manual investigation and intervention by operations team, C) Combination of automated and manual actions"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic resolution process exists"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Simple alert resolution procedures in place"
+      impact_and_risk_text: "Risk of inconsistent resolution"
+      remediation_text: "Enhance resolution procedures"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective resolution system"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-established alert resolution process"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current resolution practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Robust resolution framework"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Comprehensive resolution procedures with automation"
+      impact_and_risk_text: "Minimal risk in alert handling"
+      remediation_text: "Maintain existing resolution framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited resolution process"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Insufficient alert resolution procedures"
+      impact_and_risk_text: "Risk of extended resolution times"
+      remediation_text: "Implement structured resolution system"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Resolution automation needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Manual resolution process causing delays"
+      impact_and_risk_text: "Delayed alert resolution"
+      remediation_text: "Deploy automated resolution capabilities"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

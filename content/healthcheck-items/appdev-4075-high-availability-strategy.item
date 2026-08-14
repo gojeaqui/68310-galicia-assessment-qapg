@@ -1,0 +1,62 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "High Availability"
+  severity_key: "Not defined"
+  tags: []
+  description: "High Availability Strategy"
+  references:
+    - title: "High Availability in Kubernetes"
+      url: "https://docs.openshift.com/"
+  check_procedures:
+    - type: survey
+      question: "What strategies are in place to ensure high availability of applications?"
+    - type: survey
+      question: "How is failover managed in your Kubernetes environment?"
+    - type: survey
+      question: "What tools are used to monitor application availability?"
+    - type: survey
+      question: "How often are high availability strategies reviewed and updated?"
+    - type: survey
+      question: "What challenges have you faced in maintaining high availability?"
+    - type: survey
+      question: "Are you practicing application versioning and rollback strategies for your containers?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe high availability strategies.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Estrategias de alta disponibilidad obsoletas"
+      description_long_text: "Las estrategias de alta disponibilidad no se revisan periódicamente."
+      impact_and_risk_text: "Las estrategias obsoletas pueden provocar tiempos de inactividad de las aplicaciones."
+      remediation_text: "Establecer un programa regular para revisar y actualizar las estrategias de alta disponibilidad."
+    - key: "advisory02"
+      scenario_description_short_text: "Revisar las herramientas de monitoreo"
+      description_long_text: "Se recomienda revisar periódicamente las herramientas de monitoreo para garantizar que satisfagan las necesidades actuales."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar las herramientas actuales y explorar nuevas opciones si es necesario."
+    - key: "no_change01"
+      scenario_description_short_text: "Prácticas de alta disponibilidad adecuadas"
+      description_long_text: "Las prácticas actuales de alta disponibilidad son suficientes"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Desafíos para mantener la alta disponibilidad"
+      description_long_text: "Existen desafíos para mantener la alta disponibilidad de forma eficaz."
+      impact_and_risk_text: "Una gestión inadecuada puede provocar un mayor tiempo de inactividad."
+      remediation_text: "Implementar las mejores prácticas para la alta disponibilidad y garantizar la implementación de mecanismos de conmutación por error (failover) adecuados."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

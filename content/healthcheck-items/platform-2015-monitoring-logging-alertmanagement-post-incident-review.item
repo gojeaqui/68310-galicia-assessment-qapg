@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Alert Management Post-Incident Review Process"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Is there a post-incident review process for analyzing and learning from OpenShift alerts?"
+    - type: survey
+      question: "How frequently are post-incident reviews conducted?"
+    - type: survey
+      question: "What metrics are analyzed during post-incident reviews?"
+    - type: survey
+      question: "How are lessons learned documented and shared?"
+    - type: survey
+      question: "What is the process for implementing improvements identified in reviews?"
+    - type: survey
+      question: "Who participates in post-incident review meetings?"
+    - type: survey
+      question: "How are alert configurations adjusted based on review findings?"
+    - type: survey
+      question: "What timeline is followed for post-incident reviews?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Yes, including root cause analysis and identification of preventive measures, B) No formal post-incident review process"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic review process exists"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Simple post-incident analysis with limited follow-up"
+      impact_and_risk_text: "Risk of recurring incidents"
+      remediation_text: "Enhance post-incident review process"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective review system"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-established post-incident review process"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current review practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Comprehensive review framework"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Thorough post-incident analysis and improvement implementation"
+      impact_and_risk_text: "Minimal risk in incident recurrence"
+      remediation_text: "Maintain existing review framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited review process"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Insufficient post-incident analysis"
+      impact_and_risk_text: "Risk of repeated incidents"
+      remediation_text: "Implement structured review system"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Review implementation needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Reviews conducted but improvements not implemented"
+      impact_and_risk_text: "Continued incident patterns"
+      remediation_text: "Establish process for implementing review findings"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

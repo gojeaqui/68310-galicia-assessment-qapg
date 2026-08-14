@@ -1,0 +1,40 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Backup"
+  severity_key: "Critical"
+  tags: ["Backup", "Data Protection"]
+  tag_keys:
+    - "Disaster Recovery"
+    - "Backup Strategy"
+  description: "Ensuring VM data is protected via backups"
+  references:
+    - title: "Backing up OpenShift Virtualization workloads"
+      url: "https://docs.openshift.com/container-platform/4.16/backup_and_restore/index.html"
+  check_procedures:
+    - type: survey
+      question: "Do you have automated backups configured for virtualized workloads?"
+    - type: survey
+      question: "How often do you validate the integrity of backups?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Backup strategy in place"
+      description_long_text: "Virtualized workloads are regularly backed up."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "No backup strategy"
+      description_long_text: "Backup policies are missing for virtualized workloads."
+      impact_and_risk_text: "Without backups, data loss can occur during unexpected failures."
+      remediation_text: "Implement an automated backup solution for VMs."
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+

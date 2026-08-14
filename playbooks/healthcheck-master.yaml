@@ -1,0 +1,123 @@
+---
+- name: Ejecucion de Healthcheck
+  hosts: localhost
+  gather_facts: false
+  vars:
+    input_dir: "healthcheck-item-templates"
+    output_dir: "healthcheck-output"
+    debug: true
+
+  tasks:
+    - name: Check OpenShift login
+      shell: "oc whoami"
+      register: oc_whoami_output
+      ignore_errors: yes
+
+    - name: Display login status
+      debug:
+        msg: >
+          {% if oc_whoami_output.rc == 0 %}
+          User is logged in as {{ oc_whoami_output.stdout.strip() }}
+          {% else %}
+          User is not logged in to OpenShift
+          {% endif %}
+
+    - name: Fallamos si el usuario no esta logeado
+      fail:
+        msg: "ERROR, No esta logeado a ningun Opeshift."
+      when: oc_whoami_output.rc != 0
+
+    - name: Retrieve OpenShift cluster name
+      shell: "oc get infrastructure cluster -o jsonpath='{.status.infrastructureName}'"
+      register: cluster_name_output
+
+    - name: Set cluster name variable
+      set_fact:
+        cluster_name: "{{ cluster_name_output.stdout }}"
+
+    - name: Debug cluster name
+      debug:
+        msg: "The OpenShift cluster name is: {{ cluster_name }}"
+
+    - name: Check if OCS StorageCluster exists
+      shell: |
+        oc get storagecluster ocs-storagecluster -n openshift-storage --ignore-not-found
+      register: storagecluster_check
+      changed_when: false
+
+    - name: Patch to enable Ceph Tools
+      shell: |
+        oc patch storageclusters.ocs.openshift.io ocs-storagecluster \
+          -n openshift-storage \
+          --type json \
+          --patch '[{ "op": "replace", "path": "/spec/enableCephTools", "value": true }]'
+      when: storagecluster_check.stdout != ""
+      register: ceph_tools
+
+    - name: Print Ceph Tools patch output
+      when: storagecluster_check.stdout != ""
+      debug:
+        var: ceph_tools.stdout
+
+    - name: Get and print Cluster Operators
+      shell: |
+        echo ""
+        echo "=== Cluster Operators (oc get co) ==="
+        oc get co
+      register: co_output
+      changed_when: false
+
+    - name: Print Cluster Operators raw
+      ansible.builtin.debug:
+        msg: "{{ co_output.stdout }}"
+      no_log: false
+
+    - name: Get and print Cluster Version
+      shell: |
+        echo ""
+        echo "=== Cluster Version (oc get clusterversion) ==="
+        oc get clusterversion
+      register: cv_output
+      changed_when: false
+
+    - name: Print Cluster Version raw
+      ansible.builtin.debug:
+        msg: "{{ cv_output.stdout }}"
+      no_log: false
+
+    - name: Pause for user confirmation
+      pause:
+        prompt: |
+          REVISAR la salida de 'oc get co' y 'oc get clusterversion' antes de continuar!
+          Presione 'Enter' para continuar si todo esta bien.
+
+    - name: Get current date in YYYYMMDD format
+      shell: date +%Y%m%d
+      register: current_date
+
+    - name: Set output dir
+      set_fact:
+        output_dir: "{{ cluster_name }}_{{ current_date.stdout }}"
+
+    - name: Ensure output directory exists
+      file:
+        path: "{{ output_dir }}"
+        state: directory
+
+    - name: Find input files in current directory
+      find:
+        paths: "{{ input_dir }}"
+        patterns: "*.j2"
+        file_type: file
+      register: healthcheck_files
+
+    - name: Process each input file
+      include_tasks:
+        file: healthcheck-item.yaml
+      loop: "{{ healthcheck_files.files | map(attribute='path') | list }}"
+      loop_control:
+        loop_var: input_file
+        extended: true
+
+    - name: Zip output directory
+      shell: "tar cfz {{ output_dir }}.tar.gz {{ output_dir }}"

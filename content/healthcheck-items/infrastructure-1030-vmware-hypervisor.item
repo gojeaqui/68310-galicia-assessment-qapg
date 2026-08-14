@@ -1,0 +1,60 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "vSphere"
+  severity_key: "Not defined"
+  tag_keys:
+    - "Disaster Recovery"
+    - "High Availability"
+  tags: []
+  description: "VMware vSphere Physical ESXi Hypervisor Topology"
+  references: 
+  - title: "VMware vSphere region and zone enablement"
+    url: "https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/ipi/installing-vsphere-installer-provisioned-network-customizations.html#installation-vsphere-regions-zones_installing-vsphere-installer-provisioned-network-customizations"
+  - title: "Implementing Failure Domains with OpenShift Workloads on VMware"
+    url: "https://cloud.redhat.com/blog/a-guide-to-implementing-failure-domains-with-openshift-workloads-on-vmware"
+  check_procedures:
+    - type: survey
+      question: "What is the current ESXi hypervisor topology?"
+    - type: survey
+      question: "How are failure domains configured across ESXi hosts?"
+    - type: survey
+      question: "Are workloads distributed according to failure domain configuration?"
+    - type: survey
+      question: "How often is the topology configuration reviewed?"
+    - type: survey
+      question: "Are there any known issues with the current topology setup?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Topología correctamente configurada"
+      description_long_text: "Los hosts ESXi se distribuyen correctamente en los dominios de falla con una distribución óptima de la carga de trabajo"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Distribución desigual"
+      description_long_text: "Los hosts ESXi no se distribuyen uniformemente en los dominios de falla"
+      impact_and_risk_text: "La distribución desigual puede afectar las capacidades de alta disponibilidad y recuperación de desastres"
+      remediation_text: "Redistribuir los hosts ESXi de manera uniforme a través de los dominios de falla"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Dominios de falla faltantes"
+      description_long_text: "Los dominios de falla no están configurados correctamente"
+      impact_and_risk_text: "La falta de dominios de falla adecuados aumenta el riesgo de interrupción del servicio"
+      remediation_text: "Configurar los dominios de falla apropiados de acuerdo con las mejores prácticas"
+    - key: "advisory01"
+      scenario_description_short_text: "Se necesita una revisión de topología regular"
+      description_long_text: "La configuración de la topología no se revisa regularmente"
+      impact_and_risk_text: "La falta de revisiones regulares puede conducir a configuraciones subóptimas"
+      remediation_text: "Implementar un horario regular de revisión de topología"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

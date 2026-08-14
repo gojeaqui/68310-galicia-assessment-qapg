@@ -1,0 +1,55 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "DHCP"
+  description: "DHCP Provider"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Who is your DHCP Provider?"
+    - type: survey
+      question: "What version of DHCP is currently in use?"
+    - type: survey
+      question: "How is the DHCP server configured in terms of redundancy and failover?"
+    - type: survey
+      question: "Are there any custom configurations applied to the DHCP server?"
+    - type: survey
+      question: "How often is the DHCP configuration reviewed and updated?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out DHCP Provider details"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "La versión DHCP está actualizada."
+      description_long_text: "El servidor DHCP está ejecutando la última versión, asegurando la compatibilidad y la seguridad."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "La redundancia está configurada correctamente."
+      description_long_text: "El servidor DHCP tiene mecanismos de redundancia y conmutación por error, minimizando los riesgos de tiempo de inactividad."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Las configuraciones personalizadas necesitan revisión."
+      description_long_text: "Las configuraciones personalizadas en el servidor DHCP pueden conducir a un comportamiento inesperado y deben revisarse."
+      impact_and_risk_text: "Las configuraciones personalizadas no revisadas pueden causar problemas de red."
+      remediation_text: "Revise y documente todas las configuraciones personalizadas aplicadas al servidor DHCP."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

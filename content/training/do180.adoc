@@ -1,0 +1,45 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Red Hat OpenShift Administration I: Operating a Production Cluster (DO180)
+
+*Implemente y gestione aplicaciones en contenedores que se ejecutan como cargas de trabajo de Kubernetes en clústeres de OpenShift y solucione los problemas que puedan surgir.*
+
+[.big]#*Descripción del curso*#
+
+En el curso Red Hat OpenShift Administration I: Operating a Production Cluster (DO180) se prepara a los administradores de clústeres de OpenShift para gestionar las cargas de trabajo de Kubernetes y colaborar con los desarrolladores, los ingenieros de DevOps, los administradores de sistemas y los ingenieros de confiabilidad del sitio (SRE) para garantizar la disponibilidad de las cargas de trabajo de las aplicaciones. El curso se centra en la gestión de las aplicaciones típicas de los usuarios finales a las que se puede acceder desde una interfaz de usuario (UI) web o móvil y que representan la mayoría de las cargas de trabajo de la nube y en contenedores. Cuando nos referimos a la gestión de las aplicaciones, también hablamos de la implementación y la actualización de sus dependencias, como las bases de datos, la mensajería y los sistemas de autenticación.
+
+Podrá poner en práctica las habilidades que adquiera en este curso con todas las versiones de OpenShift, como Red Hat OpenShift on AWS (ROSA), Azure Red Hat OpenShift y OpenShift Container Platform.
+
+El curso se basa en Red Hat OpenShift 4.14.
+
+Después de completar el curso, tendrás acceso a los laboratorios prácticos hasta por 45 días para cualquier curso persencial que incluya un entorno virtual.
+
+*Nota:* Este curso se ofrece en modalidad presencial con una duración de cuatro días, en modalidad virtual con una duración de cinco días, o como curso autorregulado. Los tiempos pueden variar conforme lo realice. Para obtener la información completa sobre el curso, el cronograma y los precios, seleccione su ubicación y, luego, "Explorar ahora" en el menú de la derecha.
+
+[.big]#*Resumen del contenido del curso*#
+
+* Gestionar los clústeres de OpenShift desde la interfaz de línea de comandos y desde la consola web
+* Implementar las aplicaciones en OpenShift a partir de imágenes de contenedores, plantillas y manifiestos de Kubernetes
+* Solucionar los problemas de conectividad de red entre las aplicaciones dentro y fuera de un clúster de OpenShift
+* Conectar las cargas de trabajo de Kubernetes al almacenamiento de datos de las aplicaciones
+* Configurar las cargas de trabajo de Kubernetes para la obtención de alta disponibilidad y confiabilidad
+* Gestionar las actualizaciones de las imágenes de contenedores, las configuraciones y los manifiestos de Kubernetes de una aplicación
+
+[.big]#*Público destinatario del curso*#
+
+* Público principal: ingenieros de plataforma, administradores de sistemas, administradores de nube y otras personas que ocupen puestos de TI relacionados con la infraestructura, sean responsables del soporte de nivel uno de la infraestructura para las aplicaciones y estén interesados en gestionar clústeres de OpenShift y aplicaciones en contenedores.
+* Público secundario: arquitectos empresariales, ingenieros de confiabilidad del sitio, ingenieros de DevOps y otras personas que ocupen puestos de TI relacionados con las aplicaciones y sean responsables de diseñar la infraestructura para estas.
+* Los desarrolladores y los ingenieros de confiabilidad del sitio sin experiencia en la tecnología de contenedores deben inscribirse en el curso https://www.redhat.com/es/services/training/do188-red-hat-open-shift-development-introduction-containers-with-podman[Red Hat OpenShift Development I: Introduction to Containers with Podman (DO188)].
+
+[.big]#*Capacitación recomendada*#
+
+* https://skills.ole.redhat.com/[Realice una evaluación sin costo] para determinar si esta oferta es la más conveniente en función de sus habilidades.
+* Requisito previo: https://www.redhat.com/es/services/training/do080-deploying-containerized-applications-technical-overview[Contar con la acreditación Containers, Kubernetes and Red Hat OpenShift Technical Overview (DO080)] o tener conocimientos equivalentes sobre los contenedores de Linux
+* Requisito previo: Contar con la acreditación https://www.redhat.com/es/services/training/getting-started-with-linux-fundamentals[Getting Started with Linux Fundamentals (RH104)] o tener aptitudes equivalentes en el uso de una interfaz de línea de comandos, idealmente, para operar una shell Bash
+
+[.big]#*Aspectos tecnológicos que debe tener en cuenta*#
+
+* Necesitará una conexión a Internet que le permita acceder a un entorno de aprendizaje en la nube, el cual le ofrece un clúster de OpenShift y una estación de trabajo remota para administradores.
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/red-hat-openshift-administration-i-operating-a-production-cluster

@@ -1,0 +1,40 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Container Image Management"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Operators"
+    - "Container Images"
+    - "OLM"
+    - "Registry"
+    - "Openshift Cluster Configuration"
+  description: "Container Registry Integration Method"
+  references: 
+  - title: "External Registry Configuration"
+    url: "https://docs.openshift.com/container-platform/latest/registry/configuring-registry-operator.html#images-configuration-cas_configuring-registry-operator"
+  - title: "Openshift Registry Overview"
+    url: "https://docs.openshift.com/container-platform/latest/registry/index.html"
+  check_procedures:
+    - type: survey
+      question: "What external registries are being used?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out external registry information
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

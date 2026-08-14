@@ -1,0 +1,29 @@
+---
+version: v0
+metadata:
+  category_key: "ocp_config"
+  item_evaluated: "Master Nodes are Set"
+  product_version: "3+"
+  references:  
+    - title: "blah blah"
+      url: "https://docs.openshift.com"
+    - title: "blah blah 2"
+      url: "https://docs.openshift.com2"
+  acceptance_criteria:
+    no_change:
+      - "Master node number >= 3 and colocated etcd"
+      - "Master node number >= 2 and external etcd"
+    changes_required:
+      - "Master node number < 3 and colocated etcd"
+    changes_recommended:
+      - "Master node number < 2 and external etcd"
+results:
+  result_text: "1"
+  recommendation: changes_required 
+  impact_risk_text: "BLAH BLAH BLAH"
+  remediation_text: "BLAH BLAH BLAH"
+  additional_comments_text: |
+    BLAH BLAH BLAH BLAH
+
+
+

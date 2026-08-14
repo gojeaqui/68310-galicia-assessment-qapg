@@ -1,0 +1,52 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Tools"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Platform Engineering"
+  description: "CICD Tooling"
+  references: 
+  - title: "Understanding OpenShift Pipelines"
+    url: "https://docs.openshift.com/container-platform/latest/cicd/pipelines/about-pipelines.html"
+  check_procedures:
+    - type: survey
+      question: "What CI/CD tools are being used? Tekton, Jenkins, something else?"
+    - type: survey
+      question: "How do you manage pipeline configurations and updates?"
+    - type: survey
+      question: "Are there any specific challenges faced with the current CI/CD setup?"
+    - type: survey
+      question: "What strategies are in place for handling failed builds or deployments?"
+    - type: survey
+      question: "How do you ensure security and compliance in your CI/CD pipelines?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe CI/CD tooling.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "change01"
+      scenario_description_short_text: "Herramientas de CI/CD no estandarizadas"
+      description_long_text: "Se utilizan múltiples herramientas de CI/CD sin un enfoque estandarizado."
+      impact_and_risk_text: "La falta de estandarización puede generar ineficiencias y un mayor coste de mantenimiento."
+      remediation_text: "Considere la estandarización en una única herramienta o marco de CI/CD."
+    - key: "change02"
+      scenario_description_short_text: "Prácticas de seguridad en los pipelines de CI/CD"
+      description_long_text: "Las prácticas de seguridad en los pipelines de CI/CD no están bien definidas."
+      impact_and_risk_text: "La falta de prácticas de seguridad puede generar vulnerabilidades en el proceso de implementación."
+      remediation_text: "Implementar comprobaciones de seguridad y medidas de cumplimiento (compliance measures) en los pipelines de CI/CD."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

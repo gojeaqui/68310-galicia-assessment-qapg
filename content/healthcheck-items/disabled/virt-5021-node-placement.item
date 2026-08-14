@@ -1,0 +1,45 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Node Placement"
+  severity_key: "Medium"
+  tags: ["Node Placement", "Scheduling", "OpenShift Virtualization"]
+  tag_keys:
+    - "Taints"
+    - "Tolerations"
+    - "Node Selectors"
+  description: "Configuring node placement for OpenShift Virtualization components to ensure optimal performance and resource usage."
+  references:
+    - title: "Node Placement for OpenShift Virtualization Components"
+      url: "https://docs.openshift.com/container-platform/4.16/virt/post_installation_configuration/virt-node-placement-virt-components.html"
+  check_procedures:
+    - type: survey
+      question: "Have you configured taints, tolerations, or node selectors for OpenShift Virtualization components?"
+    - type: survey
+      question: "Are OpenShift Virtualization workloads running on dedicated infrastructure nodes?"
+    - type: survey
+      question: "Do you validate that resource-intensive components are scheduled on appropriate nodes?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Node placement correctly configured"
+      description_long_text: "Node placement rules, including taints, tolerations, and node selectors, ensure OpenShift Virtualization components run on appropriate nodes."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Node placement not configured"
+      description_long_text: "Node placement rules for OpenShift Virtualization components are not defined or validated."
+      impact_and_risk_text: >
+        Improper node placement may lead to resource contention, performance degradation, or components running on unsuitable nodes, impacting stability.
+      remediation_text: >
+        Use taints, tolerations, and node selectors to configure node placement for OpenShift Virtualization components.
+        Ensure workloads are scheduled on dedicated infrastructure nodes where needed.
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

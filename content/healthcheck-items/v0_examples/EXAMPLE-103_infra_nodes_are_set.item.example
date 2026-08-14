@@ -1,0 +1,21 @@
+---
+version: v0
+metadata:
+  category_key: "ocp_config"
+  category: "OpenShift Cluster Config"
+  category_short: "Cluster Config"
+  item_evaluated: "Infra Nodes are Set"
+  references:  
+    - title: "my title"
+      url: "https://docs.openshift.com"
+  acceptance_criteria:
+    no_change:
+      - "Infra nodes number >= 3"
+    changes_recommended:
+      - "Infra ndoes number < 3"
+results:
+  result_text: ""
+  recommendation: tbe
+  impact_risk_text: ""
+  remediation_text: ""
+  additional_comments_text: ""

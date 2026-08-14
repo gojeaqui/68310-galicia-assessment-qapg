@@ -1,0 +1,73 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Alert Management Response Time Expectations"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Are there established response time expectations for addressing OpenShift alerts?"
+    - type: survey
+      question: "How are response time SLAs defined for different alert severities?"
+    - type: survey
+      question: "What metrics are used to track response time compliance?"
+    - type: survey
+      question: "How are response time breaches handled?"
+    - type: survey
+      question: "What tools are used to measure response times?"
+    - type: survey
+      question: "How are after-hours response times managed?"
+    - type: survey
+      question: "What is the escalation process for missed response times?"
+    - type: survey
+      question: "How frequently are response time targets reviewed?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: "A) Yes, with defined SLAs (Service Level Agreements), B) Response times vary depending on severity and impact"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic response times defined"
+      description_long_text: "Simple response time expectations without formal SLAs"
+      impact_and_risk_text: "Risk of inconsistent response times"
+      remediation_text: "Establish formal response time SLAs"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective response time framework"
+      description_long_text: "Well-defined response time SLAs with monitoring"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current response time practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Comprehensive SLA system"
+      description_long_text: "Clear response time expectations with enforcement"
+      impact_and_risk_text: "Minimal risk in alert response"
+      remediation_text: "Maintain existing SLA framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited response time definitions"
+      description_long_text: "Insufficient response time expectations"
+      impact_and_risk_text: "Risk of delayed alert response"
+      remediation_text: "Implement structured response time SLAs"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Response time monitoring needed"
+      description_long_text: "Response times not effectively tracked"
+      impact_and_risk_text: "Unable to measure SLA compliance"
+      remediation_text: "Deploy response time monitoring system"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

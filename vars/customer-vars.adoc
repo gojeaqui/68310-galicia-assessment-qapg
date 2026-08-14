@@ -1,0 +1,25 @@
+// --------------------------------
+// Document Information
+// The customer-vars.adoc is meant for customer specific information such as the name,
+// short name, and gss information
+// --------------------------------
+
+:description: Assessment de plataforma Openshift (oscdmzprd01)
+
+// This is where the customer name, customer, and short-name cust are inserted
+:customer: BNA
+:cust: BNA
+
+// add name of customer logo here (store in images directory)
+// Leave it "empty" WITHOUT QUOTES if not there.
+:customerlogo: Logo_Banco_de_la_Nacion_Argentina.png
+
+:custprojectmanager: Andres Iriarte
+
+// these are required for the support chapter.
+:custgss: BANCO DE LA NACION ARGENTINA
+:nogss: SG0021907
+
+// --------------------------------
+// Other Vars
+// --------------------------------

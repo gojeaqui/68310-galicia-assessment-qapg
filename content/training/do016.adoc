@@ -1,0 +1,35 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Descripción general técnica de Red Hat OpenShift Virtualization (DO016)
+
+[.big]#*Descripción general del curso*#
+
+*Comience la capacitación gratuita sobre Red Hat OpenShift Virtualization.*
+
+Andrew Sullivan, gerente principal de marketing técnico, le brindará una descripción general técnica de Red Hat OpenShift Virtualization. En esta serie de videos a los que se accede por solicitud, los estudiantes obtendrán conocimientos prácticos sobre la creación de máquinas virtuales, su gestión, la configuración de redes, la migración eficiente de máquinas virtuales a OpenShift Virtualization y la manera de garantizar que exista alta disponibilidad.
+
+[.big]#*Resumen del contenido del curso*#
+
+* Introducción de la descripción general técnica
+* Creación y gestión de máquinas virtuales
+* Redes de máquinas virtuales y hosts
+* Almacenamiento de máquinas virtuales
+* Alta disponibilidad y gestión de servidores dedicados (bare metal)
+* Kit de herramientas de migración para virtualización
+* Próximos pasos para continuar con la capacitación
+
+[.big]#*Público al que va dirigido el curso*#
+
+* Administradores de máquinas virtuales interesados en trasladar las cargas de trabajo virtualizadas de los hipervisores tradicionales a OpenShift Virtualization
+* Administradores de Kubernetes (administradores e ingenieros de clústeres) que deseen admitir cargas de trabajo en contenedores y virtualizadas en el mismo clúster de OpenShift
+
+[.big]#*Capacitación recomendada*#
+
+* No hay requisitos previos para observar esta descripcion general técnica
+
+[.big]#*Aspectos tecnológicos que debe tener en cuenta*#
+
+* N/C
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/do016-red-hat-openshift-virtualization-technical-overview

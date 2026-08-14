@@ -1,0 +1,38 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Storage"
+  severity_key: "Medium"
+  tags: ["Storage"]
+  tag_keys:
+    - "Persistent Storage"
+  description: "Optimizing storage for VMs"
+  references:
+    - title: "Configuring storage for VMs"
+      url: "https://docs.openshift.com/container-platform/4.16/storage/index.html"
+  check_procedures:
+    - type: survey
+      question: "Do you monitor storage performance for virtual machines?"
+    - type: survey
+      question: "Is storage latency and throughput sufficient for workloads?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Storage optimized"
+      description_long_text: "Storage is properly optimized for virtualized workloads."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Storage not optimized"
+      description_long_text: "Storage configuration is not optimized, leading to performance bottlenecks."
+      impact_and_risk_text: "Poor storage performance can degrade VM responsiveness."
+      remediation_text: "Optimize storage configuration to improve VM performance."
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

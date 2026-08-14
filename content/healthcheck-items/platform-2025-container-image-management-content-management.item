@@ -1,0 +1,36 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Container Image Management"
+  severity_key: "Not defined"
+  tag_keys:
+    - "OpenShift Cluster Configuration"
+  tags: []
+  description: "Container Image Content"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "How do you manage container images and version control?"
+    - type: survey
+      question: "What container image repository tool do you use?"
+    - type: survey
+      question: "How do you promote container image content between lifecycle environments (dev, test, prod)?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill in details
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

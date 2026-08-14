@@ -1,0 +1,58 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Troubleshooting"
+  severity_key: "Not defined"
+  tags: []
+  description: "Application Troubleshooting"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "How do you debug containerized applications?"
+    - type: survey
+      question: "What tools are used for logging and monitoring application issues?"
+    - type: survey
+      question: "How often are troubleshooting procedures reviewed and updated?"
+    - type: survey
+      question: "What challenges have you faced in diagnosing application issues?"
+    - type: survey
+      question: "How is root cause analysis conducted for recurring issues?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe app troubleshooting.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Procedimientos de resolución de problemas obsoletos"
+      description_long_text: "Los procedimientos de resolución de problemas no se revisan periódicamente."
+      impact_and_risk_text: "Los procedimientos obsoletos pueden provocar tiempos de inactividad prolongados."
+      remediation_text: "Establecer un programa regular para revisar y actualizar los procedimientos de resolución de problemas."
+    - key: "advisory02"
+      scenario_description_short_text: "Revisar las herramientas de registro y monitoreo"
+      description_long_text: "Se recomienda revisar periódicamente las herramientas de registro y monitoreo para garantizar que satisfagan las necesidades actuales."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar las herramientas actuales y explorar nuevas opciones si es necesario."
+    - key: "no_change01"
+      scenario_description_short_text: "Prácticas de resolución de problemas adecuadas"
+      description_long_text: "Las prácticas actuales de resolución de problemas son suficientes"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Desafíos en el Diagnóstico de Problemas"
+      description_long_text: "Existen desafíos para diagnosticar eficazmente los problemas de las aplicaciones."
+      impact_and_risk_text: "Un diagnóstico incorrecto puede provocar problemas sin resolver y un mayor tiempo de inactividad."
+      remediation_text: "Implemente las mejores prácticas para diagnosticar problemas y asegúrese de contar con las herramientas adecuadas."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

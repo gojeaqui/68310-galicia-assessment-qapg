@@ -1,0 +1,223 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Security"
+  description: "Forward OpenShift audit logs to external logging system"
+  references: 
+  - title: "Forwarding logs to external third-party logging systems"
+    url: "https://docs.openshift.com/container-platform/latest/observability/logging/log_collection_forwarding/configuring-log-forwarding.html"
+  - title: "Understanding cluster logging"
+    url: "https://docs.openshift.com/container-platform/latest/observability/logging/cluster-logging.html"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: "survey"
+      question: "Does the organization require that audit logs are sent to a logging system external to OpenShift?"
+    - type: "survey"
+      question: "Are audit logs being forwarded to an external logging system?"
+    - type: "command"
+      question: "find out the forwarding configs in openshift-logging namespace"
+      command: |
+        # 'Review the output under "status" for fluentd pods, logs
+        oc get clusterlogging instance -n openshift-logging -o yaml
+        oc get clusterlogforwarder -n openshift-logging -o yaml
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Log Forwarding configured"
+    description_long_text: "Log forwarding is configured for the OpenShift audit pipeline to an external logging system"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Log Forwarding not configured"
+    description_long_text: "Log forwarding is not configured for the OpenShift audit pipeline to an external logging system"
+    impact_and_risk_text: "An external logging system protects the confidentiality, integrity, and availability of audit logs"
+    remediation_text: "Configure external log forwarding for audit logs"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+
+  outcome_evidence: |
+    
+    [openshift@bastion ~]$ # 'Review the output under "status" for fluentd pods, logs
+
+    ---
+
+    [openshift@bastion ~]$ oc get clusterlogging instance -n openshift-logging -o yaml
+    apiVersion: logging.openshift.io/v1
+    kind: ClusterLogging
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/last-applied-configuration: |
+          {"apiVersion":"logging.openshift.io/v1","kind":"ClusterLogging","metadata":{"annotations":{},"name":"instance","namespace":"openshift-logging"},"spec":{"collection":{"logs":{"fluentd":{},"type":"fluentd"}},"curation":{"curator":{"nodeSelector":{"node-role.kubernetes.io/infra":""},"schedule":"30 3 * * *","tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/infra","value":"reserved"},{"effect":"NoExecute","key":"node-role.kubernetes.io/infra","value":"reserved"}]},"type":"curator"},"logStore":{"elasticsearch":{"nodeCount":3,"nodeSelector":{"node-role.kubernetes.io/infra":""},"redundancyPolicy":"SingleRedundancy","storage":{"size":"500Gi","storageClassName":"thin"},"tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/infra","value":"reserved"},{"effect":"NoExecute","key":"node-role.kubernetes.io/infra","value":"reserved"}]},"type":"elasticsearch"},"managementState":"Managed","visualization":{"kibana":{"nodeSelector":{"node-role.kubernetes.io/infra":""},"replicas":1,"tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/infra","value":"reserved"},{"effect":"NoExecute","key":"node-role.kubernetes.io/infra","value":"reserved"}]},"type":"kibana"}}}
+      creationTimestamp: "2022-08-24T20:51:27Z"
+      generation: 25
+      name: instance
+      namespace: openshift-logging
+      resourceVersion: "1039306392"
+      uid: fb0f4611-f11e-4618-9947-3eb686739d9a
+    spec:
+      collection:
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
+          operator: Exists
+        - effect: NoExecute
+          key: node-role.kubernetes.io/infra
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoExecute
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        type: vector
+      curation:
+        curator:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          schedule: 30 3 * * *
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/infra
+            operator: Exists
+          - effect: NoExecute
+            key: node-role.kubernetes.io/infra
+            operator: Exists
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/master
+            operator: Exists
+          - effect: NoExecute
+            key: node-role.kubernetes.io/master
+            operator: Exists
+        type: curator
+      logStore:
+        lokistack:
+          name: logging-loki
+        type: lokistack
+      managementState: Managed
+      visualization:
+        kibana:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          replicas: 1
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/infra
+          - effect: NoExecute
+            key: node-role.kubernetes.io/infra
+        type: kibana
+    status:
+      collection:
+        logs:
+          fluentdStatus:
+            daemonSet: collector
+            nodes:
+              collector-9cgxg: oscdmzprd01-n5xps-master-0
+              collector-b8chr: oscdmzprd01-n5xps-master-2
+              collector-fzfhn: oscdmzprd01-n5xps-worker-cx9kl
+              collector-jq5w8: oscdmzprd01-n5xps-worker-bqb24
+              collector-jvtnw: oscdmzprd01-n5xps-master-1
+              collector-n5lh8: oscdmzprd01-n5xps-worker-2f4z2
+              collector-p9vxj: oscdmzprd01-n5xps-worker-g988l
+            pods:
+              failed: []
+              notReady: []
+              ready:
+              - collector-9cgxg
+              - collector-b8chr
+              - collector-fzfhn
+              - collector-jq5w8
+              - collector-jvtnw
+              - collector-n5lh8
+              - collector-p9vxj
+      conditions:
+      - lastTransitionTime: "2022-08-24T20:53:48Z"
+        status: "False"
+        type: CollectorDeadEnd
+      - lastTransitionTime: "2022-08-24T20:53:36Z"
+        message: curator is deprecated in favor of defining retention policy
+        reason: ResourceDeprecated
+        status: "True"
+        type: CuratorRemoved
+      - lastTransitionTime: "2025-08-26T00:58:49Z"
+        status: "True"
+        type: Ready
+      curation: {}
+      logStore:
+        elasticsearchStatus:
+        - cluster:
+            activePrimaryShards: 254
+            activeShards: 508
+            initializingShards: 0
+            numDataNodes: 3
+            numNodes: 3
+            pendingTasks: 0
+            relocatingShards: 0
+            status: green
+            unassignedShards: 0
+          clusterName: elasticsearch
+          nodeConditions:
+            elasticsearch-cdm-0l2d423c-1: []
+            elasticsearch-cdm-0l2d423c-2: []
+            elasticsearch-cdm-0l2d423c-3: []
+          nodeCount: 3
+          pods:
+            client:
+              failed: []
+              notReady: []
+              ready:
+              - elasticsearch-cdm-0l2d423c-1-6b45db6847-4n2hb
+              - elasticsearch-cdm-0l2d423c-2-6c886bf4c6-4srgm
+              - elasticsearch-cdm-0l2d423c-3-5bcff975f7-wnlsm
+            data:
+              failed: []
+              notReady: []
+              ready:
+              - elasticsearch-cdm-0l2d423c-1-6b45db6847-4n2hb
+              - elasticsearch-cdm-0l2d423c-2-6c886bf4c6-4srgm
+              - elasticsearch-cdm-0l2d423c-3-5bcff975f7-wnlsm
+            master:
+              failed: []
+              notReady: []
+              ready:
+              - elasticsearch-cdm-0l2d423c-1-6b45db6847-4n2hb
+              - elasticsearch-cdm-0l2d423c-2-6c886bf4c6-4srgm
+              - elasticsearch-cdm-0l2d423c-3-5bcff975f7-wnlsm
+          shardAllocationEnabled: all
+      visualization:
+        kibanaStatus:
+        - deployment: kibana
+          pods:
+            failed: []
+            notReady: []
+            ready:
+            - kibana-586c95fcd-srhq5
+          replicaSets:
+          - kibana-586c95fcd
+          - kibana-6f4f5689db
+          replicas: 1
+    ---
+
+    [openshift@bastion ~]$ oc get clusterlogforwarder -n openshift-logging -o yaml
+    apiVersion: v1
+    items: []
+    kind: List
+    metadata:
+      resourceVersion: ""
+    ---

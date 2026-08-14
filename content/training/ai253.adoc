@@ -1,0 +1,45 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Creating Machine Learning Models with Python and Red Hat OpenShift AI (AI253)
+
+[.big]#*Descripción general del curso*#
+
+*Introducción a la programación con Python, a los conceptos de machine learning (aprendizaje automático) y a la manera de usar la inteligencia artificial de Red Hat OpenShift para entrenar modelos de machine learning.*
+
+Python es un lenguaje de programación popular que utilizan los administradores de sistemas, los analistas de datos y los desarrolladores para crear aplicaciones, realizar análisis estadísticos y entrenar modelos de inteligencia artificial/machine learning. Este curso presenta a los estudiantes el lenguaje Python y les enseña los conceptos básicos y los diferentes tipos de machine learning. Además, les ofrece experiencia práctica que les permite desarrollar habilidades básicas, como la de utilizar Red Hat OpenShift AI en el entrenamiento de modelos de machine learning siguiendo las prácticas recomendadas.
+
+El curso se basa en Python 3, RHEL 9.0, Red Hat OpenShift® 4.14 y Red Hat OpenShift AI 2.8.
+
+*Nota:* Este curso se ofrece en modalidad presencial o virtual con una duración de cuatro o cinco días, respectivamente. Los tiempos pueden variar conforme lo realice. Para obtener la información completa sobre el curso, el cronograma y los precios, seleccione su ubicación y, luego, "Explorar ahora" en el menú de la derecha.
+
+[.big]#*Resumen del contenido del curso*#
+
+* Conceptos básicos de la sintaxis, las funciones y los tipos de datos de Python
+* Depuración de scripts de Python con el depurador de Python (pdb)
+* Gestión de datos compuestos por medio del uso de estructuras de datos de Python, como diccionarios, conjuntos, tuplas y listas
+* Programación orientada a objetos en Python y gestión de las excepciones
+* Lectura y escritura de archivos en Python y análisis de datos de JSON
+* Uso de expresiones regulares eficaces para manipular texto en Python
+* Estructuración efectiva de grandes programas de Python con módulos y espacios de nombres
+* Introducción al machine learning
+* Entrenamiento de modelos
+* Mejora del entrenamiento de modelos con RHOAI
+
+[.big]#*Público al que va dirigido*#
+
+* Analistas de datos y especialistas de la inteligencia artificial que deseen utilizar Red Hat OpenShift AI para diseñar y entrenar modelos de machine learning
+* Desarrolladores que deseen diseñar e integrar aplicaciones que utilizan inteligencia artificial/machine learning
+* Ingenieros de MLOps responsables de instalar, configurar, implementar y supervisar las aplicaciones de inteligencia artificial/machine learning en Red Hat OpenShift AI
+
+[.big]#*Capacitación recomendada*#
+
+* Se requiere experiencia en Git.
+* Se requiere tener experiencia en Red Hat OpenShift o haber realizado el cursohttps://www.redhat.com/es/services/training/red-hat-openshift-developer-ii-building-and-deploying-cloud-native-applications[Red Hat OpenShift Developer II: Building and Deploying Cloud-native Applications (DO288)].
+* Se recomienda tener experiencia básica en la inteligencia artificial, el análisis de datos y el machine learning.
+
+[.big]#*Aspectos tecnológicos que debe tener en cuenta*#
+
+* No hay aulas disponibles para la capacitación guiada por instructor (ILT).
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/ai253-creating-machine-learning-models-python-and-red-hat-openshift-ai

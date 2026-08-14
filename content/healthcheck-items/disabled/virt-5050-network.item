@@ -1,0 +1,45 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Network Configuration"
+  severity_key: "Medium"
+  tags: ["Network Configuration", "OpenShift Virtualization"]
+  tag_keys:
+    - "Networking"
+    - "Post-Installation"
+    - "Virtual Machines"
+  description: "Ensuring OpenShift Virtualization network configuration is optimized and validated post-installation."
+  references:
+    - title: "Configuring OpenShift Virtualization Networking Post-Installation"
+      url: "https://docs.openshift.com/container-platform/4.16/virt/post_installation_configuration/virt-post-install-network-config.html"
+  check_procedures:
+    - type: survey
+      question: "Have you configured additional network attachments for your virtual machines post-installation?"
+    - type: survey
+      question: "Do you use Multus to provide multiple network interfaces for virtual machines?"
+    - type: survey
+      question: "Have you validated that your virtual machines can communicate over the configured networks?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Network configuration optimized"
+      description_long_text: "OpenShift Virtualization networks are configured, validated, and optimized for virtual machine communication."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Network configuration incomplete"
+      description_long_text: >
+        OpenShift Virtualization networks are not properly configured or validated, which may impact virtual machine connectivity.
+      impact_and_risk_text: >
+        Incomplete or incorrect network configurations can cause virtual machine communication failures, connectivity issues, or degraded network performance.
+      remediation_text: >
+        Use Multus to configure additional network attachments and multiple interfaces. Validate connectivity and optimize network settings post-installation.
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

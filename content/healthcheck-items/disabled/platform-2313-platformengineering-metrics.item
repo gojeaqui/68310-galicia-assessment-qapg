@@ -1,0 +1,45 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Platform Engineering"
+  severity_key:  low
+  tag_keys: []
+  tags: []
+  description: "Platform Metrics"
+  references:
+    - title: "Measuring DevSecOps Journey"
+      url: https://www.redhat.com/architect/measure-devsecops
+    - title: "DSE measures and improves DevOps"
+      url: https://www.redhat.com/en/blog/dse-measures-and-improves-devops
+    - title: "DSE measures and improves DevOps"
+      url: https://www.redhat.com/architect/engineering-metrics
+  check_procedures:
+    - type: survey
+      question: "How do you measure performance of the software engineering team?"
+    - type: survey
+      question: "Deployment frequency" # Deployment frequency measures how often changes or updates are deployed to the platform. High deployment frequency is often associated with agile practices and can indicate a more responsive and efficient development process.
+    - type: survey
+      question: "Lead Time for Changes" # Lead time for changes measures the time it takes from the initiation of a change request to its deployment into production. Shorter lead times indicate faster delivery of new features or fixes, which enhances agility and time-to-market.
+    - type: survey
+      question: "Mean Time to Restore" # MTTR measures the average time taken to repair or restore the platform after a failure or incident. A lower MTTR indicates faster incident response and resolution, which contributes to improved system reliability. 
+    - type: survey
+      question: "Change Failure Rate" # Measures the average time elapsed between system failures. It provides insights into the platform's reliability and helps identify trends in failure occurrences.
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Platform Engineering Metrics" 
+      description_long_text: ""  # By understanding the performance metrics of the organization, we can gain insights and offer recommendations for improving developer productivity and increasing OpenShift adoption.
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

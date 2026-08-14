@@ -1,0 +1,45 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Scheduling"
+  severity_key: "Not defined"
+  tags: []
+  description: "Pod scheduling"
+  references:
+    - title: "Understanding pod affinity"
+      url: "https://docs.openshift.com/container-platform/latest/nodes/scheduling/nodes-scheduler-pod-affinity.html"
+  check_procedures:
+    - type: survey
+      question: "Are pods scheduled using affinity rules?"
+    - type: survey
+      question: "Do you use taints and tolerations to control pod scheduling?"
+    - type: survey
+      question: "How do you ensure high availability through pod scheduling?"
+    - type: survey
+      question: "Are there any specific node selectors used for scheduling pods?"
+    - type: survey
+      question: "What strategies are in place to handle node failures in terms of pod scheduling?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out pod scheduling info
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "change01"
+      scenario_description_short_text: "Los pods no se programan (scheduled) con reglas de afinidad"
+      description_long_text: "Los pods no se programan con reglas de afinidad"
+      impact_and_risk_text: "Configurar la afinidad/antiafinidad de los pods puede aumentar la resiliencia de la aplicación al garantizar que los pods se distribuyan en diferentes zonas de fallo. A medida que las reglas de programación aumentan en complejidad, se debe tener más cuidado para garantizar que sean válidas y no impidan la programación de los pods"
+      remediation_text: "Considere implementar la programación de pods para mejorar la resiliencia de la aplicación"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

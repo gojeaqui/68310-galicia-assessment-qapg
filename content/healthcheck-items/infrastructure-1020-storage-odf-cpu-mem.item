@@ -1,0 +1,249 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "storage"
+  severity_key: "Not defined"
+  tags: []
+  description: "ODF CPU/Memory Check"
+  references:
+  - title: "Red Hat OpenShift Data Foundation"
+    url: "https://docs.openshift.com/container-platform/latest/storage/persistent_storage/persistent-storage-ocs.html"
+  check_procedures:
+    - type: survey
+      question: "Asegurarse de que la asignación de recursos (CPU/memoria) a los pods de ODF sea apropiada y no cause cuellos de botella."
+    - type: "command"
+      command: |
+        oc describe node | awk '/Name:/{node=$2} /openshift-storage/ && /%/{gsub(/[()]/,""); print node, $0}' | column -t
+        oc adm top pods -n openshift-storage
+        oc get nodes -l cluster.ocs.openshift.io/openshift-storage='' -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.capacity.cpu}{"\t"}{.status.capacity.memory}{"\t"}{.status.capacity.ephemeral-storage}{"\n"}{end}'
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "ODF configurado apropiadamente"
+      description_long_text: "ODF está instalado y configurado correctamente con capacidad de almacenamiento y redundancia adecuados"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "La asignación de recursos (CPU/memoria) a los pods de ODF es apropiada"
+      description_long_text: "Encontramos que los recursos de CPU y Memoria asignados a los pods de ODF no supera la capacidad de los nodos de ODF y se corresponde con el uso normal de ODF"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "ODF necesita actualización"
+      description_long_text: "La versión actual de ODF requiere una actualización para abordar los problemas conocidos o recibir nuevas funciones"
+      impact_and_risk_text: "Ejecutar versiones desactualizadas puede hacer que falten correcciones o funciones importantes."
+      remediation_text: "Actualizar ODF a la última versión compatible"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Revisión de configuración de ODF necesaria"
+      description_long_text: "La configuración de ODF requiere una revisión para un rendimiento y confiabilidad óptimos"
+      impact_and_risk_text: "La configuración subóptima puede afectar el rendimiento del almacenamiento"
+      remediation_text: "Revise y optimice la configuración de ODF de acuerdo con las mejores prácticas"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc describe node | awk '/Name:/{node=$2} /openshift-storage/ && /%/{gsub(/[()]/,""); print node, $0}' | column -t
+    oscdmzprd01-n5xps-infra-6bjvr      openshift-storage  csi-cephfsplugin-47vcg                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-infra-6bjvr      openshift-storage  csi-rbdplugin-fkqfp                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-infra-hdwjx      openshift-storage  csi-cephfsplugin-c67xg                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-infra-hdwjx      openshift-storage  csi-rbdplugin-v6dcd                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-infra-xggmf      openshift-storage  csi-cephfsplugin-59d5k                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-infra-xggmf      openshift-storage  csi-rbdplugin-ddd74                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-infra-xstc7      openshift-storage  csi-cephfsplugin-5xcq8                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-infra-xstc7      openshift-storage  csi-rbdplugin-hg82w                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-loki-9c5z2       openshift-storage  csi-cephfsplugin-dm6pb                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-loki-9c5z2       openshift-storage  csi-cephfsplugin-provisioner-fc7c7b988-n6p5c                     0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-loki-9c5z2       openshift-storage  csi-rbdplugin-provisioner-85dc544fdd-lwmkv                       0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-loki-9c5z2       openshift-storage  csi-rbdplugin-wwzw5                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-loki-tj4bh       openshift-storage  csi-cephfsplugin-f65ml                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-loki-tj4bh       openshift-storage  csi-cephfsplugin-provisioner-fc7c7b988-rnt9j                     0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-loki-tj4bh       openshift-storage  csi-rbdplugin-5m2ld                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-loki-z852k       openshift-storage  csi-cephfsplugin-x22ww                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-loki-z852k       openshift-storage  csi-rbdplugin-provisioner-85dc544fdd-slfs8                       0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-loki-z852k       openshift-storage  csi-rbdplugin-znm29                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-1-dj9c9  openshift-storage  csi-cephfsplugin-2nqps                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-1-dj9c9  openshift-storage  csi-rbdplugin-xvg8x                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-1-dj9c9  openshift-storage  noobaa-core-0                                                    999m  3%  999m   3%  4Gi    6%   4Gi    6%   56d
+    oscdmzprd01-n5xps-storage-1-dj9c9  openshift-storage  rook-ceph-crashcollector-oscdmzprd01-n5xps-storage-1-dj9c9wn6jd  0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-1-dj9c9  openshift-storage  rook-ceph-exporter-oscdmzprd01-n5xps-storage-1-dj9c9-846b8gwt7j  0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-1-dj9c9  openshift-storage  rook-ceph-mon-b-ff5699ddc-tgr8g                                  1     3%  1      3%  2Gi    3%   2Gi    3%   56d
+    oscdmzprd01-n5xps-storage-1-dj9c9  openshift-storage  rook-ceph-osd-11-7d5f7f7bf8-2qs8g                                2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-1-dj9c9  openshift-storage  rook-ceph-osd-3-77fb9cd6d-x8jkq                                  2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-1-dj9c9  openshift-storage  rook-ceph-osd-5-858d647f6c-kwg4p                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-1-dj9c9  openshift-storage  rook-ceph-osd-9-85989f654d-r69kr                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  csi-cephfsplugin-cbl9w                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  csi-rbdplugin-95dmh                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  odf-operator-controller-manager-566cbf4b5c-4qpj6                 200m  0%  200m   0%  200Mi  0%   300Mi  0%   56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  rook-ceph-crashcollector-oscdmzprd01-n5xps-storage-2-nrhkdqcldw  0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  rook-ceph-exporter-oscdmzprd01-n5xps-storage-2-nrhkd-85899mscz9  0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  rook-ceph-mds-ocs-storagecluster-cephfilesystem-a-66894dcchvscm  3     9%  3      9%  8Gi    12%  8Gi    12%  56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  rook-ceph-osd-12-745c9b4c4b-pbg7v                                2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  rook-ceph-osd-13-74b9cb8886-mx6qv                                2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  rook-ceph-osd-15-66ddb8bdc-wzbdf                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  rook-ceph-osd-16-5574489699-rncqf                                2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-2-nrhkd  openshift-storage  rook-ceph-rgw-ocs-storagecluster-cephobjectstore-a-76d689cp8vr6  2     6%  2      6%  4Gi    6%   4Gi    6%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  csi-cephfsplugin-k5cmk                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  csi-rbdplugin-qh29n                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  noobaa-endpoint-5466fbffbd-mxk8h                                 999m  3%  999m   3%  2Gi    3%   2Gi    3%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  rook-ceph-crashcollector-oscdmzprd01-n5xps-storage-3-wnsfnbb6lf  0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  rook-ceph-exporter-oscdmzprd01-n5xps-storage-3-wnsfn-557f5c56dd  0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  rook-ceph-mgr-a-64cbd8c6c-kcstm                                  1     3%  1      3%  3Gi    4%   3Gi    4%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  rook-ceph-mon-c-69787548bc-fsv4d                                 1     3%  1      3%  2Gi    3%   2Gi    3%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  rook-ceph-operator-7d79444c6f-6lc5r                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  rook-ceph-osd-1-86dd976df6-8jz5b                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  rook-ceph-osd-10-6b9db849df-2hlvt                                2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  rook-ceph-osd-4-6c5c746fd7-pfw7v                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  rook-ceph-osd-7-68958499d6-875rw                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-3-wnsfn  openshift-storage  ux-backend-server-585f748df8-mblrd                               0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  csi-cephfsplugin-frwq2                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  csi-rbdplugin-bkltj                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  ocs-metrics-exporter-c9b98f4f8-5cm64                             0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  odf-console-6bb5589f96-mslld                                     100m  0%  100m   0%  512Mi  0%   512Mi  0%   56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  rook-ceph-crashcollector-oscdmzprd01-n5xps-storage-4-d6p6k5zng9  0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  rook-ceph-exporter-oscdmzprd01-n5xps-storage-4-d6p6k-6cc75jglj9  0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  rook-ceph-mds-ocs-storagecluster-cephfilesystem-b-b79784b8jhfgp  3     9%  3      9%  8Gi    12%  8Gi    12%  56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  rook-ceph-osd-14-c579f4b76-lk5dm                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  rook-ceph-osd-17-d6879f69c-hsxdj                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  rook-ceph-osd-18-6cd57475c7-zk74v                                2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-4-d6p6k  openshift-storage  rook-ceph-osd-19-54cbc96b98-8x6wh                                2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  csi-addons-controller-manager-6d85f798cc-r5vcw                   20m   0%  1500m  4%  128Mi  0%   640Mi  1%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  csi-cephfsplugin-jcjf5                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  csi-rbdplugin-rhr7d                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  noobaa-db-pg-0                                                   500m  1%  500m   1%  4Gi    6%   4Gi    6%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  noobaa-operator-5f799ff578-6cxcb                                 250m  0%  250m   0%  512Mi  0%   512Mi  0%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  ocs-operator-654875b8cc-9pz8s                                    0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  rook-ceph-crashcollector-oscdmzprd01-n5xps-storage-5-642cg787fc  0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  rook-ceph-exporter-oscdmzprd01-n5xps-storage-5-642cg-858cfwrj8m  0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  rook-ceph-mon-a-955dbbc7f-h7xtq                                  1     3%  1      3%  2Gi    3%   2Gi    3%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  rook-ceph-osd-0-6cff5455f8-f6q7c                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  rook-ceph-osd-2-b6b6ffddb-wth8z                                  2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  rook-ceph-osd-6-855cd4574d-5nwwc                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-storage-5-642cg  openshift-storage  rook-ceph-osd-8-5977dd4db4-wflvk                                 2     6%  2      6%  5Gi    8%   5Gi    8%   56d
+    oscdmzprd01-n5xps-worker-5l8fh     openshift-storage  csi-cephfsplugin-lbw9h                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-5l8fh     openshift-storage  csi-rbdplugin-q55cm                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-b5fwt     openshift-storage  csi-cephfsplugin-26flx                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-b5fwt     openshift-storage  csi-rbdplugin-mv9np                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-f4lxl     openshift-storage  csi-cephfsplugin-4gzh5                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-f4lxl     openshift-storage  csi-rbdplugin-5msw6                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-jwpzr     openshift-storage  csi-cephfsplugin-9w5kc                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-jwpzr     openshift-storage  csi-rbdplugin-b652n                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-qvq2n     openshift-storage  csi-cephfsplugin-csk9b                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-qvq2n     openshift-storage  csi-rbdplugin-mz4cr                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-vg9vs     openshift-storage  csi-cephfsplugin-5q79p                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-vg9vs     openshift-storage  csi-rbdplugin-86l75                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-w29hd     openshift-storage  csi-cephfsplugin-crqcn                                           0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-w29hd     openshift-storage  csi-rbdplugin-xmvbk                                              0     0%  0      0%  0      0%   0      0%   56d
+    oscdmzprd01-n5xps-worker-w29hd     openshift-storage  rook-ceph-tools-967c5db49-w9h4b                                  0     0%  0      0%  0      0%   0      0%   4m2s
+    ---
+
+    [openshift@bastion ~]$ oc adm top pods -n openshift-storage
+    NAME                                                              CPU(cores)   MEMORY(bytes)   
+    csi-addons-controller-manager-6d85f798cc-r5vcw                    2m           111Mi           
+    csi-cephfsplugin-26flx                                            0m           46Mi            
+    csi-cephfsplugin-2nqps                                            0m           45Mi            
+    csi-cephfsplugin-47vcg                                            0m           40Mi            
+    csi-cephfsplugin-4gzh5                                            0m           39Mi            
+    csi-cephfsplugin-59d5k                                            0m           39Mi            
+    csi-cephfsplugin-5q79p                                            0m           41Mi            
+    csi-cephfsplugin-5xcq8                                            0m           42Mi            
+    csi-cephfsplugin-9w5kc                                            0m           43Mi            
+    csi-cephfsplugin-c67xg                                            0m           36Mi            
+    csi-cephfsplugin-cbl9w                                            0m           46Mi            
+    csi-cephfsplugin-crqcn                                            0m           42Mi            
+    csi-cephfsplugin-csk9b                                            0m           49Mi            
+    csi-cephfsplugin-dm6pb                                            0m           52Mi            
+    csi-cephfsplugin-f65ml                                            0m           56Mi            
+    csi-cephfsplugin-frwq2                                            0m           42Mi            
+    csi-cephfsplugin-jcjf5                                            0m           47Mi            
+    csi-cephfsplugin-k5cmk                                            0m           44Mi            
+    csi-cephfsplugin-lbw9h                                            0m           43Mi            
+    csi-cephfsplugin-provisioner-fc7c7b988-n6p5c                      3m           163Mi           
+    csi-cephfsplugin-provisioner-fc7c7b988-rnt9j                      0m           144Mi           
+    csi-cephfsplugin-x22ww                                            0m           51Mi            
+    csi-rbdplugin-5m2ld                                               0m           110Mi           
+    csi-rbdplugin-5msw6                                               0m           58Mi            
+    csi-rbdplugin-86l75                                               0m           61Mi            
+    csi-rbdplugin-95dmh                                               0m           65Mi            
+    csi-rbdplugin-b652n                                               0m           65Mi            
+    csi-rbdplugin-bkltj                                               0m           68Mi            
+    csi-rbdplugin-ddd74                                               0m           64Mi            
+    csi-rbdplugin-fkqfp                                               0m           61Mi            
+    csi-rbdplugin-hg82w                                               0m           71Mi            
+    csi-rbdplugin-mv9np                                               0m           61Mi            
+    csi-rbdplugin-mz4cr                                               0m           65Mi            
+    csi-rbdplugin-provisioner-85dc544fdd-lwmkv                        2m           199Mi           
+    csi-rbdplugin-provisioner-85dc544fdd-slfs8                        0m           172Mi           
+    csi-rbdplugin-q55cm                                               0m           63Mi            
+    csi-rbdplugin-qh29n                                               0m           74Mi            
+    csi-rbdplugin-rhr7d                                               0m           73Mi            
+    csi-rbdplugin-v6dcd                                               0m           66Mi            
+    csi-rbdplugin-wwzw5                                               0m           109Mi           
+    csi-rbdplugin-xmvbk                                               0m           63Mi            
+    csi-rbdplugin-xvg8x                                               0m           71Mi            
+    csi-rbdplugin-znm29                                               0m           111Mi           
+    noobaa-core-0                                                     71m          590Mi           
+    noobaa-db-pg-0                                                    16m          157Mi           
+    noobaa-endpoint-5466fbffbd-mxk8h                                  4m           160Mi           
+    noobaa-operator-5f799ff578-6cxcb                                  59m          121Mi           
+    ocs-metrics-exporter-c9b98f4f8-5cm64                              27m          58Mi            
+    ocs-operator-654875b8cc-9pz8s                                     4m           160Mi           
+    odf-console-6bb5589f96-mslld                                      0m           31Mi            
+    odf-operator-controller-manager-566cbf4b5c-4qpj6                  1m           87Mi            
+    rook-ceph-crashcollector-oscdmzprd01-n5xps-storage-1-dj9c9wn6jd   0m           7Mi             
+    rook-ceph-crashcollector-oscdmzprd01-n5xps-storage-2-nrhkdqcldw   0m           7Mi             
+    rook-ceph-crashcollector-oscdmzprd01-n5xps-storage-3-wnsfnbb6lf   0m           7Mi             
+    rook-ceph-crashcollector-oscdmzprd01-n5xps-storage-4-d6p6k5zng9   0m           7Mi             
+    rook-ceph-crashcollector-oscdmzprd01-n5xps-storage-5-642cg787fc   0m           7Mi             
+    rook-ceph-exporter-oscdmzprd01-n5xps-storage-1-dj9c9-846b8gwt7j   11m          21Mi            
+    rook-ceph-exporter-oscdmzprd01-n5xps-storage-2-nrhkd-85899mscz9   14m          20Mi            
+    rook-ceph-exporter-oscdmzprd01-n5xps-storage-3-wnsfn-557f5c56dd   10m          19Mi            
+    rook-ceph-exporter-oscdmzprd01-n5xps-storage-4-d6p6k-6cc75jglj9   10m          19Mi            
+    rook-ceph-exporter-oscdmzprd01-n5xps-storage-5-642cg-858cfwrj8m   7m           20Mi            
+    rook-ceph-mds-ocs-storagecluster-cephfilesystem-a-66894dcchvscm   7m           29Mi            
+    rook-ceph-mds-ocs-storagecluster-cephfilesystem-b-b79784b8jhfgp   9m           31Mi            
+    rook-ceph-mgr-a-64cbd8c6c-kcstm                                   17m          744Mi           
+    rook-ceph-mon-a-955dbbc7f-h7xtq                                   39m          454Mi           
+    rook-ceph-mon-b-ff5699ddc-tgr8g                                   22m          455Mi           
+    rook-ceph-mon-c-69787548bc-fsv4d                                  23m          447Mi           
+    rook-ceph-operator-7d79444c6f-6lc5r                               12m          97Mi            
+    rook-ceph-osd-0-6cff5455f8-f6q7c                                  40m          3815Mi          
+    rook-ceph-osd-1-86dd976df6-8jz5b                                  14m          3780Mi          
+    rook-ceph-osd-10-6b9db849df-2hlvt                                 20m          3822Mi          
+    rook-ceph-osd-11-7d5f7f7bf8-2qs8g                                 18m          3506Mi          
+    rook-ceph-osd-12-745c9b4c4b-pbg7v                                 44m          3764Mi          
+    rook-ceph-osd-13-74b9cb8886-mx6qv                                 27m          3830Mi          
+    rook-ceph-osd-14-c579f4b76-lk5dm                                  36m          3408Mi          
+    rook-ceph-osd-15-66ddb8bdc-wzbdf                                  30m          3289Mi          
+    rook-ceph-osd-16-5574489699-rncqf                                 32m          3521Mi          
+    rook-ceph-osd-17-d6879f69c-hsxdj                                  32m          3628Mi          
+    rook-ceph-osd-18-6cd57475c7-zk74v                                 29m          3554Mi          
+    rook-ceph-osd-19-54cbc96b98-8x6wh                                 32m          3798Mi          
+    rook-ceph-osd-2-b6b6ffddb-wth8z                                   43m          3693Mi          
+    rook-ceph-osd-3-77fb9cd6d-x8jkq                                   54m          3856Mi          
+    rook-ceph-osd-4-6c5c746fd7-pfw7v                                  21m          3871Mi          
+    rook-ceph-osd-5-858d647f6c-kwg4p                                  20m          3401Mi          
+    rook-ceph-osd-6-855cd4574d-5nwwc                                  43m          3242Mi          
+    rook-ceph-osd-7-68958499d6-875rw                                  11m          3709Mi          
+    rook-ceph-osd-8-5977dd4db4-wflvk                                  42m          3360Mi          
+    rook-ceph-osd-9-85989f654d-r69kr                                  44m          3558Mi          
+    rook-ceph-rgw-ocs-storagecluster-cephobjectstore-a-76d689cp8vr6   9m           859Mi           
+    rook-ceph-tools-967c5db49-w9h4b                                   0m           1Mi             
+    ux-backend-server-585f748df8-mblrd                                0m           39Mi            
+    ---
+
+    [openshift@bastion ~]$ oc get nodes -l cluster.ocs.openshift.io/openshift-storage='' -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.capacity.cpu}{"\t"}{.status.capacity.memory}{"\t"}{.status.capacity.ephemeral-storage}{"\n"}{end}'
+    oscdmzprd01-n5xps-storage-1-dj9c9	32	65844100Ki	209124332Ki
+    oscdmzprd01-n5xps-storage-2-nrhkd	32	65844096Ki	209124332Ki
+    oscdmzprd01-n5xps-storage-3-wnsfn	32	65844096Ki	209124332Ki
+    oscdmzprd01-n5xps-storage-4-d6p6k	32	65844100Ki	209124332Ki
+    oscdmzprd01-n5xps-storage-5-642cg	32	65844096Ki	209124332Ki
+    ---

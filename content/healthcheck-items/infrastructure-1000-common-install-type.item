@@ -1,0 +1,62 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Common"
+  severity_key: "Not defined"
+  tag_keys: []
+  tags: []
+  description: "Installation Type"
+  references: 
+  - title: "Openshift Installation Type"
+    url: "https://docs.openshift.com/container-platform/latest/installing/installing-preparing.html#supported-installation-methods-for-different-platforms"
+  check_procedures:
+    - type: "survey"
+      question: "What installation method was utilized for the installation of the OpenShift Cluster?"
+    - type: "survey"
+      question: "Was the installation process documented and shared with relevant teams?"
+    - type: "survey"
+      question: "Are there any challenges faced during the installation process that need addressing?"
+  common_outcomes:
+  - key: scenario1
+    scenario_description_short_text: "Instalación IPI soportada"
+    description_long_text: "El cliente utiliza el método de Infraestructura Proporcionada por el Instalador (IPI) compatible con el proveedor de infraestructura/nube de su elección"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: scenario2
+    scenario_description_short_text: "Instalación UPI soportada (Manual)"
+    description_long_text: "El cliente utiliza el método de Infraestructura Proporcionada por el Usuario (UPI) compatible con el proveedor de infraestructura/nube de su elección. La parte aprovisionada por el usuario es un proceso completamente manual."
+    impact_and_risk_text: "La capacidad del cliente para implementar de forma repetitiva, consistente y eficiente se ve obstaculizada por procesos manuales y acciones técnicas, lo que provoca retrasos o impedimentos."
+    remediation_text: "Utilizando un marco de automatización de su elección, considere automatizar todos los prerrequisitos técnicos, integraciones y procesos para optimizar la experiencia de instalación."
+  - key: scenario3
+    scenario_description_short_text: "Instalación UPI soportada (parcialmente automatizada)"
+    description_long_text: "El cliente utiliza el método de Infraestructura Proporcionada por el Usuario (UPI) compatible con el proveedor de infraestructura/nube de su elección. El cliente ha automatizado parcialmente la parte aprovisionada por el usuario."
+    impact_and_risk_text: "La capacidad del cliente para implementar de forma repetitiva, consistente y eficiente se ve obstaculizada por procesos manuales y acciones técnicas, lo que provoca retrasos o impedimentos."
+    remediation_text: "Utilizando un marco de automatización de su elección, considere automatizar todos los prerrequisitos técnicos, integraciones y procesos para optimizar la experiencia de instalación."
+  - key: scenario4
+    scenario_description_short_text: "Instalación UPI soportada (Automatizada)"
+    description_long_text: "El cliente utiliza el método de Infraestructura Proveída por el Usuario (UPI) compatible con el proveedor de infraestructura/nube de su elección. El cliente ha automatizado completamente la parte provista por el usuario."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: scenario5
+    scenario_description_short_text: "Instalador basado en agente (Agent Based Installer) - Automatizado"
+    description_long_text: "El cliente utiliza el método de instalación basado en agente en el proveedor de infraestructura de su elección. La parte aprovisionada por el usuario ha sido automatizada por el cliente."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: advisory01
+    scenario_description_short_text: "Documentación de instalación"
+    description_long_text: "Asegurar que el proceso de instalación esté bien documentado y sea accesible para todos los equipos relevantes."
+    impact_and_risk_text: "Facilita el intercambio de conocimientos y reduce la dependencia de personas específicas."
+    remediation_text: "Crear y mantener documentación de instalación completa."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: pass
+  common_outcome_key: "scenario1"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

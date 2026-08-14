@@ -1,0 +1,57 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Lifecycle Management"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Cluster Version"
+  references: 
+  - title: "Red Hat OpenShift Container Platform Life Cycle Policy"
+    url: "https://access.redhat.com/support/policy/updates/openshift"
+  - title: "Understanding OpenShift Updates"
+    url: "https://docs.openshift.com/container-platform/latest/updating/understanding_updates/intro-to-updates.html"
+  - title: "Migration from OpenShift Container Platform 3 to 4 overview"
+    url: "https://docs.openshift.com/container-platform/latest/migrating_from_ocp_3_to_4/index.html"
+  check_procedures:
+    - type: "survey"
+      question: "is the cluster version a supported version ? "
+    - type: "command"
+      question: ""
+      command: |
+          oc get clusterversion 
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Supported Cluster Version"
+    description_long_text: "Current cluster version is supported by Red Hat and is the latest."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_required01"
+    scenario_description_short_text: "Unsupported Cluster Version"
+    description_long_text: "Cluster version is no longer supported by Red Hat. Upgrade at least to an Extended Update Support (EUS) release version to keep Red Hat support."
+    impact_and_risk_text: "Full functionality of an OpenShift cluster(s) may require access to hosted services provided by Red Hat, the availability of these services cannot be guaranteed for unmaintained and unsupported versions of OpenShift."
+    remediation_text: "Upgrade to latest supported release of OpenShift."
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Versión del clúster desactualizada"
+    description_long_text: "La versión actual del clúster cuenta con el soporte de Red Hat, pero no es la más reciente."
+    impact_and_risk_text: "Para que un clúster de OpenShift funcione correctamente, puede ser necesario acceder a servicios alojados proporcionados por Red Hat. No se puede garantizar la disponibilidad de estos servicios para versiones de OpenShift sin mantenimiento ni soporte."
+    remediation_text: "Actualice a la última versión compatible de OpenShift."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: changes_recommended
+  common_outcome_key: "changes_recommended01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get clusterversion
+    NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
+    version   4.14.52   True        False         120d    Cluster version is 4.14.52
+    ---

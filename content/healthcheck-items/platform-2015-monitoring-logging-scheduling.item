@@ -1,0 +1,43 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Scheduling"
+  description: "OpenShift logging pods are scheduled on appropriate nodes"
+  references: 
+  - title: "Moving OpenShift Logging resources with node selectors"
+    url: "https://docs.openshift.com/container-platform/latest/observability/logging/scheduling_resources/logging-node-selectors.html"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: "survey"
+      question: "Are the OpenShift logging pods scheduled on nodes that should not impact critical functions of the cluster?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Logging running on correct nodes"
+    description_long_text: "pods are running on nodes that are appropriately sized and not interfering with other OCP components"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Logging pods on wrong nodes"
+    description_long_text: "pods are running on nodes that may not be appropriately sized and may interfere with other OCP components"
+    impact_and_risk_text: "Logging can consume significant resources from the node it is running on and the underlying storage. It should be scheduled seperately from crtical OCP components such as etcd, api server and controllers. Depending on the level of load it may also need to be scheduled on dedicated nodes."
+    remediation_text: "Move the components to infrastructure nodes that can handle the logging loads."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

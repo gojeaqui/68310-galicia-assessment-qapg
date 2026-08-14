@@ -1,0 +1,19 @@
+////
+Proposito
+-------
+In one or two sentences summarize the customer's business - include what
+industry they are in, whether they are local, nationwide or global, include
+some description of their size, scope of impact, or significant achievement.
+In the next one to two sentences focus on how the customer is using technology,
+if possible cite the specific technology Red Hat is
+providing/supporting/augmenting.
+
+Sample
+------
+ACME Financial is a global financial institution operating in over 100 countries.  ACME-F is the leading financier for construction projects in the United States and ranks #2 globally.  ACME-F uses machine learning to rapidly identify fraudulent activity on its personal banking platform, and to evaluate risk in its commercial ventures.
+
+////
+
+image::banco_nacion_plaza_mayo_1200_fachada_0.jpg[]
+
+El Banco de la Nación Argentina (BNA) es el principal banco público de Argentina, fundado en 1891 para afrontar una crisis económica y promover actividades agropecuarias. Se transformó recientemente en sociedad anónima (BNA S.A.), aunque el Estado Nacional sigue siendo su único accionista mayoritario. Ofrece una amplia gama de servicios financieros y juega un rol clave en la política económica nacional al distribuir crédito y brindar servicios en zonas donde la banca privada no tiene presencia. 

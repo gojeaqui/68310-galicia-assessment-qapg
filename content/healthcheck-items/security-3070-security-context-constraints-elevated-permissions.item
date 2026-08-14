@@ -1,0 +1,63 @@
+version: v2
+check_definition:
+  category_key: "security"
+  subcategory_key: "Security Context Constraints"
+  severity_key: "Not defined"
+  tags: []
+  description: "Elevated Privileges"
+  references: 
+  - title: "Managing security context constraints"
+    url: "https://docs.openshift.com/container-platform/latest/authentication/managing-security-context-constraints.html"
+  check_procedures:
+    - type: command
+      command: |
+        oc get scc -o jsonpath='{range .items[*]}{.metadata.name} {.groups} {.users} {"\n"}{end}'
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Privilegios de las cuentas configurados correctamente"
+    description_long_text: "Los privilegios de los Security Context Constraints están configurados correctamente"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "Elevated Privileges"
+    description_long_text: "Elevated Privileges on service accounts"
+    impact_and_risk_text: "accounts detected with high privileges, which can be reused by unintended pods"
+    remediation_text: "Where possible, limit or remove unnecessary privileges"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get scc -o jsonpath='{range .items[*]}{.metadata.name} {.groups} {.users} {"\n"}{end}'
+    anyuid ["system:cluster-admins"] [] 
+    elasticsearch-scc [] [] 
+    hostaccess [] [] 
+    hostmount-anyuid [] ["system:serviceaccount:openshift-infra:pv-recycler-controller"] 
+    hostnetwork [] [] 
+    hostnetwork-v2 [] [] 
+    logging-scc [] [] 
+    machine-api-termination-handler [] ["system:serviceaccount:openshift-machine-api:machine-api-termination-handler"] 
+    node-exporter [] [] 
+    nonroot [] [] 
+    nonroot-v2 [] [] 
+    noobaa [] [] 
+    noobaa-db [] [] 
+    noobaa-endpoint [] [] 
+    privileged ["system:cluster-admins","system:nodes","system:masters"] ["system:admin","system:serviceaccount:openshift-infra:build-controller"] 
+    restricted ["system:authenticated"] [] 
+    restricted-v2 [] [] 
+    rook-ceph [] ["system:serviceaccount:openshift-storage:rook-ceph-system","system:serviceaccount:openshift-storage:default","system:serviceaccount:openshift-storage:rook-ceph-mgr","system:serviceaccount:openshift-storage:rook-ceph-osd","system:serviceaccount:openshift-storage:rook-ceph-rgw"] 
+    rook-ceph-csi [] ["system:serviceaccount:openshift-storage:rook-csi-rbd-plugin-sa","system:serviceaccount:openshift-storage:rook-csi-rbd-provisioner-sa","system:serviceaccount:openshift-storage:rook-csi-cephfs-plugin-sa","system:serviceaccount:openshift-storage:rook-csi-cephfs-provisioner-sa","system:serviceaccount:openshift-storage:rook-csi-nfs-plugin-sa","system:serviceaccount:openshift-storage:rook-csi-nfs-provisioner-sa"] 
+    trident-controller [] ["system:serviceaccount:bna-trident-dmzprd01:trident-controller"] 
+    trident-node-linux [] ["system:serviceaccount:bna-trident-dmzprd01:trident-node-linux"] 
+    velero-privileged [] ["system:admin","system:serviceaccount:openshift-adp:velero"] 
+    ---

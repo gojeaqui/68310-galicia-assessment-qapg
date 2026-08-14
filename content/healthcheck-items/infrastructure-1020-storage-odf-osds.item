@@ -1,0 +1,135 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "storage"
+  severity_key: "Not defined"
+  tags: []
+  description: "ODF OSD Component Check"
+  references:
+  - title: "Red Hat OpenShift Data Foundation"
+    url: "https://docs.openshift.com/container-platform/latest/storage/persistent_storage/persistent-storage-ocs.html"
+  check_procedures:
+    - type: survey
+      question: "Revisar el número de OSDs (Object Storage Daemons) y su distribución a través de los nodos de almacenamiento."
+    - type: survey
+      question: "Confirmar la configuración del almacenamiento subyacente para los OSDs (ej. dispositivos RAW, LVM, etc.) y su rendimiento."
+    - type: "command"
+      command: |
+        oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph osd status
+        oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph osd tree
+        oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph osd df
+        oc get pvc -n openshift-storage
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "ODF configurado apropiadamente"
+      description_long_text: "ODF está instalado y configurado correctamente con capacidad de almacenamiento y redundancia adecuados"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "Discos OSD correctamente balanceados"
+      description_long_text: "Se encontró que los discos OSD están correctamente balanceados y configurados como SSD por performance"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "ODF necesita actualización"
+      description_long_text: "La versión actual de ODF requiere una actualización para abordar los problemas conocidos o recibir nuevas funciones"
+      impact_and_risk_text: "Ejecutar versiones desactualizadas puede hacer que falten correcciones o funciones importantes."
+      remediation_text: "Actualizar ODF a la última versión compatible"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Revisión de configuración de ODF necesaria"
+      description_long_text: "La configuración de ODF requiere una revisión para un rendimiento y confiabilidad óptimos"
+      impact_and_risk_text: "La configuración subóptima puede afectar el rendimiento del almacenamiento"
+      remediation_text: "Revise y optimice la configuración de ODF de acuerdo con las mejores prácticas"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph osd status
+    ID  HOST                                USED  AVAIL  WR OPS  WR DATA  RD OPS  RD DATA  STATE      
+     0  oscdmzprd01-n5xps-storage-5-642cg  89.9G  15.4T      0     4915       0       49   exists,up  
+     1  oscdmzprd01-n5xps-storage-3-wnsfn   103G  15.3T      0        0       0        0   exists,up  
+     2  oscdmzprd01-n5xps-storage-5-642cg  94.5G  15.4T      0     2457       0       24   exists,up  
+     3  oscdmzprd01-n5xps-storage-1-dj9c9  97.9G  15.4T      0      819       2      106   exists,up  
+     4  oscdmzprd01-n5xps-storage-3-wnsfn  90.8G  15.4T      0        0       0        0   exists,up  
+     5  oscdmzprd01-n5xps-storage-1-dj9c9  89.6G  15.4T      1     4096       0       24   exists,up  
+     6  oscdmzprd01-n5xps-storage-5-642cg  91.0G  15.4T      0      686k      0        0   exists,up  
+     7  oscdmzprd01-n5xps-storage-3-wnsfn  97.7G  15.4T      2     2716k      0        0   exists,up  
+     8  oscdmzprd01-n5xps-storage-5-642cg  88.8G  15.4T      0     1638       0        0   exists,up  
+     9  oscdmzprd01-n5xps-storage-1-dj9c9  94.5G  15.4T      0        0       0        0   exists,up  
+    10  oscdmzprd01-n5xps-storage-3-wnsfn  93.6G  15.4T      0      819       0       24   exists,up  
+    11  oscdmzprd01-n5xps-storage-1-dj9c9  88.2G  15.4T      0      199k      0        0   exists,up  
+    12  oscdmzprd01-n5xps-storage-2-nrhkd  95.7G  15.4T      0      298k      0        0   exists,up  
+    13  oscdmzprd01-n5xps-storage-2-nrhkd  95.4G  15.4T      0        0       0       49   exists,up  
+    14  oscdmzprd01-n5xps-storage-4-d6p6k  83.4G  15.4T      0        0       0      230   exists,up  
+    15  oscdmzprd01-n5xps-storage-2-nrhkd  92.2G  15.4T      0     6553       0        0   exists,up  
+    16  oscdmzprd01-n5xps-storage-2-nrhkd  79.1G  15.4T      0     7372       1       49   exists,up  
+    17  oscdmzprd01-n5xps-storage-4-d6p6k  89.8G  15.4T      0      819       0       49   exists,up  
+    18  oscdmzprd01-n5xps-storage-4-d6p6k  99.4G  15.4T      0     5734       0        0   exists,up  
+    19  oscdmzprd01-n5xps-storage-4-d6p6k  91.3G  15.4T      1     6553       0        0   exists,up  
+    ---
+
+    [openshift@bastion ~]$ oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph osd tree
+    ID   CLASS  WEIGHT     TYPE NAME                                   STATUS  REWEIGHT  PRI-AFF
+     -1         310.00000  root default                                                         
+     -7          62.00000      host oscdmzprd01-n5xps-storage-1-dj9c9                           
+      3    ssd   15.50000          osd.3                                   up   1.00000  1.00000
+      5    ssd   15.50000          osd.5                                   up   1.00000  1.00000
+      9    ssd   15.50000          osd.9                                   up   1.00000  1.00000
+     11    ssd   15.50000          osd.11                                  up   1.00000  1.00000
+     -9          62.00000      host oscdmzprd01-n5xps-storage-2-nrhkd                           
+     12    ssd   15.50000          osd.12                                  up   1.00000  1.00000
+     13    ssd   15.50000          osd.13                                  up   1.00000  1.00000
+     15    ssd   15.50000          osd.15                                  up   1.00000  1.00000
+     16    ssd   15.50000          osd.16                                  up   1.00000  1.00000
+     -5          62.00000      host oscdmzprd01-n5xps-storage-3-wnsfn                           
+      1    ssd   15.50000          osd.1                                   up   1.00000  1.00000
+      4    ssd   15.50000          osd.4                                   up   1.00000  1.00000
+      7    ssd   15.50000          osd.7                                   up   1.00000  1.00000
+     10    ssd   15.50000          osd.10                                  up   1.00000  1.00000
+    -11          62.00000      host oscdmzprd01-n5xps-storage-4-d6p6k                           
+     14    ssd   15.50000          osd.14                                  up   1.00000  1.00000
+     17    ssd   15.50000          osd.17                                  up   1.00000  1.00000
+     18    ssd   15.50000          osd.18                                  up   1.00000  1.00000
+     19    ssd   15.50000          osd.19                                  up   1.00000  1.00000
+     -3          62.00000      host oscdmzprd01-n5xps-storage-5-642cg                           
+      0    ssd   15.50000          osd.0                                   up   1.00000  1.00000
+      2    ssd   15.50000          osd.2                                   up   1.00000  1.00000
+      6    ssd   15.50000          osd.6                                   up   1.00000  1.00000
+      8    ssd   15.50000          osd.8                                   up   1.00000  1.00000
+    ---
+
+    [openshift@bastion ~]$ oc exec -n openshift-storage $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph osd df
+    ID  CLASS  WEIGHT    REWEIGHT  SIZE     RAW USE  DATA     OMAP     META      AVAIL    %USE  VAR   PGS  STATUS
+     3    ssd  15.50000   1.00000   16 TiB   98 GiB   97 GiB    6 KiB   1.2 GiB   15 TiB  0.62  1.06   84      up
+     5    ssd  15.50000   1.00000   16 TiB   90 GiB   89 GiB   28 MiB   673 MiB   15 TiB  0.56  0.97   89      up
+     9    ssd  15.50000   1.00000   16 TiB   95 GiB   94 GiB   75 KiB   965 MiB   15 TiB  0.60  1.02   89      up
+    11    ssd  15.50000   1.00000   16 TiB   88 GiB   87 GiB  7.3 MiB   1.3 GiB   15 TiB  0.56  0.96   82      up
+    12    ssd  15.50000   1.00000   16 TiB   96 GiB   95 GiB   30 MiB   1.0 GiB   15 TiB  0.60  1.04  100      up
+    13    ssd  15.50000   1.00000   16 TiB   95 GiB   95 GiB   29 MiB   984 MiB   15 TiB  0.60  1.03   84      up
+    15    ssd  15.50000   1.00000   16 TiB   92 GiB   92 GiB   72 KiB   656 MiB   15 TiB  0.58  1.00   95      up
+    16    ssd  15.50000   1.00000   16 TiB   79 GiB   78 GiB  7.6 MiB   1.3 GiB   15 TiB  0.50  0.86   85      up
+     1    ssd  15.50000   1.00000   16 TiB  103 GiB  102 GiB   22 MiB   905 MiB   15 TiB  0.65  1.12   94      up
+     4    ssd  15.50000   1.00000   16 TiB   91 GiB   90 GiB   29 MiB   1.1 GiB   15 TiB  0.57  0.98   85      up
+     7    ssd  15.50000   1.00000   16 TiB   98 GiB   97 GiB  307 KiB   895 MiB   15 TiB  0.62  1.06   87      up
+    10    ssd  15.50000   1.00000   16 TiB   94 GiB   92 GiB  7.1 MiB   1.3 GiB   15 TiB  0.59  1.01   87      up
+    14    ssd  15.50000   1.00000   16 TiB   83 GiB   82 GiB  3.6 MiB   1.4 GiB   15 TiB  0.53  0.90   80      up
+    17    ssd  15.50000   1.00000   16 TiB   90 GiB   89 GiB   27 MiB   786 MiB   15 TiB  0.57  0.97   87      up
+    18    ssd  15.50000   1.00000   16 TiB   99 GiB   99 GiB    9 KiB   943 MiB   15 TiB  0.63  1.08   89      up
+    19    ssd  15.50000   1.00000   16 TiB   91 GiB   90 GiB   14 MiB   1.3 GiB   15 TiB  0.58  0.99   89      up
+     0    ssd  15.50000   1.00000   16 TiB   90 GiB   89 GiB   38 MiB   917 MiB   15 TiB  0.57  0.97   89      up
+     2    ssd  15.50000   1.00000   16 TiB   95 GiB   93 GiB  9.0 MiB   1.3 GiB   15 TiB  0.60  1.02   91      up
+     6    ssd  15.50000   1.00000   16 TiB   91 GiB   90 GiB  9.3 MiB   1.4 GiB   15 TiB  0.57  0.99   87      up
+     8    ssd  15.50000   1.00000   16 TiB   89 GiB   88 GiB  303 KiB  1020 MiB   15 TiB  0.56  0.96   82      up
+                            TOTAL  310 TiB  1.8 TiB  1.8 TiB  260 MiB    21 GiB  308 TiB  0.58                   
+    MIN/MAX VAR: 0.86/1.12  STDDEV: 0.03
+    ---

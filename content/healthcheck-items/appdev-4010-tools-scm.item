@@ -1,0 +1,50 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Tools"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Platform Engineering"
+  description: "Source Control Management Tool"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "What SCM tools are being used?"
+    - type: survey
+      question: "How do you manage access control and permissions in your SCM tools?"
+    - type: survey
+      question: "Are there any specific branching strategies employed in your SCM?"
+    - type: survey
+      question: "How do you handle code reviews and approvals in your SCM process?"
+    - type: survey
+      question: "What measures are in place to ensure the security of your source code?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out SCM info
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "change01"
+      scenario_description_short_text: "Herramientas de SCM no estandarizadas"
+      description_long_text: "Se utilizan múltiples herramientas de SCM sin un enfoque estandarizado."
+      impact_and_risk_text: "La falta de estandarización puede generar ineficiencias y un aumento en los costos de mantenimiento."
+      remediation_text: "Considere la estandarización en una única herramienta o framework de SCM."
+    - key: "change02"
+      scenario_description_short_text: "Prácticas de seguridad en SCM"
+      description_long_text: "Las prácticas de seguridad en SCM no están bien definidas."
+      impact_and_risk_text: "La falta de prácticas de seguridad puede generar vulnerabilidades en el proceso de gestión del código fuente."
+      remediation_text: "Implementar controles de seguridad y medidas de cumplimiento en los procesos de SCM."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

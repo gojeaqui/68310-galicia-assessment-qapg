@@ -1,0 +1,49 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Networking Architecture"
+  severity_key: "Medium"
+  tags: ["Networking", "OpenShift Virtualization", "Network Diagram"]
+  tag_keys:
+    - "Network Design"
+    - "Multus"
+    - "VM Networking"
+  description: "Understanding and validating OpenShift Virtualization networking architecture and configurations."
+  references:
+    - title: "OpenShift Virtualization Networking Diagram"
+      url: "https://github.com/dlbewley/demo-virt/blob/new-diag/networking/diagram.md"
+  check_procedures:
+    - type: survey
+      question: "Have you designed your OpenShift Virtualization networking architecture following a clear topology or diagram?"
+    - type: survey
+      question: "Do you leverage Multus for multi-network configurations in your virtualized workloads?"
+    - type: survey
+      question: "Have you validated that your virtual machines have appropriate access to Layer 2 and Layer 3 networking?"
+    - type: survey
+      question: "Do you ensure high availability and redundancy for critical VM networking components?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Networking architecture well-defined"
+      description_long_text: "The OpenShift Virtualization networking architecture is clearly defined, validated, and optimized for Layer 2/3 communication with high availability."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Networking architecture not well-defined"
+      description_long_text: >
+        The OpenShift Virtualization networking configuration lacks a clear design, may not include multi-network setups, or has not been validated.
+      impact_and_risk_text: >
+        An unclear or incomplete networking design can lead to connectivity failures, misconfigurations, or redundancy gaps for virtual machines.
+      remediation_text: >
+        Develop a clear networking topology diagram. Use Multus for multi-network configurations, validate connectivity, and ensure redundancy for critical components.
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+
+

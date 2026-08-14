@@ -1,0 +1,171 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Ingress Controller Replica Count"
+  references: 
+  - title: "document replica count"
+    url: "https://docs.openshift.com/container-platform/latest/networking/ingress-operator.html"
+  check_procedures:
+    - type: command
+      command: |
+        oc get ingresscontroller --all-namespaces -o yaml
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "El Ingress Controller tiene alta disponibilidad"
+    description_long_text: "Existe un mínimo de 3 Ingress Controller que permiten una alta disponibilidad."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "Incorrect number of replicas"
+    description_long_text: "Only 1 IngressController exists, which may impact availability."
+    impact_and_risk_text: "If the node the IngressController is running on becomes unavailable, the cluster may become unreachable.A minimum 3 is recommended"
+    remediation_text: "Adjust replica count for Ingress Controller"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get ingresscontroller --all-namespaces -o yaml
+    apiVersion: v1
+    items:
+    - apiVersion: operator.openshift.io/v1
+      kind: IngressController
+      metadata:
+        creationTimestamp: "2022-08-24T17:42:48Z"
+        finalizers:
+        - ingresscontroller.operator.openshift.io/finalizer-ingresscontroller
+        generation: 4
+        name: default
+        namespace: openshift-ingress-operator
+        resourceVersion: "998557534"
+        uid: 1054a877-0cd5-472e-b6db-ece3660c8666
+      spec:
+        clientTLS:
+          clientCA:
+            name: ""
+          clientCertificatePolicy: ""
+        httpCompression: {}
+        httpEmptyRequestsPolicy: Respond
+        httpErrorCodePages:
+          name: ""
+        nodePlacement:
+          nodeSelector:
+            matchLabels:
+              node-role.kubernetes.io/infra: ""
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/infra
+          - effect: NoExecute
+            key: node-role.kubernetes.io/infra
+        replicas: 3
+        tuningOptions: {}
+        unsupportedConfigOverrides: null
+      status:
+        availableReplicas: 3
+        conditions:
+        - lastTransitionTime: "2022-08-24T17:42:49Z"
+          reason: Valid
+          status: "True"
+          type: Admitted
+        - lastTransitionTime: "2025-07-27T10:58:33Z"
+          message: The deployment has Available status condition set to True
+          reason: DeploymentAvailable
+          status: "True"
+          type: DeploymentAvailable
+        - lastTransitionTime: "2025-07-27T10:58:33Z"
+          message: Minimum replicas requirement is met
+          reason: DeploymentMinimumReplicasMet
+          status: "True"
+          type: DeploymentReplicasMinAvailable
+        - lastTransitionTime: "2025-07-27T10:58:33Z"
+          message: All replicas are available
+          reason: DeploymentReplicasAvailable
+          status: "True"
+          type: DeploymentReplicasAllAvailable
+        - lastTransitionTime: "2022-08-24T17:42:49Z"
+          message: The configured endpoint publishing strategy does not include a managed
+            load balancer
+          reason: EndpointPublishingStrategyExcludesManagedLoadBalancer
+          status: "False"
+          type: LoadBalancerManaged
+        - lastTransitionTime: "2022-08-24T17:42:49Z"
+          message: No DNS zones are defined in the cluster dns config.
+          reason: NoDNSZones
+          status: "False"
+          type: DNSManaged
+        - lastTransitionTime: "2025-07-27T10:58:33Z"
+          status: "True"
+          type: Available
+        - lastTransitionTime: "2025-07-27T10:58:33Z"
+          status: "False"
+          type: Progressing
+        - lastTransitionTime: "2025-07-27T10:58:33Z"
+          status: "False"
+          type: Degraded
+        - lastTransitionTime: "2022-08-24T17:42:49Z"
+          message: IngressController is upgradeable.
+          reason: Upgradeable
+          status: "True"
+          type: Upgradeable
+        - lastTransitionTime: "2023-03-09T23:51:26Z"
+          message: Canary route checks for the default ingress controller are successful
+          reason: CanaryChecksSucceeding
+          status: "True"
+          type: CanaryChecksSucceeding
+        - lastTransitionTime: "2025-07-27T10:58:33Z"
+          message: Deployment is not actively rolling out
+          reason: DeploymentNotRollingOut
+          status: "False"
+          type: DeploymentRollingOut
+        - lastTransitionTime: "2024-04-27T01:50:42Z"
+          message: LoadBalancer is not progressing
+          reason: LoadBalancerNotProgressing
+          status: "False"
+          type: LoadBalancerProgressing
+        - lastTransitionTime: "2024-04-27T01:50:42Z"
+          message: No evaluation condition is detected.
+          reason: NoEvaluationCondition
+          status: "False"
+          type: EvaluationConditionsDetected
+        domain: apps.oscdmzprd01.cc.bna.net
+        endpointPublishingStrategy:
+          hostNetwork:
+            httpPort: 80
+            httpsPort: 443
+            protocol: TCP
+            statsPort: 1936
+          type: HostNetwork
+        observedGeneration: 4
+        selector: ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default
+        tlsProfile:
+          ciphers:
+          - ECDHE-ECDSA-AES128-GCM-SHA256
+          - ECDHE-RSA-AES128-GCM-SHA256
+          - ECDHE-ECDSA-AES256-GCM-SHA384
+          - ECDHE-RSA-AES256-GCM-SHA384
+          - ECDHE-ECDSA-CHACHA20-POLY1305
+          - ECDHE-RSA-CHACHA20-POLY1305
+          - DHE-RSA-AES128-GCM-SHA256
+          - DHE-RSA-AES256-GCM-SHA384
+          - TLS_AES_128_GCM_SHA256
+          - TLS_AES_256_GCM_SHA384
+          - TLS_CHACHA20_POLY1305_SHA256
+          minTLSVersion: VersionTLS12
+    kind: List
+    metadata:
+      resourceVersion: ""
+    ---

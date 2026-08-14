@@ -1,0 +1,65 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Security"
+  description: "Managing Application Logs"
+  references: 
+  - title: "Monitoring application health by using health checks"
+    url: "https://docs.openshift.com/container-platform/latest/applications/application-health.html"
+  check_procedures:
+    - type: survey
+      question: "How are containerized application logs managed?"
+    - type: survey
+      question: "What tools are used for aggregating and analyzing application logs?"
+    - type: survey
+      question: "How frequently are logs reviewed for security and performance issues?"
+    - type: survey
+      question: "Are there automated alerts set up for specific log patterns or errors?"
+    - type: survey
+      question: "What is the retention policy for application logs?"
+    - type: survey
+      question: "How is log data secured to prevent unauthorized access?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Registros (Logs) gestionados eficazmente"
+    description_long_text: "Los logs de la aplicación se gestionan eficazmente con las herramientas y los procesos adecuados"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "Registros (Logs) parcialmente gestionados"
+    description_long_text: "Algunos aspectos de la gestión de logs no están completamente implementados."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Registros (Logs) sin gestión"
+    description_long_text: "Los logs de las aplicaciones no se gestionan, lo que puede provocar que se pasen por alto problemas críticos."
+    impact_and_risk_text: "Mayor riesgo de pasar por alto problemas críticos de las aplicaciones y amenazas de seguridad."
+    remediation_text: "Implementar una estrategia integral de gestión de logs con las herramientas adecuadas."
+  - key: "advisory01"
+    scenario_description_short_text: "Mejores prácticas para la gestión de logs"
+    description_long_text: "Asegúrese de que los logs se revisen y analicen periódicamente para obtener información valiosa."
+    impact_and_risk_text: "Mejora la fiabilidad y la seguridad de las aplicaciones."
+    remediation_text: "Establezca una rutina para la revisión y el análisis de logs."
+  - key: "advisory02"
+    scenario_description_short_text: "Prácticas de seguridad de logs"
+    description_long_text: "Asegurar la seguridad de los datos de los logs para evitar el acceso no autorizado."
+    impact_and_risk_text: "Proteger la información confidencial y mantener la integridad de los datos."
+    remediation_text: "Implementar controles de acceso y cifrado para los datos de los logs."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

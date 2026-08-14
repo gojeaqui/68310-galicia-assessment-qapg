@@ -1,0 +1,41 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Lifecycle Management"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+    - "GitOps"
+    - "Management"
+  description: "Configuration Management"
+  references: 
+  - title: "Advanced managed cluster configuration with SiteConfig resources"
+    url: "https://docs.openshift.com/container-platform/latest/scalability_and_performance/ztp_far_edge/ztp-advanced-install-ztp.html"
+  check_procedures:
+    - type: "survey"
+      question: "How do you manage configurations across multiple clusters?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "La configuración está gestionada apropiadamente"
+    description_long_text: "Los clústeres se configuran mediante el sistema de políticas de ACM para las tareas de Dia 2."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Configuration is handled manually"
+    description_long_text: "Clusters are configured manually by a person using a checklist"
+    impact_and_risk_text: "Clusters may drift away from ideal configuration."
+    remediation_text: "Implement a management tool such as ArgoCD or other GitOps tools."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

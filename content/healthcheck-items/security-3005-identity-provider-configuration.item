@@ -1,0 +1,92 @@
+version: v2
+check_definition:
+  category_key: "security"
+  subcategory_key: "Identity"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Identity Provider Type/Configuration"
+  references: 
+  - title: "Understanding identity provider configuration"
+    url: "https://docs.openshift.com/container-platform/latest/authentication/understanding-identity-provider.html"
+  check_procedures:
+    - type: compliance_operator
+      profile: none
+      rule: none
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: "command"
+      command: |
+        oc get OAuth cluster -o yaml
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "La autenticación la gestiona el proveedor de identidad"
+    description_long_text: "La autenticación se gestiona a nivel de organización"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "Enterprise authentication not available"
+    description_long_text: "Enterprise authentication, so users may use the same user/pass as enterprise auth"
+    impact_and_risk_text: "External Identities not configured, may not be configured to standard enterprise auth"
+    remediation_text: "Implement more robust authentication"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get OAuth cluster -o yaml
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      annotations:
+        include.release.openshift.io/ibm-cloud-managed: "true"
+        include.release.openshift.io/self-managed-high-availability: "true"
+        include.release.openshift.io/single-node-developer: "true"
+        release.openshift.io/create-only: "true"
+      creationTimestamp: "2022-08-24T17:35:53Z"
+      generation: 16
+      name: cluster
+      ownerReferences:
+      - apiVersion: config.openshift.io/v1
+        kind: ClusterVersion
+        name: version
+        uid: e3eb1514-02ac-42ec-a68e-4a5a6e2a17c0
+      resourceVersion: "965239692"
+      uid: ca82bc5e-ada3-4b64-83fa-a6b881b45128
+    spec:
+      identityProviders:
+      - ldap:
+          attributes:
+            email: []
+            id:
+            - dn
+            name:
+            - cn
+            preferredUsername:
+            - sAMAccountName
+          bindDN: CN=Ldap_OP,OU=Servicio,OU=Usuarios,OU=Produccion,DC=cc,DC=bna,DC=net
+          bindPassword:
+            name: ldap-secret
+          insecure: true
+          url: ldap://cc.bna.net:389/DC=cc,DC=bna,DC=net?sAMAccountName?sub?(&(objectclass=*)(|(memberOf=CN=BNA_Openshift_Admin,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)(memberOf=CN=BNA_Openshift_ReadLogs,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)(memberOf=CN=BNA_Openshift_Read,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)(memberOf=CN=BNA_Openshift_SecAdm,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)(memberOf=CN=BNA_Openshift_SupportCyberbank,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)(memberOf=CN=BNA_Openshift_Ops,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)))
+        mappingMethod: claim
+        name: CC-BNA-NET
+        type: LDAP
+      - htpasswd:
+          fileData:
+            name: htpasswd-4n9kz
+        mappingMethod: claim
+        name: htpasswd-userdb
+        type: HTPasswd
+    ---

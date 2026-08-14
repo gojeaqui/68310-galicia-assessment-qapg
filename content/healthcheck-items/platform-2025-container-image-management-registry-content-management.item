@@ -1,0 +1,46 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Container Management"
+  severity_key: "Not defined"
+  tag_keys:
+    - "Operators"
+    - "Container Images"
+    - "OLM" 
+    - "Registry" 
+    - "OpenShift Cluster Configuration"
+  tags: []
+  description: "Container Image Registry Content"
+  references:
+    - title: "Mirroring the OpenShift Container Platform image repository"
+      url: "https://docs.openshift.com/container-platform/latest/installing/disconnected_install/installing-mirroring-creating-registry.html"
+  check_procedures:
+    - type: survey
+      question: "Is the environment connected or disconnected?"
+    - type: survey
+      question: "If disconnected, describe the content management process to bring images into the environment"
+    - type: survey
+      question: "In what registry are images stored?"
+    - type: survey
+      question: "If disconnected, how is mirroring done? How is version control implemented?"
+    - type: survey
+      question: "Is the cluster connected to sync images, synced with proxy, or fully disconnected?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "El ambiente es de tipo conectado"
+      description_long_text: "El ambiente es de tipo conectado, no se requiere ninguna acción"  # Consultant to describe image registry structure
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "advisory01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

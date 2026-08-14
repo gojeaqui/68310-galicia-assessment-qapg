@@ -1,0 +1,153 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Container Image Management"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Operators"
+    - "Container Images"
+    - "OLM"
+    - "Registry"
+    - "Openshift Cluster Configuration"
+  description: "Openshift internal registry is functioning and running"
+  references: 
+  - title: "Managing the Openshift internal registry"
+    url: "https://docs.openshift.com/container-platform/latest/registry/index.html"
+  check_procedures:
+    - type: command
+      command: | 
+        oc get configs.imageregistry.operator.openshift.io cluster -o yaml
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Registry interna configurada"
+    description_long_text: "La Registry interna de OpenShift está funcionando correctamente"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "Internal registry disabled"
+    description_long_text: "Openshift internal registry is not running"
+    impact_and_risk_text: ""
+    remediation_text: "Enable internal registry"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get configs.imageregistry.operator.openshift.io cluster -o yaml
+    apiVersion: imageregistry.operator.openshift.io/v1
+    kind: Config
+    metadata:
+      creationTimestamp: "2022-08-24T17:47:48Z"
+      finalizers:
+      - imageregistry.operator.openshift.io/finalizer
+      generation: 16
+      name: cluster
+      resourceVersion: "1038000376"
+      uid: ab570c8a-f5ff-47e0-80cb-a8a75ca3c720
+    spec:
+      defaultRoute: true
+      disableRedirect: true
+      httpSecret: f70c1cca7444cb5e54afc9825acb67b02cd1f3b4b2c379b9c8a8a6bee0f0e495487780afdd85f62de2ecaf7f0b742e74916daf56047a95023ea548c11077b44b
+      logLevel: Normal
+      managementState: Managed
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+      observedConfig: null
+      operatorLogLevel: Normal
+      proxy: {}
+      replicas: 3
+      requests:
+        read:
+          maxWaitInQueue: 0s
+        write:
+          maxWaitInQueue: 0s
+      rolloutStrategy: RollingUpdate
+      storage:
+        managementState: Managed
+        pvc:
+          claim: oscdmzprd01-registry-pvc
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/infra
+      - effect: NoExecute
+        key: node-role.kubernetes.io/infra
+      unsupportedConfigOverrides: null
+    status:
+      conditions:
+      - lastTransitionTime: "2023-12-19T16:56:50Z"
+        reason: AsExpected
+        status: "False"
+        type: ImageConfigControllerDegraded
+      - lastTransitionTime: "2025-07-01T05:02:35Z"
+        message: The registry is ready
+        reason: Ready
+        status: "False"
+        type: Progressing
+      - lastTransitionTime: "2025-06-25T19:42:57Z"
+        message: The registry is ready
+        reason: Ready
+        status: "True"
+        type: Available
+      - lastTransitionTime: "2024-12-22T05:58:35Z"
+        status: "False"
+        type: Degraded
+      - lastTransitionTime: "2022-08-24T21:37:33Z"
+        status: "False"
+        type: Removed
+      - lastTransitionTime: "2022-08-24T17:48:14Z"
+        reason: AsExpected
+        status: "False"
+        type: ImageRegistryCertificatesControllerDegraded
+      - lastTransitionTime: "2022-08-24T17:48:22Z"
+        reason: AsExpected
+        status: "False"
+        type: AzureStackCloudControllerDegraded
+      - lastTransitionTime: "2022-08-24T17:49:04Z"
+        message: The daemon set node-ca has available replicas
+        reason: AsExpected
+        status: "True"
+        type: NodeCADaemonAvailable
+      - lastTransitionTime: "2024-04-16T19:00:52Z"
+        reason: AsExpected
+        status: "False"
+        type: NodeCADaemonControllerDegraded
+      - lastTransitionTime: "2023-08-06T18:31:47Z"
+        reason: PVC Exists
+        status: "True"
+        type: StorageExists
+      - lastTransitionTime: "2025-08-27T17:56:07Z"
+        message: The daemon set node-ca is deployed
+        reason: AsExpected
+        status: "False"
+        type: NodeCADaemonProgressing
+      generations:
+      - group: apps
+        hash: ""
+        lastGeneration: 8
+        name: node-ca
+        namespace: openshift-image-registry
+        resource: daemonsets
+      - group: apps
+        hash: ""
+        lastGeneration: 21
+        name: image-registry
+        namespace: openshift-image-registry
+        resource: deployments
+      observedGeneration: 16
+      readyReplicas: 3
+      storage:
+        managementState: Managed
+        pvc:
+          claim: oscdmzprd01-registry-pvc
+      storageManaged: true
+    ---

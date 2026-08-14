@@ -1,0 +1,55 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Common"
+  severity_key: "Not defined"
+  tag_keys: 
+    - High Availability
+    - Resilency
+    - Disaster Recovery
+  tags: []
+  description: "Cross site / multi cluster DR strategies"
+  references: []
+  check_procedures:
+    - type: "survey"
+      question: "Document organization's multi hybrid cloud desire and requirements"
+    - type: "survey"
+      question: "Document multi cluster requirements"
+    - type: "survey"
+      question: "What disaster recovery strategies are currently in place for cross-site or multi-cluster setups?"
+    - type: "survey"
+      question: "How frequently are disaster recovery plans tested and updated?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to document multi cluster requirements
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Documentación de la estrategia de recuperación ante desastres"
+      description_long_text: "Asegurar que las estrategias de recuperación ante desastres estén bien documentadas y sean accesibles."
+      impact_and_risk_text: "Facilita la recuperación rápida en caso de desastre."
+      remediation_text: "Crear y mantener documentación completa para las estrategias de recuperación ante desastres."
+    - key: "no_change01"
+      scenario_description_short_text: "Estrategias de recuperación ante desastres implementadas"
+      description_long_text: "Se implementan estrategias eficaces de recuperación ante desastres para configuraciones entre sitios o multiclúster"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Estrategias de recuperación ante desastres no implementadas"
+      description_long_text: "No se implementan estrategias de recuperación ante desastres, lo que puede provocar un tiempo de inactividad prolongado en caso de desastre."
+      impact_and_risk_text: "Mayor riesgo de pérdida de datos y tiempos de recuperación más largos."
+      remediation_text: "Desarrollar e implementar estrategias de recuperación ante desastres para configuraciones entre sitios o multiclúster."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

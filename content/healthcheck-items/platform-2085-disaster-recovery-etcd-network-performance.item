@@ -1,0 +1,47 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Disaster Recovery"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "etcd"
+    - "Performance"
+  description: "etcd Network Performance"
+  references: 
+  - title: "Recommended etcd practices"
+    url: "https://docs.openshift.com/container-platform/latest/scalability_and_performance/recommended-performance-scale-practices/recommended-etcd-practices.html"
+  - title: "etcd tuning"
+    url: "https://etcd.io/docs/v3.5/tuning/"
+  - title: "How to graph etcd metrics using Prometheus to gauge etcd performance in OpenShift"
+    url: "https://access.redhat.com/solutions/5489721"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "see metric etcd_network_peer_round_trip_time_seconds_bucket in prometheus"
+    - type: "survey"
+      question: "How is the uptime of the kubeapi server, are users experiencing any long load times on the console or connecting to the commandline with oc?"
+  common_outcomes:
+  - key: "nochange_01"
+    scenario_description_short_text: "Tiempos de carga dentro del margen de aceptación"
+    description_long_text: "El percentil 99 de la métrica etcd_network_peer_round_trip_time_seconds_bucket es inferior a 50 ms (el promedio es de 25ms)."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "recommend01"
+    scenario_description_short_text: "Load times outside acceptance window"
+    description_long_text: "Reported etcd_network_peer_round_trip_time_seconds_bucket metric 2 minutes rate 99th percentile is more than 50ms."
+    impact_and_risk_text: "When latency is to high etcd can elect a new leader which cause container migration between the master nodes. This can result in down time from the kubeapiserver as containers migrate."
+    remediation_text: "The default settings in etcd should work well for installations on a local network where the average network latency is low. However, when using etcd across multiple data centers or over networks with high latency, the heartbeat interval and election timeout settings may need tuning"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "nochange_01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

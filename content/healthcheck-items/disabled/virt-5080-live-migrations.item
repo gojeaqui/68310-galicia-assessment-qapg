@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Live Migration"
+  severity_key: "High"
+  tags: ["Migration", "Availability"]
+  tag_keys:
+    - "Live Migration"
+    - "Workload Mobility"
+  description: "Configuring and validating live migration for virtual machines"
+  references:
+    - title: "Configuring live migration for VMs"
+      url: "https://docs.openshift.com/container-platform/4.16/virt/live_migration/virt-about-live-migration.html"
+  check_procedures:
+    - type: survey
+      question: "Do you regularly test live migration of virtual machines?"
+    - type: survey
+      question: "Are policies in place for live migration during node maintenance?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Live migration configured"
+      description_long_text: "Live migration is enabled and tested to ensure workload mobility and uptime."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Live migration not configured"
+      description_long_text: "Live migration is not configured or tested for virtualized workloads."
+      impact_and_risk_text: "Lack of live migration can cause downtime during node maintenance or failures."
+      remediation_text: "Configure and validate live migration policies for virtual machines."
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

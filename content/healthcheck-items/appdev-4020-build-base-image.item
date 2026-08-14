@@ -1,0 +1,54 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Build"
+  severity_key: "Not defined"
+  tags: []
+  description: "Container Base Image"
+  references: 
+  - title: "Base image options"
+    url: "https://docs.openshift.com/container-platform/latest/architecture/understanding-development.html#base-image-options"
+  - title: "Introducing the Red Hat Universal Base Image"
+    url: "https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image"
+  - title: "Getting started with containers"
+    url: "https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_atomic_host/7/html-single/getting_started_with_containers/index#using_red_hat_base_container_images_standard_and_minimal"
+  check_procedures:
+    - type: survey
+      question: "What base images are in use?"
+    - type: survey
+      question: "How do you ensure the security and compliance of your base images?"
+    - type: survey
+      question: "Are there any automated processes for updating base images?"
+    - type: survey
+      question: "What challenges have you faced with using base images in your current setup?"
+    - type: survey
+      question: "Do you have a strategy for migrating to newer base images when available?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Imágenes UBI (Universal Base Image) en uso"
+    description_long_text: "Las aplicaciones se crean utilizando una imagen UBI adecuada."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_recommended01"
+    scenario_description_short_text: "Imágenes no compatibles en uso"
+    description_long_text: "Las aplicaciones se crean con una imagen no compatible"
+    impact_and_risk_text: "Red Hat no puede ofrecer soporte ni aplicar correcciones de seguridad a las imágenes"
+    remediation_text: "Considere usar imágenes oficiales de UBI (Universal Base Image)"
+  - key: "changes_recommended02"
+    scenario_description_short_text: "Imágenes base obsoletas en uso"
+    description_long_text: "Las aplicaciones utilizan imágenes base obsoletas que pueden presentar vulnerabilidades de seguridad."
+    impact_and_risk_text: "El uso de imágenes obsoletas puede exponer las aplicaciones a riesgos de seguridad."
+    remediation_text: "Actualice periódicamente las imágenes base a las últimas versiones compatibles."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

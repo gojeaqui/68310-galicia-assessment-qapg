@@ -1,0 +1,29 @@
+skip_statuses:
+- 'not_applicable'
+- 'tbe'
+- 'no_change'
+statuses:
+  changes_required:
+    color: '#FF0000'
+    text: 'Changes Required'
+    description: 'Indicates Changes Required for system stability, subscription compliance, or other reason.'
+  changes_recommended:
+    color: '#FEFE20'
+    text: 'Changes Recommended'
+    description: 'Indicates Changes Recommended to align with recommended practices, but not urgently required'
+  not_applicable: 
+    color: '#A6B9BF'
+    text: 'N/A'
+    description: 'No advise given on line item.  For line items which are data-only to provide context.'
+  advisory:
+    color: '#80E5FF'
+    text: 'Advisory'
+    description: 'No change required or recommended, but additional information provided.'
+  no_change:
+    color: '#00FF00'
+    text: 'No Change'
+    description: 'No change required.  In alignment with recommended practices.' 
+  tbe:
+    color: '#FFFFFF'
+    text: 'To Be Evaluated'
+    description: 'Not yet evaluated.  Will appear only in draft copies.'  

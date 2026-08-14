@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "virtualization"
+  subcategory_key: "Network"
+  severity_key: "High"
+  tags: ["Network", "Security"]
+  tag_keys:
+    - "Network Segmentation"
+    - "VM Isolation"
+  description: "Ensuring network isolation for virtualized workloads"
+  references:
+    - title: "Configuring network policies"
+      url: "https://docs.openshift.com/container-platform/4.16/virt/vm_networking/virt-networking-overview.html"
+  check_procedures:
+    - type: survey
+      question: "Are network policies in place to isolate critical VMs?"
+    - type: survey
+      question: "Do you enforce multi-network segmentation for VMs?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Network isolation configured"
+      description_long_text: "Network segmentation and policies are properly enforced for virtual machines."
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Network isolation not configured"
+      description_long_text: "VMs lack proper network segmentation and isolation."
+      impact_and_risk_text: "Lack of isolation can expose VMs to security threats."
+      remediation_text: "Implement network policies to ensure proper isolation of virtualized workloads."
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

@@ -1,0 +1,83 @@
+version: v2
+check_definition:
+  category_key: "security"
+  subcategory_key: "Security Context Constraints"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Default Security Context Constraint Unchanged"
+  references: 
+  - title: "Managing security context constraints"
+    url: "https://docs.openshift.com/container-platform/latest/authentication/managing-security-context-constraints.html"
+  check_procedures:
+    - type: compliance_operator
+      profile: none
+      rule: none
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: "command"
+      command: |
+        oc describe scc restricted
+  common_outcomes:
+  - key: "nochange_01"
+    scenario_description_short_text: "La configuración predeterminada de SCC está restringida."
+    description_long_text: "Se encontró que la configuración predeterminada de SCC está restringida, limitando los accesos de los pods."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "require_01"
+    scenario_description_short_text: ""
+    description_long_text: "Default configured SCC is a different SCC than restricted. Customer should not change the default SCC assigned to system:authenticated metagroup and follow OpenShift documentation for recommended practice when elevated permissions are required."
+    impact_and_risk_text: "Pods may default to more privileged access than they require and potentially create security vulnerabilities."
+    remediation_text: "Assign restricted SCC to system:authenticated metagroup and create separate service accounts or groups with SCC's for pods that may require additional permissions."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "nochange_01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc describe scc restricted
+    Name:						restricted
+    Priority:					<none>
+    Access:						
+      Users:					<none>
+      Groups:					system:authenticated
+    Settings:					
+      Allow Privileged:				false
+      Allow Privilege Escalation:			true
+      Default Add Capabilities:			<none>
+      Required Drop Capabilities:			KILL,MKNOD,SETUID,SETGID
+      Allowed Capabilities:				<none>
+      Allowed Seccomp Profiles:			<none>
+      Allowed Volume Types:				configMap,csi,downwardAPI,emptyDir,ephemeral,persistentVolumeClaim,projected,secret
+      Allowed Flexvolumes:				<all>
+      Allowed Unsafe Sysctls:			<none>
+      Forbidden Sysctls:				<none>
+      Allow Host Network:				false
+      Allow Host Ports:				false
+      Allow Host PID:				false
+      Allow Host IPC:				false
+      Read Only Root Filesystem:			false
+      Run As User Strategy: MustRunAsRange		
+        UID:					<none>
+        UID Range Min:				<none>
+        UID Range Max:				<none>
+      SELinux Context Strategy: MustRunAs		
+        User:					<none>
+        Role:					<none>
+        Type:					<none>
+        Level:					<none>
+      FSGroup Strategy: MustRunAs			
+        Ranges:					<none>
+      Supplemental Groups Strategy: RunAsAny	
+        Ranges:					<none>
+    ---

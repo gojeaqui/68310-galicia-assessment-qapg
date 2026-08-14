@@ -1,0 +1,173 @@
+{
+	// Place your snippets for asciidoc here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"Add definition for glossary": {
+		"scope": "asciidoc",
+		"prefix": "definition",
+		"body": [
+			"",
+			"| ${1:Term}",
+			"| ${2:Term}",
+			""
+		]
+	},
+	"New Technical Implementation Heading": {
+		"scope": "asciidoc",
+		"prefix": "implementation",
+		"body": [
+			"",
+			"= ${1:Title}",
+			"",
+			"${2:Content}",
+			""
+		]
+	},
+	"Add Journal Entry": {
+		"scope": "asciidoc",
+		"prefix": "journal",
+		"body": [
+			"| ${1:$CURRENT_MONTH}/${2:$CURRENT_DATE}/${3:$CURRENT_YEAR}",
+			"",
+			"// Activities",
+			"a|",
+			"- ${4:Activity}",
+			"",
+			"// Blockers",
+			"a|",
+			"- ${5:None}"
+		]
+	},
+	"New ADR": {
+		"scope": "asciidoc",
+		"prefix": "adr",
+		"body": [
+			"",
+			"<<<",
+			"",
+			":adrnum: {counter:adrnum}",
+			"[id=ADR-{adrnum},title='$1']",
+			"[cols=\"1h,3a\"]",
+			"|===",
+			"| ID",
+			"| ADR-{adrnum}",
+			"// A unique code that unambiguously identifies the decision; for example: “ADR-42.”",
+			"",
+			"| Title",
+			"| $1",
+			"",
+			"| Status",
+			"| **${2|PROPOSED,REJECTED,ACCEPTED,DEPRECATED,SUPERSEDED|}**",
+			"",
+			"| Subject Area(s)",
+			"| $3",
+			"",
+			"| Question",
+			"| $4",
+			"//HINT: if something is more of a organizational mandate or standard, such as, \"must conform to NIST 800-53\", then use an Architectural Policy or Principle instead. But if there is a decision to be made between alternatives for HOW to conform to NIST 800-53 then you would create an ADR.",
+			"",
+			"| Issue or Problem",
+			"| $5",
+			"",
+			"| Assumptions",
+			"a|",
+			"- $6",
+			"",
+			"| Alternatives",
+			"a|",
+			"- $7",
+			"",
+			"| Decision",
+			"| $8",
+			"",
+			"| Justification",
+			"| $9",
+			"//HINT: list the policies or principles that affected the decision.",
+			"",
+			"| Agreeing Parties",
+			"| [cols=\"1,1\", options=\"header\"]",
+			"// Key stakeholders and approvers documented as agreeing",
+			"!===",
+			"! Person",
+			"! Representing",
+			"",
+			"! #TODO Agreeing person name#",
+			"! #TODO Team or group that person is representing and agreeing on behalf of, ex security, operations#",
+			"",
+			"! #TODO Agreeing person name#",
+			"! #TODO Team or group that person is representing and agreeing on behalf of, ex security, operations#",
+			"!===",
+			"",
+			"| Related Policies",
+			"| * #TODO list links to policies that this record is related to in some way and the way in which,",
+			"they are related. EX: policy affected decision in some way.#",
+			"//HINT: syntax for inline link is <<POLICY-?>>",
+			"",
+			"| Related Principles",
+			"| * #TODO list links to policies that this record is related to in some way and the way in which,",
+			"they are related. EX: principle affected decision in some way.#",
+			"//HINT: syntax for inline link is <<PRINCIPLE-?>>",
+			"",
+			"| Related Decisions",
+			"| * #TODO list links to policies that this record is related to in some way and the way in which,",
+			"they are related. EX: other decision limited options for this decision#",
+			"//HINT: syntax for inline link is <<ADR-?>>",
+			"",
+			"|==="
+		]
+	},
+	"Create source block": {
+		"prefix": "source",
+		"scope": "asciidoc",
+		"body": [
+			"[source,${1|yaml,java,javascript,php,go,ruby,python,xml,sql,c,c++,html,css|}]",
+			"----",
+			"$2",
+			"----",
+			""
+		]
+	},
+	"Working session entry": {
+		"prefix": "session",
+		"scope": "asciidoc",
+		"body": [
+			"| ${1:Title}",
+			"| ${2:$CURRENT_MONTH}/${3:$CURRENT_DATE}/${4:$CURRENT_YEAR}",
+			"a|",
+			"- Purpose",
+			"* ${5}",
+			"- Attendees",
+			"* ${6}",
+			"a|",
+			"- Outputs",
+			"* ${7}"
+		]
+	},
+	"Challenge entry": {
+		"prefix": "challenge",
+		"scope": "asciidoc",
+		"body": [
+			"= ${1:Title}",
+			"",
+			"== Challenge",
+			"${2}",
+			"",
+			"== Immediate Resolution",
+			"${3}",
+			"",
+			"== Future Recommendation",
+			"${4}",
+			""
+		]
+	}
+}

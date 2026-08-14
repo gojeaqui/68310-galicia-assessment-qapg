@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Alert Management Feedback Mechanism"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Is there a mechanism for providing feedback and suggesting improvements to the OpenShift alerting system?"
+    - type: survey
+      question: "How is alert effectiveness feedback collected and analyzed?"
+    - type: survey
+      question: "What process exists for implementing alert improvements based on feedback?"
+    - type: survey
+      question: "How frequently is alert feedback reviewed?"
+    - type: survey
+      question: "What metrics are used to measure alert quality?"
+    - type: survey
+      question: "How are false positives reported and addressed?"
+    - type: survey
+      question: "What channels exist for team members to suggest alert modifications?"
+    - type: survey
+      question: "How is feedback tracked and prioritized?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Yes, feedback channels are available and encouraged, B) No formal mechanism for feedback and improvement"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic feedback process exists"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Simple feedback mechanism with limited follow-up"
+      impact_and_risk_text: "Risk of unaddressed alert issues"
+      remediation_text: "Enhance feedback collection and review process"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective feedback system"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-established alert feedback mechanism"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current feedback practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Strong improvement process"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Regular feedback collection and implementation"
+      impact_and_risk_text: "Minimal risk in alert optimization"
+      remediation_text: "Maintain existing feedback framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited feedback process"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Insufficient alert improvement mechanism"
+      impact_and_risk_text: "Risk of persistent alert issues"
+      remediation_text: "Implement structured feedback system"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Feedback implementation needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Feedback collected but not effectively implemented"
+      impact_and_risk_text: "Continued alert inefficiencies"
+      remediation_text: "Establish process for implementing feedback"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

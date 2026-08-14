@@ -1,0 +1,66 @@
+version: v2
+check_definition:
+  category_key: "operation_ready"
+  subcategory_key: "Training"
+  severity_key: high
+  tags: []
+  description: "Team upskilling and training"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Are you actively investing in training and upskilling your team in containerization technologies and practices?"
+    - type: survey
+      question: "What formal training programs are in place for container technologies?"
+    - type: survey
+      question: "How do you track training progress and certification completion?"
+    - type: survey
+      question: "What is your annual training budget per team member?"
+    - type: survey
+      question: "How do you identify skill gaps and training needs?"
+    - type: survey
+      question: "What internal knowledge sharing practices are implemented?"
+    - type: survey
+      question: "How do you measure training effectiveness?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out findings
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Training Program Review"
+      description_long_text: "Current training approach needs assessment"
+      impact_and_risk_text: "Potential gaps in skill development"
+      remediation_text: "Review and enhance training program"
+    - key: "no_change01"
+      scenario_description_short_text: "Strong Training Program"
+      description_long_text: "Comprehensive training strategy in place"
+      impact_and_risk_text: "Good skill development path"
+      remediation_text: "Maintain current training approach"
+    - key: "no_change02"
+      scenario_description_short_text: "Effective Skill Development"
+      description_long_text: "Training effectively addresses skill needs"
+      impact_and_risk_text: "Strong team capability growth"
+      remediation_text: "Continue current training program"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Training Enhancement Required"
+      description_long_text: "Training program needs improvement"
+      impact_and_risk_text: "Risk of skill gaps"
+      remediation_text: "Implement comprehensive training strategy"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Tracking Implementation Needed"
+      description_long_text: "Training progress tracking insufficient"
+      impact_and_risk_text: "Limited visibility of skill development"
+      remediation_text: "Implement training tracking system"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

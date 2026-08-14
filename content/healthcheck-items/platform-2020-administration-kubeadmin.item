@@ -1,0 +1,47 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Administration"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Documentar si kubeadmin está habilitado/deshabilitado"
+  references: 
+  - title: "Removing the kubeadmin user"
+    url: "https://docs.openshift.com/container-platform/latest/authentication/remove-kubeadmin.html"
+  check_procedures:
+    - type: "command"
+      command: |
+          # check that kubeadmin secret does not exist
+          oc get secrets kubeadmin -n kube-system
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "kubeadmin disabled"
+    description_long_text: "kubeadmin account is disabled"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "La cuenta de 'kubeadmin' esta habilitada"
+    description_long_text: "Se encontró que la cuenta de 'kubeadmin' todavía esta habilitada"
+    impact_and_risk_text: "Tener la cuenta default de 'kubeadmin' habilitada representa un riesgo de seguridad"
+    remediation_text: "Se recomienda deshabilitar la cuenta una vez determinado que el acceso ClusterAdmin al cluster esta garantizado por otros medios."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: changes_recommended
+  common_outcome_key: "change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get secrets kubeadmin -n kube-system
+    NAME        TYPE     DATA   AGE
+    kubeadmin   Opaque   1      3y60d
+    ---

@@ -1,0 +1,197 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "storage"
+  severity_key: "Not defined"
+  tags: []
+  description: "ODF StorageCluster Component Check"
+  references:
+  - title: "Red Hat OpenShift Data Foundation"
+    url: "https://docs.openshift.com/container-platform/latest/storage/persistent_storage/persistent-storage-ocs.html"
+  check_procedures:
+    - type: survey
+      question: "Verificar el estado del Custom Resource (CR) StorageCluster para la configuración principal de ODF."
+    - type: "command"
+      command: |
+        oc get StorageCluster -n openshift-storage ocs-storagecluster -o yaml
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "ODF configurado apropiadamente"
+      description_long_text: "ODF está instalado y configurado correctamente con capacidad de almacenamiento y redundancia adecuados"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "El Custom Resource (CR) StorageCluster esta correcto"
+      description_long_text: "La configuración del ODF en el Custom Resource (CR) StorageCluster es correcta"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "ODF necesita actualización"
+      description_long_text: "La versión actual de ODF requiere una actualización para abordar los problemas conocidos o recibir nuevas funciones"
+      impact_and_risk_text: "Ejecutar versiones desactualizadas puede hacer que falten correcciones o funciones importantes."
+      remediation_text: "Actualizar ODF a la última versión compatible"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Revisión de configuración de ODF necesaria"
+      description_long_text: "La configuración de ODF requiere una revisión para un rendimiento y confiabilidad óptimos"
+      impact_and_risk_text: "La configuración subóptima puede afectar el rendimiento del almacenamiento"
+      remediation_text: "Revise y optimice la configuración de ODF de acuerdo con las mejores prácticas"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get StorageCluster -n openshift-storage ocs-storagecluster -o yaml
+    apiVersion: ocs.openshift.io/v1
+    kind: StorageCluster
+    metadata:
+      annotations:
+        cluster.ocs.openshift.io/local-devices: "true"
+        uninstall.ocs.openshift.io/cleanup-policy: delete
+        uninstall.ocs.openshift.io/mode: graceful
+      creationTimestamp: "2025-08-27T18:31:28Z"
+      finalizers:
+      - storagecluster.ocs.openshift.io
+      generation: 3
+      name: ocs-storagecluster
+      namespace: openshift-storage
+      ownerReferences:
+      - apiVersion: odf.openshift.io/v1alpha1
+        kind: StorageSystem
+        name: ocs-storagecluster-storagesystem
+        uid: 53b656ff-06cf-4e4a-92a7-40feb1783a79
+      resourceVersion: "1124362359"
+      uid: 7d7ecac3-03ae-47e2-af71-bf4903208bd9
+    spec:
+      arbiter: {}
+      enableCephTools: true
+      encryption:
+        kms: {}
+      externalStorage: {}
+      flexibleScaling: true
+      managedResources:
+        cephBlockPools: {}
+        cephCluster: {}
+        cephConfig: {}
+        cephDashboard: {}
+        cephFilesystems: {}
+        cephNonResilientPools: {}
+        cephObjectStoreUsers: {}
+        cephObjectStores: {}
+        cephRBDMirror: {}
+        cephToolbox: {}
+      mirroring: {}
+      monDataDirHostPath: /var/lib/rook
+      network:
+        connections:
+          encryption: {}
+        multiClusterService: {}
+      nodeTopologies: {}
+      storageDeviceSets:
+      - config: {}
+        count: 20
+        dataPVCTemplate:
+          metadata: {}
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: "1"
+            storageClassName: loki-odf-storage
+            volumeMode: Block
+          status: {}
+        name: ocs-deviceset-loki-odf-storage
+        placement: {}
+        preparePlacement: {}
+        replica: 1
+        resources: {}
+    status:
+      conditions:
+      - lastHeartbeatTime: "2025-08-27T18:31:28Z"
+        lastTransitionTime: "2025-08-27T18:31:28Z"
+        message: Version check successful
+        reason: VersionMatched
+        status: "False"
+        type: VersionMismatch
+      - lastHeartbeatTime: "2025-10-22T19:54:35Z"
+        lastTransitionTime: "2025-08-27T18:36:21Z"
+        message: Reconcile completed successfully
+        reason: ReconcileCompleted
+        status: "True"
+        type: ReconcileComplete
+      - lastHeartbeatTime: "2025-10-22T19:54:35Z"
+        lastTransitionTime: "2025-08-27T18:38:09Z"
+        message: Reconcile completed successfully
+        reason: ReconcileCompleted
+        status: "True"
+        type: Available
+      - lastHeartbeatTime: "2025-10-22T19:54:35Z"
+        lastTransitionTime: "2025-08-27T18:38:09Z"
+        message: Reconcile completed successfully
+        reason: ReconcileCompleted
+        status: "False"
+        type: Progressing
+      - lastHeartbeatTime: "2025-10-22T19:54:35Z"
+        lastTransitionTime: "2025-08-27T18:31:28Z"
+        message: Reconcile completed successfully
+        reason: ReconcileCompleted
+        status: "False"
+        type: Degraded
+      - lastHeartbeatTime: "2025-10-22T19:54:35Z"
+        lastTransitionTime: "2025-08-27T18:38:09Z"
+        message: Reconcile completed successfully
+        reason: ReconcileCompleted
+        status: "True"
+        type: Upgradeable
+      failureDomain: host
+      failureDomainKey: kubernetes.io/hostname
+      failureDomainValues:
+      - oscdmzprd01-n5xps-storage-1-dj9c9
+      - oscdmzprd01-n5xps-storage-2-nrhkd
+      - oscdmzprd01-n5xps-storage-3-wnsfn
+      - oscdmzprd01-n5xps-storage-4-d6p6k
+      - oscdmzprd01-n5xps-storage-5-642cg
+      images:
+        ceph:
+          actualImage: registry.redhat.io/rhceph/rhceph-7-rhel9@sha256:6527aebd11721169e4d47527472eb5921fcc94aa6dff191514a71968ca90e7a1
+          desiredImage: registry.redhat.io/rhceph/rhceph-7-rhel9@sha256:6527aebd11721169e4d47527472eb5921fcc94aa6dff191514a71968ca90e7a1
+        noobaaCore:
+          actualImage: registry.redhat.io/odf4/mcg-core-rhel9@sha256:d71fa8004ac3d4856299cc8ef087a05c4585e91dd1fc02ca08ab8b15b701d2ab
+          desiredImage: registry.redhat.io/odf4/mcg-core-rhel9@sha256:d71fa8004ac3d4856299cc8ef087a05c4585e91dd1fc02ca08ab8b15b701d2ab
+        noobaaDB:
+          actualImage: registry.redhat.io/rhel8/postgresql-12@sha256:5408194b960c46ac0d8871bedb84c1b62d57ab68db027928c6e0a7a5d81749ec
+          desiredImage: registry.redhat.io/rhel8/postgresql-12@sha256:5408194b960c46ac0d8871bedb84c1b62d57ab68db027928c6e0a7a5d81749ec
+      kmsServerConnection: {}
+      nodeTopologies:
+        labels:
+          kubernetes.io/hostname:
+          - oscdmzprd01-n5xps-storage-1-dj9c9
+          - oscdmzprd01-n5xps-storage-2-nrhkd
+          - oscdmzprd01-n5xps-storage-3-wnsfn
+          - oscdmzprd01-n5xps-storage-4-d6p6k
+          - oscdmzprd01-n5xps-storage-5-642cg
+      phase: Ready
+      relatedObjects:
+      - apiVersion: ceph.rook.io/v1
+        kind: CephCluster
+        name: ocs-storagecluster-cephcluster
+        namespace: openshift-storage
+        resourceVersion: "1124362351"
+        uid: 01dd27ab-28dc-4a6c-b3ad-98d7afeca034
+      - apiVersion: noobaa.io/v1alpha1
+        kind: NooBaa
+        name: noobaa
+        namespace: openshift-storage
+        resourceVersion: "1124362294"
+        uid: cbfaa0c3-d8b3-47d5-867e-afcecdd8e0be
+      version: 4.14.22
+    ---

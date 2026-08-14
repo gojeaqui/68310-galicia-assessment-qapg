@@ -1,0 +1,29 @@
+---
+{{{
+version: v1
+metadata:
+  category_key: "infra"
+  item_evaluated: "Infrastructure Provider(s)"
+  references:  # List of Reference
+    - title: "Display text for link"
+      url: "URL of reference"
+  check_procedures:
+    - type: survey
+      question: "What infrastructure providers (e.g. AWS, Bare Metal, VMware) are your clusters installed on?"
+  acceptance_criteria:
+    no_change:
+      - id: 'nochange_01'
+        condition_description: 'Infrastructure provider is a Red Hat tested infrastructure provider. Bare-metal, vSphere, RHOSP, AWS, GCP, Azure, IBM Z or LinuxONE, IBM Power Systems, RHV.'
+    changes_recommended:
+      - id: 'recommend01'
+        condition_description: "Infrastructure provider is a non tested infrastructure provider. Moving to a Red Hat tested infrastructure provider is recommended."
+        impact_risk_text: "Non supported infrastructure providers limit Red Hat Support's ability to assist in cases.  Unsupported infrastructure may behave in unusual ways or lack capabilities for essential OpenShift features."
+        remediation_text: "Re-install clusters on supported infrastructure type."
+results:
+  result_short_text: "short text"  # Short description of results
+  result_long_text:  "this is a longer text" # Optional longer result description
+  recommendation: advisory
+  acceptance_criteria_id:  'recommend02'
+  impact_risk_additional_text: "Additional impact risk from consultant"
+  remediation_additional_text: "Additional remediation text from consultant"
+  additional_comments_text: "Additional comments from consultant"

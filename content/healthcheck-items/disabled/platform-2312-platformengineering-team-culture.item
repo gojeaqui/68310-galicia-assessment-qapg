@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Platform Engineering"
+  severity_key:  low
+  tag_keys: []
+  tags: []
+  description: "Platform Engineering: Team and Culture"
+  references:
+    - title: "Team Topologies"
+      url: https://teamtopologies.com/ 
+    - title: "Driving modern software engineering: Empowering people, optimizing processes, inspiring innovation"
+      url: https://www.redhat.com/en/blog/driving-modern-software-engineering
+  check_procedures:
+    - type: survey
+      question: "How is your platform engineering team (or those responsible for platform engineering tasks) structured within the organization?"
+    - type: survey
+      question: "Can you describe the collaboration between the platform engineering team and other IT and development teams?"
+    - type: survey
+      question: "What training or development opportunities does your organization provide for platform engineering skills?"      
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Platform Engineering Team and Culture" 
+      description_long_text: ""  # We are trying to get an understanding of the organization's maturity and strategy in platform engineering.
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

@@ -1,0 +1,29 @@
+// Este archivo se mantiene ejecutando scripts/refresh-training.py script
+
+= Ansible Basics: Automation Technical Overview (DO007)
+
+[.big]#*Descripción del curso*#
+
+*Crea, expande y gestiona la automatización con Red Hat Ansible Automation Platform*
+
+* El curso Ansible Basics: Automation Technical Overview consiste en una serie de videos gratuitos que están disponibles según se soliciten y en los cuales se abordan los conceptos básicos de Red Hat Ansible Automation Platform. Aprenderás a utilizar Ansible para la gestión de la configuración, la preparación, la implementación y la gestión de la infraestructura informática en todos los entornos de nube, virtuales y físicos.
+
+[.big]#*Resumen del contenido del curso*#
+
+* En este curso de introducción a la automatización con Ansible, aprenderás a simplificar las tareas de TI, como la gestión de la configuración, la implementación de las aplicaciones y la organización, mediante Ansible. El curso introductorio, presentado por Roger Lopez, gerente principal de marketing técnico de Ansible, abarca los conceptos esenciales de Ansible, incluidos los módulos, las tareas y los playbooks. A través de ejemplos reales, descubrirás la función que ocupa el controlador de automatización en los flujos de trabajo y el uso que puede dársele a Ansible Automation Platform en la gestión de los entornos de producción.
+* El curso se basa en Ansible Automation Platform 2.5.
+
+[.big]#*Público destinatario del curso*#
+
+* Administradores, ingenieros, arquitectos, personal directivo de TI y todo aquel que busque adquirir conocimiento avanzado sobre Ansible
+
+[.big]#*Capacitación recomendada*#
+
+* La realización de este resumen técnico no supone requisitos previos.
+
+[.big]#*Aspectos tecnológicos que debes tener en cuenta*#
+
+* N/C
+
+Para más detalles, o para inscribirse:
+https://www.redhat.com/es/services/training/do007-ansible-essentials-simplicity-automation-technical-overview

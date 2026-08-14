@@ -1,0 +1,73 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Build"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Environment Variables"
+    - "Secrets"
+    - "Configuration Maps"
+  description: "Application Build Strategy"
+  references:
+    - title: "Using config maps with applications"
+      url: "https://docs.openshift.com/container-platform/latest/applications/config-maps.html"
+    - title: "Providing sensitive data to pods by using secrets"
+      url: "https://docs.openshift.com/container-platform/latest/nodes/pods/nodes-pods-secrets.html"
+  check_procedures:
+    - type: survey
+      question: "Are applications rebuilt when promoting to new environments?"
+    - type: survey
+      question: "How do you manage environment-specific configurations during the build process?"
+    - type: survey
+      question: "What strategies are in place to handle sensitive data in your build process?"
+    - type: survey
+      question: "Are there any automated processes for managing configuration changes?"
+    - type: survey
+      question: "What challenges have you faced with your current build strategy?"
+    - type: survey
+      question: "How do you ensure consistency in environment configurations across different stages?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out build info
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "Variables de entorno abstraídas de los contenedores"
+      description_long_text: "Las variables de entorno estan abstraídas en mapas de configuración/secretos"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Se requiere reconstrucción (rebuilding) para implementar en entornos superiores"
+      description_long_text: "Las variables de entorno se configuran durante la compilación. Se requiere una nueva compilación para cada implementación."
+      impact_and_risk_text: "Mayor riesgo de fallo en entornos superiores."
+      remediation_text: "Separar la configuración del entorno de la compilación del contenedor almacenando los datos en configmaps/secrets."
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Datos sensibles no gestionados de forma segura"
+      description_long_text: "Los datos sensibles no se gestionan de forma segura durante el proceso de compilación."
+      impact_and_risk_text: "Exponer datos sensibles puede provocar vulnerabilidades de seguridad."
+      remediation_text: "Utilizar secretos para gestionar datos sensibles de forma segura."
+    - key: "changes_recommended03"
+      scenario_description_short_text: "Cambios de configuración no automatizados"
+      description_long_text: "Los cambios de configuración no están automatizados, lo que puede provocar errores."
+      impact_and_risk_text: "Los cambios manuales de configuración pueden generar errores e inconsistencias."
+      remediation_text: "Automatizar los cambios de configuración para garantizar la consistencia y reducir los errores."
+    - key: "advisory02"
+      scenario_description_short_text: "Falta de consistencia en las configuraciones de entorno (environment configurations)"
+      description_long_text: "Existe una falta de consistencia en las configuraciones de entorno en las diferentes etapas."
+      impact_and_risk_text: "Las configuraciones inconsistentes pueden provocar un comportamiento inesperado en diferentes entornos."
+      remediation_text: "Implementar una estrategia para garantizar la consistencia de las configuraciones en todos los entornos."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

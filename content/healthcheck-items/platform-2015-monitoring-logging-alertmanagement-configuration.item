@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Alert Management Communication Channels"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "How are alerts communicated to the relevant stakeholders?"
+    - type: survey
+      question: "What notification channels are used for different alert severities?"
+    - type: survey
+      question: "How are after-hours alerts handled and communicated?"
+    - type: survey
+      question: "What is the escalation path for unacknowledged alerts?"
+    - type: survey
+      question: "How are alert notifications prioritized?"
+    - type: survey
+      question: "What backup communication channels are in place?"
+    - type: survey
+      question: "How are communication channel outages handled?"
+    - type: survey
+      question: "What is the process for updating alert notification settings?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) Email notifications, B) SMS/text messages, C) Integration with collaboration tools (Slack, Microsoft Teams), D) Other (please specify)"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic channels in place"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Simple alert communication channels established"
+      impact_and_risk_text: "Risk of missed notifications"
+      remediation_text: "Enhance communication channels"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective communication system"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-established alert notification channels"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current communication practices"
+    - key: "no_change02"
+      scenario_description_short_text: "Robust notification framework"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Multiple reliable communication channels in use"
+      impact_and_risk_text: "Minimal risk in alert communication"
+      remediation_text: "Maintain existing communication framework"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Limited communication channels"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Insufficient alert notification methods"
+      impact_and_risk_text: "Risk of delayed alert response"
+      remediation_text: "Implement additional communication channels"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Channel redundancy needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Lack of backup communication methods"
+      impact_and_risk_text: "Risk of communication failure"
+      remediation_text: "Deploy redundant notification channels"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

@@ -1,0 +1,58 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "High Availability"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Ingress"
+    - "Security"
+  description: "Automatically scaling pods with the horizontal pod autoscaler"
+  references:
+    - title: "Application Onboarding"
+      url: "https://docs.openshift.com/container-platform/latest/nodes/pods/nodes-pods-autoscaling.html"
+  check_procedures:
+    - type: survey
+      question: "How do you handle scalability and resource allocation for your containerized applications?"
+    - type: survey
+      question: "Do you have a strategy for scaling your containerized applications based on demand?"
+    - type: survey
+      question: "What metrics are used to trigger scaling events?"
+    - type: survey
+      question: "How often are scaling policies reviewed and updated?"
+    - type: survey
+      question: "What challenges have you faced with the horizontal pod autoscaler?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Escalado de cargas de trabajo habilitado"
+      description_long_text: "Las cargas de trabajo se escalan automáticamente para responder a la demanda"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Escalado de cargas de trabajo no habilitado"
+      description_long_text: "Las cargas de trabajo se escalan manualmente o no se escalan en absoluto"
+      impact_and_risk_text: "Las cargas de trabajo que no se han escalado correctamente pueden provocar tiempo de inactividad, pérdida de datos o desperdicio de recursos"
+      remediation_text: "Implementar una estrategia para escalar las aplicaciones según la demanda"
+    - key: "advisory01"
+      scenario_description_short_text: "Revisar las métricas de escalado"
+      description_long_text: "Se recomienda revisar periódicamente las métricas de escalado para garantizar que satisfagan las necesidades actuales."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar las métricas actuales y explorar nuevas opciones si es necesario."
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Desafíos con el escalador automático"
+      description_long_text: "Existen desafíos para usar eficazmente el escalador automático de pods horizontales."
+      impact_and_risk_text: "El uso inadecuado del escalador automático puede provocar una utilización ineficiente de los recursos."
+      remediation_text: "Revise las configuraciones del escalador automático y optimícelas según las necesidades de la aplicación."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses.
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

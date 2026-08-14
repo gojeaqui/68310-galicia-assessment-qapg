@@ -1,0 +1,46 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"
+  description: "Ensure all OpenShift alerts are reviewed, addressed or silenced"
+  references: 
+  - title: "Managing alerts"
+    url: "https://docs.openshift.com/container-platform/latest/monitoring/managing-alerts.html"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify alerts by clicking observe > alerting in console UI"
+    - type: "survey"
+      question: "is the cluster sending alerts?"
+    - type: "survey"
+      question: "Are all the pods mounted in openshift-monitoring namespace running fine or do you see broken pods?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Openshift alerting is configured"
+    description_long_text: "OpenShift alerts provide information to administrators about the status of the cluster. All alerts have been properly addressed."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_required01"
+    scenario_description_short_text: "Openshift alerting is not configured"
+    description_long_text: "OpenShift alerts provide information to administrators about the status of the cluster. Alerts are firing that have not been properly addressed."
+    impact_and_risk_text: "Alerts that are firing can indicate imminent failure or just provide information based on the severity of the alert. Critical alerts should be immediately addressed and resolved to prevent platform outages or degraded performance. Other alerts such as 'INFO' may just need to be silenced once acknowledged"
+    remediation_text: "Review all alerts and remediate or silence as needed"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

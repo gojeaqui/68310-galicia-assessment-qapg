@@ -1,0 +1,68 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "vSphere"
+  severity_key: "Not defined"
+  tag_keys:
+    - "Security"
+    - "Automation" 
+  tags: []
+  description: "VMware vCenter Service Account"
+  references:
+  - title: "Required vCenter account privileges"
+    url: "https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/upi/upi-vsphere-installation-reqs.html#vsphere-csi-driver-reqs_upi-vsphere-installation-reqs"
+  - title: "Modifying the vSphere configuration in OpenShift 4"
+    url: "https://access.redhat.com/solutions/4618011"
+  - title: "vSphere Permissions and User Management Tasks"
+    url: "https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.security.doc/GUID-5372F580-5C23-4E9C-8A4E-EF1B4DD9033E.html"
+  check_procedures:
+    - type: survey
+      question: "How are the OpenShift cluster's vCenter service accounts set up?"
+    - type: survey
+      question: "What specific permissions and roles are assigned to the service account?"
+    - type: survey
+      question: "How often are the service account permissions reviewed?"
+    - type: survey
+      question: "Are there any known issues with the current service account configuration?"
+    - type: survey
+      question: "Is there a backup mechanism for service account configurations?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "Cuenta de servicio correctamente configurada"
+      description_long_text: "La cuenta de servicio del vCenter tiene todos los roles y permisos requeridos según la documentación."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "La cuenta de servicio necesita revision"
+      description_long_text: "Los permisos de la cuenta de servicio requieren revisión y posibles actualizaciones"
+      impact_and_risk_text: "Los permisos insuficientes pueden limitar la funcionalidad de OpenShift"
+      remediation_text: "Revisar y actualizar los permisos de cuenta de servicio según la documentación"
+    - key: "changes_recommended03"
+      scenario_description_short_text: "La cuenta de servicio necesita revision"
+      description_long_text: "Falta configurar el dato del vCenter cluster en el panel de configuración de vSphere de Openshift"
+      impact_and_risk_text: "Si no se configura correctamente este dato, el Openshift puede demorar mas en aprovisionar un PVC dado que tiene que hacer prueba y error en la busqueda del datacenter"
+      remediation_text: "Se recomienda cargar el nombre del vCenter cluster en el panel (tener en cuenta que esta operación REINICIA los nodos master)"
+    - key: "advisory01"
+      scenario_description_short_text: "Existe copia de seguridad de la cuenta de servicio"
+      description_long_text: "La configuración de la cuenta de servicio está correctamente respaldada"
+      impact_and_risk_text: ""
+      remediation_text: "Continuar manteniendo copias de seguridad regulares"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Permission review frequency insufficient"
+      scenario_description_short_text: "La frecuencia de revisión de permisos es insuficiente."
+      description_long_text: "Los permisos de la cuenta de servicio no se revisan con la frecuencia suficiente"
+      impact_and_risk_text: "Los permisos obsoletos pueden afectar las operaciones del clúster"
+      remediation_text: "Implementar un cronograma de revisión de permisos regulares"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: changes_recommended
+  common_outcome_key: "changes_recommended03"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

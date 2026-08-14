@@ -1,0 +1,55 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Deployment"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Platform Engineering"
+  description: "Deployment IaC Type"
+  references: 
+  - title: "Working with Helm charts using the Developer perspective."
+    url: "https://docs.openshift.com/container-platform/latest/applications/working_with_helm_charts/understanding-helm.html"
+  - title: "Creating applications from installed Operators"
+    url: "https://docs.openshift.com/container-platform/latest/operators/user/olm-creating-apps-from-installed-operators.html"
+  check_procedures:
+    - type: survey
+      question: "How are applications created - Helm, Operator, other methods?"
+    - type: survey
+      question: "How do you manage environment-specific configurations during deployment?"
+    - type: survey
+      question: "Are there any automated processes for deploying applications?"
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Se está utilizando una herramienta de plantillas"
+    description_long_text: "Se está utilizando una herramienta de empaquetado como Helm y se están siguiendo las prácticas recomendadas."
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change01"
+    scenario_description_short_text: "No se está utilizando ninguna herramienta de plantillas"
+    description_long_text: "El cliente está copiando y pegando configuraciones para varios entornos que deben modificarse individualmente."
+    impact_and_risk_text: "Esto puede provocar que se deban actualizar varias rutas de código para un solo cambio."
+    remediation_text: "Implemente una herramienta de plantillas como Helm o Kustomize."
+  - key: "advisory01"
+    scenario_description_short_text: "Falta de automatización en el proceso de implementación"
+    description_long_text: "El proceso de implementación carece de automatización."
+    impact_and_risk_text: "Las implementaciones manuales pueden ser propensas a errores y consumir mucho tiempo."
+    remediation_text: "Considere automatizar el proceso de implementación para mejorar la eficiencia y reducir errores."
+  - key: "advisory02"
+    scenario_description_short_text: "Configuraciones de entorno inconsistentes"
+    description_long_text: "Las configuraciones de entorno son inconsistentes en las diferentes etapas."
+    impact_and_risk_text: "Las configuraciones inconsistentes pueden provocar un comportamiento inesperado en diferentes entornos."
+    remediation_text: "Implementar una estrategia para garantizar configuraciones consistentes en todos los entornos."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

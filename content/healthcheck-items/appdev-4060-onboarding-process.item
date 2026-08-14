@@ -1,0 +1,56 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Onboarding"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Ingress"
+    - "Security"
+  description: "Application Onboarding"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Once containerized applications have been developed, what's your process for onboarding those applications to the container platform?"
+    - type: survey
+      question: "What tools or methods are used to facilitate application onboarding?"
+    - type: survey
+      question: "How do you ensure compliance and security during the onboarding process?"
+    - type: survey
+      question: "What challenges have you faced during the application onboarding process?"
+    - type: survey
+      question: "How often is the onboarding process reviewed and optimized?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe application onboarding.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "El proceso de incorporación (Onboarding) necesita mejoras"
+      description_long_text: "El proceso de incorporación actual presenta ineficiencias o carece de ciertas prácticas recomendadas."
+      impact_and_risk_text: "Una incorporación ineficiente puede retrasar la implementación de la aplicación y afectar el cumplimiento normativo."
+      remediation_text: "Revisar y optimizar el proceso de incorporación para abordar los desafíos identificados."
+    - key: "advisory02"
+      scenario_description_short_text: "Revisar las herramientas de incorporación (Onboarding)"
+      description_long_text: "Se recomienda revisar periódicamente las herramientas de incorporación para garantizar que satisfagan las necesidades actuales."
+      impact_and_risk_text: ""
+      remediation_text: "Evaluar las herramientas actuales y explorar nuevas opciones si es necesario."
+    - key: "no_change01"
+      scenario_description_short_text: "Proceso de incorporación (Onboarding) adecuado"
+      description_long_text: "Las prácticas de incorporación actuales son suficientes para la implementación de la aplicación"
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

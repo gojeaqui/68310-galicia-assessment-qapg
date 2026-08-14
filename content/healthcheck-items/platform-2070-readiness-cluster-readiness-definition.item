@@ -1,0 +1,33 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Readiness"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Automation"
+    - "GitOps"
+  description: "Defining Cluster Readiness"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Do you have a post configuration checklist or test process to validate cluster readiness?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only" 
+      description_long_text: ""  # Consultant to describe cluster readiness procedures
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

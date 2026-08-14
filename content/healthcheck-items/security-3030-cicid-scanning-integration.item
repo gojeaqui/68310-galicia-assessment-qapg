@@ -1,0 +1,39 @@
+version: v2
+check_definition:
+  category_key: "security"
+  subcategory_key: "CICD"
+  severity_key: "Not defined"
+  tags: []
+  description: "CI/CD integration with Security Scanning"
+  references: 
+  - title: "Utilize the Openshift container security guide to for some inspiration on effective scanning"
+    url: "https://docs.openshift.com/container-platform/latest/security/container_security/security-understanding.html"
+  check_procedures:
+    - type: "survey"
+      question: "Ask customer what their solution will be for integrating a scanning solution into their pipelines to ensure images are properly vetted before deployment. Ask customer if their solution will involve modify or deploying additional software against the Openshift platform and how they will support this."
+    - type: "survey"
+      question: "Ask customer where security scanning will be performed (build, deploy, runtime)."
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "Security Scanning properly integrated into CI/CD platform"
+    description_long_text: "Customer has a properly vetted solutions which is compatible with the Openshift platform, supportable and meets their security needs"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "change_recommended01"
+    scenario_description_short_text: "Customer has not implemented a solution or a solution is not viable for Openshift"
+    description_long_text: "The customer has not decided yet on a scanning solution for their pipelines. The scanning solution they want requires additional software which may not be installable on Openshift"
+    impact_and_risk_text: "Customer will not be able to properly vet their images and could lead to security concerns"
+    remediation_text: "Work with customer to identify a scanning method which will meet their needs and is Openshift supported if necessary."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

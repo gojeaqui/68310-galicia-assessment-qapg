@@ -1,0 +1,66 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Common"
+  severity_key: "Not defined"
+  tags: []
+  description: "Additional Machinesets"
+  references: 
+  - title: "Machineset API"
+    url: "https://docs.openshift.com/container-platform/latest/rest_api/machine_apis/machineset-machine-openshift-io-v1beta1.html"
+  check_procedures:
+    - type: "command"
+      command: |
+        oc get machineset -n openshift-machine-api
+    - type: "survey"
+      question: "Are there any additional machinesets configured for specific workloads?"
+    - type: "survey"
+      question: "How are machinesets monitored and managed in your environment?"
+    - type: "survey"
+      question: "What is the process for scaling machinesets up or down?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to describe machinesets.
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Administración de Machinesets"
+      description_long_text: "Asegurar que los Machinesets se monitoricen y gestionen correctamente."
+      impact_and_risk_text: "Mejora la asignación de recursos y el rendimiento del clúster."
+      remediation_text: "Implementar prácticas de monitorización y gestión para los Machinesets."
+    - key: "no_change01"
+      scenario_description_short_text: "Machinesets configurados"
+      description_long_text: "Los Machinesets están configurados y gestionados eficazmente."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Machinesets no configurados"
+      description_long_text: "Los Machinesets no están configurados, lo que puede provocar un uso ineficiente de los recursos."
+      impact_and_risk_text: "Posibilidad de desperdicio de recursos o capacidad insuficiente."
+      remediation_text: "Revisar y configurar los Machinesets para optimizar el uso de los recursos."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get machineset -n openshift-machine-api
+    NAME                          DESIRED   CURRENT   READY   AVAILABLE   AGE
+    oscdmzprd01-n5xps-infra       4         4         4       4           3y59d
+    oscdmzprd01-n5xps-loki        3         3         3       3           57d
+    oscdmzprd01-n5xps-storage-1   1         1         1       1           57d
+    oscdmzprd01-n5xps-storage-2   1         1         1       1           57d
+    oscdmzprd01-n5xps-storage-3   1         1         1       1           57d
+    oscdmzprd01-n5xps-storage-4   1         1         1       1           57d
+    oscdmzprd01-n5xps-storage-5   1         1         1       1           57d
+    oscdmzprd01-n5xps-worker      7         7         7       7           3y60d
+    ---

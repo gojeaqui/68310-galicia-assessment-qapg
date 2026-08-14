@@ -1,0 +1,55 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "storage"
+  severity_key: "Not defined"
+  tags: []
+  description: "Software-Defined vs Physical Storage"
+  references: 
+  - title: "Understanding persistent storage"
+    url: "https://docs.openshift.com/container-platform/latest/storage/understanding-persistent-storage.html"
+  check_procedures:
+    - type: survey
+      question: "Is storage software-defined or physical storage?"
+    - type: survey
+      question: "What specific storage solution is being used (e.g., ODF, NetApp, Pure Storage)?"
+    - type: survey
+      question: "How is the storage redundancy configured?"
+    - type: survey
+      question: "Are there any known performance issues with the current storage setup?"
+    - type: survey
+      question: "How often is the storage configuration reviewed and updated?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Almacenamiento correctamente configurado"
+      description_long_text: "La solución de almacenamiento está configurada correctamente con una redundancia adecuada"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "El rendimiento del almacenamiento es óptimo"
+      description_long_text: "La configuración de almacenamiento actual funciona bien sin problemas informados"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Revisión de necesidades de configuración de almacenamiento"
+      description_long_text: "La configuración de almacenamiento requiere revisión para un rendimiento óptimo"
+      impact_and_risk_text: "La configuración subóptima puede afectar el rendimiento del almacenamiento"
+      remediation_text: "Revise y optimice la configuración de almacenamiento de acuerdo con las mejores prácticas"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "La redundancia de almacenamiento necesita mejora"
+      description_long_text: "La configuración actual de redundancia de almacenamiento puede no cumplir con los requisitos de alta disponibilidad"
+      impact_and_risk_text: "La redundancia insuficiente puede conducir a la pérdida de datos o al tiempo de inactividad"
+      remediation_text: "Mejore la configuración de redundancia de almacenamiento para cumplir con los requisitos de disponibilidad"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

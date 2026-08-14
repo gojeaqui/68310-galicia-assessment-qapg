@@ -1,0 +1,55 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "Network"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "DHCP"
+  description: "DHCP Configuration"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "Are DHCP reservations static or dynamic?"
+    - type: survey
+      question: "Describe Pool Configuration"
+    - type: survey
+      question: "What is the lease time for DHCP addresses?"
+    - type: survey
+      question: "Are there any known issues with the current DHCP setup?"
+    - type: survey
+      question: "Is there a backup mechanism for DHCP configuration?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out DHCP details"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "El tiempo de arrendamiento (lease time) es óptimo."
+      description_long_text: "El tiempo de arrendamiento de DHCP se establece de manera óptima, equilibrando entre la disponibilidad de direcciones y la estabilidad de la red."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "no_change01"
+      scenario_description_short_text: "No hay problemas conocidos con DHCP."
+      description_long_text: "La configuración actual de DHCP es estable sin problemas informados."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Falta mecanismo de respaldo."
+      description_long_text: "No existe un mecanismo de respaldo para la configuración DHCP, lo que podría conducir a la pérdida de datos en caso de falla."
+      impact_and_risk_text: "La falta de copia de seguridad puede dar lugar a tiempo de inactividad prolongado y una reconfiguración manual en caso de pérdida de datos."
+      remediation_text: "Implemente un mecanismo de respaldo regular para la configuración de DHCP."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

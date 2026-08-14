@@ -1,0 +1,43 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Inner Loop"
+  severity_key:  low
+  tag_keys: []
+  tags: []
+  description: "Inner loop Standardization"
+  references:
+    - title: "Red Hat OpenShift Dev Spaces"
+      url: https://developers.redhat.com/products/openshift-dev-spaces/overview
+    - title: "The Modern Developer"
+      url: https://developers.redhat.com/e-books/modern-developer
+    - title: "The Inner Loop with OpenShift Dev Spaces"
+      url: https://www.opensourcerers.org/2022/10/17/develop-the-inner-loop-with-openshift-dev-spaces/
+  check_procedures:
+    - type: survey
+      question: "How do you ensure consistency across development environments within your organization?"
+    - type: survey
+      question: "How are dependencies and development tools managed and versioned across projects?"  
+    - type: survey
+      question: "How do developers collaborate on code in real-time within your organization? (Consider pair programming, code review processes, etc.)"  
+    - type: survey
+      question: "Can developers easily share and replicate environments for testing and debugging purposes?"  
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Inner Loop" # Increasing the adoption of Openshift depends on a frictionless, secure development environment. These questions are to understand the organization's inner-loop and how we can see if it's a good fit for them to adapt RedHat DevSpaces.
+      description_long_text: ""  
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

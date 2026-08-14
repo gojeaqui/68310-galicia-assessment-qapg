@@ -1,0 +1,60 @@
+version: v2
+check_definition:
+  category_key: "Infrastructure"
+  subcategory_key: "vSphere"
+  severity_key: "Not defined"
+  tag_keys:
+    - "Disaster Recovery"
+    - "High Availability"
+  tags: []
+  description: "VMware vSphere HA Enabled"
+  references: 
+  - title: "Using OpenShift Container Platform with vMotion"
+    url: "https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/upi/upi-vsphere-installation-reqs.html"
+  - title: "vSphere HA Checklist"
+    url: "https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.avail.doc/GUID-BA85FEC4-A37C-45BA-938D-37B309010D93.html"
+  check_procedures:
+    - type: survey
+      question: "Have the customer provide information regarding the VMware ESXi Cluster and if it is currently enabled for high availability / vmotion."
+    - type: survey
+      question: "Determine if the ESXi Cluster has enough physical resources to handle virtual machine hypervisor failover / vmotions."
+    - type: survey
+      question: "What is the current HA configuration and failover policy?"
+    - type: survey
+      question: "How often is the HA configuration tested?"
+    - type: survey
+      question: "Are there any known issues with the current HA setup?"
+  common_outcomes:
+    - key: "no_change01"
+      scenario_description_short_text: "vSphere HA habilitado"
+      description_long_text: "vSphere HA está habilitado y el clúster ESXi tiene suficientes recursos para manejar adecuadamente la carga entrante."
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Recursos insuficientes"
+      description_long_text: "vSphere HA está habilitado, pero el clúster ESXi no tiene suficientes recursos para manejar adecuadamente la carga entrante."
+      impact_and_risk_text: "Si el clúster ESXi no tiene suficientes recursos de cálculo cuando se produce una actividad de falla o mantenimiento que impacta uno o más hosts, esto podría conducir a problemas de rendimiento y/o interrupciones del clúster OpenShift."
+      remediation_text: "El cliente debe considerar agregar nodos ESXi adicionales al clúster ESXi para manejar correctamente los escenarios de falla y/o mantenimiento."
+    - key: "changes_recommended02"
+      scenario_description_short_text: "vSphere HA no habilitado"
+      description_long_text: "vSphere HA no está habilitado."
+      impact_and_risk_text: "No permitir que las máquinas virtuales migren entre los hipervisores/hosts de ESXi automáticamente pueden causar interrupciones en caso de falla o mantenimiento."
+      remediation_text: "El cliente debe considerar la configuración de alta disponibilidad para el clúster ESXi para lograr niveles más altos de disponibilidad de máquinas virtuales en caso de falla o mantenimiento del host ESXi."
+    - key: "advisory01"
+      scenario_description_short_text: "Se requieren pruebas de HA"
+      description_long_text: "La configuración de HA no se prueba regularmente"
+      impact_and_risk_text: "Configuraciónes de HA no probadas puede fallar cuando sean necesarias"
+      remediation_text: "Implementar un cronograma regular de pruebas de HA"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

@@ -1,0 +1,48 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Quotas & Limits"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Capacity Management"
+  description: "Resource Quotas Defined"
+  references: 
+  - title: "Resource quotas per project"
+    url: "https://docs.openshift.com/container-platform/latest/applications/quotas/quotas-setting-per-project.html"
+  - title: "Resource quotas across multiple projects"
+    url: "https://docs.openshift.com/container-platform/latest/applications/quotas/quotas-setting-across-multiple-projects.html"
+  check_procedures:
+    - type: command
+      command: | 
+        oc get resourcequotas --all-namespaces
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: "No hay aislación entre los namespaces en términos del uso de recursos"
+    description_long_text: "Si bien no hay  aislación entre los namespaces en términos de limites de recursos, no se espera que corran otras aplicaciones en el cluster asi que no aplica la recomendación"
+    impact_and_risk_text: "None"
+    remediation_text: "None required"
+  - key: "change01"
+    scenario_description_short_text: "Quotas not set"
+    description_long_text: "One or more namespaces do not have resource quotas"
+    impact_and_risk_text: "Workloads may consume too many resources, affecting cluster stability"
+    remediation_text: "Implement resource quotas"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get resourcequotas --all-namespaces
+    NAMESPACE                NAME                            AGE      REQUEST                                                              LIMIT
+    bna-trident-dmzprd01     trident-csi                     2y279d                                                                        
+    openshift-host-network   host-network-namespace-quotas   3y60d    count/daemonsets.apps: 0/0, count/deployments.apps: 0/0, pods: 0/0   limits.cpu: 0/0, limits.memory: 0/0
+    ---

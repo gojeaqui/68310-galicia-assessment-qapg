@@ -1,0 +1,41 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Inner Loop"
+  severity_key:  low
+  tag_keys: []
+  tags: []
+  description: "Inner loop Overview"
+  references:
+    - title: "Standardizing application delivery with OpenShift"
+      url: https://developers.redhat.com/articles/2022/12/16/standardizing-application-delivery-openshift
+    - title: "Inner Loop with Quarkus"
+      url: https://developers.redhat.com/articles/2022/12/12/kubernetes-native-inner-loop-development-quarkus
+    - title: "kubernetes Development with odo"
+      url: https://developers.redhat.com/blog/2020/06/16/enterprise-kubernetes-development-with-odo-the-cli-tool-for-developers
+  check_procedures:
+    - type: survey
+      question: "How would you describe your current inner loop development process?"
+    - type: survey
+      question: "What tools and technologies are currently being utilized for your inner loop?"  
+    - type: survey
+      question: "How do you ensure consistency across development environments within your organization?"  
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Inner Loop" 
+      description_long_text: ""  
+      impact_and_risk_text: ""
+      remediation_text: ""
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

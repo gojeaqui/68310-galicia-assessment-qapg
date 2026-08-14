@@ -1,0 +1,80 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Administration"
+    - "Security"    
+    - "Incident"
+  description: "Incident Management Tool Utilization"
+  references: []
+  check_procedures:
+    - type: survey
+      question: "What tool is used for Incident Management in your Organization?"
+    - type: survey
+      question: "How is the incident management tool integrated with OpenShift monitoring?"
+    - type: survey
+      question: "What automation capabilities are implemented in the tool?"
+    - type: survey
+      question: "How are incidents tracked and categorized in the tool?"
+    - type: survey
+      question: "What reporting capabilities are utilized?"
+    - type: survey
+      question: "How is the tool configured for different severity levels?"
+    - type: survey
+      question: "What integration exists with communication platforms?"
+    - type: survey
+      question: "How is historical incident data maintained?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      # Consultant to fill out based on client's communication
+      description_long_text: "A) ServiceNow, B) Jira Service Management, C) PagerDuty D) Any Other Tool Please Specify"
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "advisory02"
+      scenario_description_short_text: "Basic tool implementation"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Incident management tool in place with basic configuration"
+      impact_and_risk_text: "Limited incident tracking capabilities"
+      remediation_text: "Enhance tool configuration and utilization"
+    - key: "no_change01"
+      scenario_description_short_text: "Effective tool usage"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Well-configured incident management system"
+      impact_and_risk_text: "No immediate risks identified"
+      remediation_text: "Continue current tool utilization"
+    - key: "no_change02"
+      scenario_description_short_text: "Comprehensive tool setup"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Fully integrated incident management platform"
+      impact_and_risk_text: "Minimal risk in incident tracking"
+      remediation_text: "Maintain existing tool configuration"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Tool optimization needed"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Incident management tool needs enhancement"
+      impact_and_risk_text: "Risk of inefficient incident handling"
+      remediation_text: "Optimize incident management tool configuration"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Integration improvements required"
+      # Consultant to fill out based on client's communication
+      description_long_text: "Tool integration gaps identified"
+      impact_and_risk_text: "Fragmented incident management"
+      remediation_text: "Implement comprehensive tool integration"
+customer_environment_findings:
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      # Consultant to fill out based on client's communication
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""

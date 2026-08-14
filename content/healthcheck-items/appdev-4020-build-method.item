@@ -1,0 +1,50 @@
+version: v2
+check_definition:
+  category_key: "appdev"
+  subcategory_key: "Build"
+  severity_key: "Not defined"
+  tags: []
+  description: "Container Build Method"
+  references: 
+  - title: "Understanding image builds"
+    url: "https://docs.openshift.com/container-platform/latest/cicd/builds/understanding-image-builds.html"
+  check_procedures:
+    - type: survey
+      question: "How are images built (i.e. S2I, Containerfile)?"
+    - type: survey
+      question: "What tools are used to build and store images?"
+    - type: survey
+      question: "How do you manage dependencies during the build process?"
+    - type: survey
+      question: "Are there any automated tests integrated into the build process?"
+    - type: survey
+      question: "What challenges have you faced with the current build method?"
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Information Only"
+      description_long_text: ""  # Consultant to fill out build info
+      impact_and_risk_text: ""
+      remediation_text: ""
+    - key: "change01"
+      scenario_description_short_text: "Proceso de compilación ineficiente"
+      description_long_text: "El proceso de compilación actual es ineficiente y requiere mucho tiempo."
+      impact_and_risk_text: "Las compilaciones ineficientes pueden ralentizar los ciclos de desarrollo y aumentar el uso de recursos."
+      remediation_text: "Considere optimizar el proceso de compilación o usar herramientas de compilación más eficientes."
+    - key: "change02"
+      scenario_description_short_text: "Falta de pruebas automatizadas en el proceso de compilación"
+      description_long_text: "No hay pruebas automatizadas integradas en el proceso de compilación."
+      impact_and_risk_text: "La falta de pruebas puede provocar problemas no detectados y una menor calidad del software."
+      remediation_text: "Integre pruebas automatizadas en el proceso de compilación para detectar problemas de forma temprana."
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
