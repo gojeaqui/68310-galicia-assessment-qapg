@@ -231,7 +231,7 @@ case "${GENERATE_PDF_EXIT_CODE}" in
     *) echo "ERROR: Something unknown went wrong" ;;
 esac
 
-OUTFILE_NEW="[${GIT_DATE}] BNA - (oscdmzprd01) Healthcheck cluster Openshift 4.x.pdf"
+OUTFILE_NEW="[${GIT_DATE}] Galicia - (qapg) Healthcheck cluster Openshift 4.x.pdf"
 echo "${OUTFILE} -> ${OUTFILE_NEW}"
 mv "${OUTFILE}" "${OUTFILE_NEW}"
 

@@ -19,39 +19,59 @@ Ejemplo
 Red Hat Consulting was engaged by Acme Inc. to assist with the Application Standardization 2.0 Project.  Three Ansible Tower clusters were established to serve Dev, Test and Prod environments.  Red Hat Consulting collaborated on the creation of 135 compliance and remediation playbooks, and over the course of the engagement scanned the entire Dev environment automatically bringing nearly 200 non-compliant services into compliance and flagging an additional 50 for manual remediation.  Acme's ServiceNow environment now has up-to-date compliance status on every application identified in the Dev environment.  During the course of the engagement three separate demonstrations were provided to Acme executive management as well as several knowledge transfer sessions crafted to ensure that Acme is enabled to begin scanning Test and Prod environments on their own after the necessary approvals.
 
 ////
-El Banco de la Nación Argentina contrató los servicios de Red Hat Consulting para apoyar al Banco en las fases cruciales de estabilización y puesta en producción del proyecto de Banca Digital. Nuestra misión es garantizar una transición fluida y eficiente, minimizando cualquier posible interrupción y optimizando el rendimiento de la nueva plataforma. +
+El Banco Galicia contrató los servicios de Red Hat Consulting para que lo asista con la revision del cluster 'prdpg' con el fin de determinar si se encuentran problemas en el mismo antes de entrar en producción. +
 
 En este contexto, se identifican y describen varias áreas que consideramos de suma importancia, las cuales deben ser revisadas y ajustadas meticulosamente durante el proceso de implementación de Banca Digital. Esto es especialmente relevante si se considera el alto volumen de usuarios y el gran número de transacciones que se espera que la plataforma maneje en un periodo de tiempo significativamente corto. La capacidad de la plataforma para escalar y mantener un rendimiento óptimo bajo estas condiciones es fundamental para el éxito del proyecto y la satisfacción del cliente.
 
 A continuación se deja un resumen de lo que se encontró durante el assessment:
+[cols="2,4,4,4", options="header"]
+|===
+| Hallazgo | Descripción | Impacto / Riesgo | Recomendación
 
-* Corrección en datos de la cuenta de VMWare
-** Se encontró que a la cuenta de VMWare le falta configurar el nombre del vCenter
+| *NFS Subdir External Provisioner no soportado*
+| Se encontró instalado el proveedor de volúmenes `nfs-subdir-external-provisioner`, cuyo uso no está soportado para componentes de infraestructura de OpenShift.
+| NFS presenta limitaciones relacionadas con POSIX y bloqueo de archivos que pueden generar degradación del rendimiento y riesgo de corrupción de datos.
+| Reemplazar por Red Hat OpenShift Data Foundation (ODF) o por un controlador CSI certificado por Red Hat que permita aprovisionamiento dinámico.
 
-* Corrección de uso de llaves SSH
-** Se encontró el uso de multiples llaves SSH para ingresar a los nodos
+| *Alertas de OpenShift activas sin atender*
+| Se identificaron alertas en estado `firing` que aún no fueron revisadas o atendidas.
+| Algunas alertas pueden indicar fallos inminentes, degradación del rendimiento o potenciales interrupciones de la plataforma.
+| Revisar todas las alertas activas y remediarlas o silenciarlas según corresponda, priorizando las de severidad crítica.
 
-* Version de cluster desactualizada
-** Si bien el equipo ya esta al tanto de esto y se están actualizando los clusters, el problema de fondo es que no hay una política de actualización periódica. Debería haber un ejercicio de actualización de los clusters cada 3 meses.
+| *Problemas en el stack de Logging*
+| Los collectors de Logging no se encuentran desplegados correctamente en los nodos infra y podrían faltar `tolerations` para permitir su ejecución. Además, no se encuentra desplegado el operador Loki.
+| La ausencia de collectors puede provocar una recolección incompleta de logs y pérdida de información útil para auditoría y troubleshooting.
+| Revisar la configuración del stack de Logging, validar las `tolerations` requeridas para los nodos infra y asegurar el despliegue correcto del operador Loki.
 
-* Certificados auto-firmados
-** Se encontró el uso de certificados auto-firmados para la API y *.apps.
+| *Almacenamiento de Logging no óptimo*
+| El despliegue de OpenShift Logging presenta ausencia de algunos PVC requeridos por Loki.
+| Logging requiere almacenamiento persistente de alto rendimiento. Un almacenamiento inadecuado puede afectar el rendimiento y, dependiendo de la tecnología utilizada, generar problemas de fiabilidad o corrupción de datos.
+| Configurar almacenamiento persistente respaldado por SSD/NVMe y asegurar la creación y disponibilidad de los PVC requeridos por Loki.
 
-* Envío de alertas a sistemas externos no configurada
-** No esta configurado el envío de alertas a un sistema externo a Openshift como puede ser algún sistema de mensajería como Teams o Telegram
+| *Cuenta `kubeadmin` habilitada*
+| La cuenta predeterminada `kubeadmin` continúa habilitada en el clúster.
+| Mantener habilitada una cuenta administrativa predeterminada representa un riesgo de seguridad.
+| Deshabilitar `kubeadmin` una vez garantizado el acceso administrativo al clúster mediante otros mecanismos.
 
-* La cuenta de 'kubeadmin' esta habilitada
-** Encontramos que se esta utilizando la cuenta de admin default 'kubeadmin', se recomienda deshabilitarla por seguridad.
+| *Registry interna degradada*
+| La registry interna se encuentra en estado `Managed`, pero no tiene almacenamiento configurado.
+| La registry no puede almacenar ni servir imágenes de contenedor, lo que puede provocar fallas en despliegues que dependan de imágenes almacenadas internamente.
+| Configurar el almacenamiento requerido para la registry interna.
 
-* Auto aprovisionamiento de Proyectos habilitado
-** Encontramos que se encuentra habilitado el auto-aprovisionamiento de proyectos, se recomienda deshabilitarlo
+| *Conexión LDAP no cifrada*
+| La comunicación entre OpenShift y el servidor LDAP actualmente no utiliza cifrado.
+| Las credenciales y otra información intercambiada podrían quedar expuestas a interceptación.
+| Habilitar comunicaciones cifradas en el servidor LDAP y configurar el proveedor de identidad OAuth para utilizar LDAPS.
 
-* Conexión LDAP no cifrada
-** Encontramos que la conexión al LDAP no esta cifrada lo cual provoca que durante el login a la plataforma el usuario y password 
+| *Atributo `id` de LDAP no inmutable*
+| El proveedor de identidad LDAP utiliza actualmente `cn` de Active Directory como atributo `id`. Este atributo no garantiza inmutabilidad.
+| Si el atributo cambia, OpenShift puede interpretar al usuario como una identidad diferente, pudiendo impedirle acceder con su identidad anterior. El riesgo es especialmente relevante para usuarios con privilegios administrativos.
+| Utilizar un atributo de Active Directory que sea inmutable durante toda la vida de la cuenta. Evaluar `sAMAccountName` como alternativa, siempre que las políticas del AD garanticen que no cambia. Validar previamente el impacto sobre las identidades existentes y definir un procedimiento que evite bloquear el acceso administrativo.
+
+|===
 
 Los puntos que consideramos críticos son los siguientes:
 
-* Cuenta de 'kubeadmin' habilitada
+* Uso de NFS Subdir External Provisioner
+* Registry interna degradada
 * Conexión LDAP no cifrada
-* Version de cluster desactualizada
-

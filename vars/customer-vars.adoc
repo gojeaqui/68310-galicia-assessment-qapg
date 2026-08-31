@@ -4,20 +4,20 @@
 // short name, and gss information
 // --------------------------------
 
-:description: Assessment de plataforma Openshift (oscdmzprd01)
+:description: Assessment de plataforma Openshift (qapg)
 
 // This is where the customer name, customer, and short-name cust are inserted
-:customer: BNA
-:cust: BNA
+:customer: Galicia
+:cust: Galicia
 
 // add name of customer logo here (store in images directory)
 // Leave it "empty" WITHOUT QUOTES if not there.
-:customerlogo: Logo_Banco_de_la_Nacion_Argentina.png
+:customerlogo: Logo_Banco_Galicia.jpg
 
-:custprojectmanager: Andres Iriarte
+:custprojectmanager: Sebastian Geijo
 
 // these are required for the support chapter.
-:custgss: BANCO DE LA NACION ARGENTINA
+:custgss: AR-BANCO Galicia
 :nogss: SG0021907
 
 // --------------------------------

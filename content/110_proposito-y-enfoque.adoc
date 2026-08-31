@@ -25,4 +25,4 @@ seeks to <describe what the initiative is meant to achieve> by <describe how
 this engagement is going to support the initiative>.
 ////
 
-{cust} contrató los servicios de Red Hat Consulting para que lo asista con {description} con la intención de (#TODO# describir qué se pretende lograr con esta iniciativa) a través de (#TODO# describir de qué modo este proyecto apoyará esa iniciativa).
+El Banco Galicia contrató los servicios de Red Hat Consulting para que lo asista con la revision del cluster 'prdpg' con el fin de determinar si se encuentran problemas en el mismo antes de entrar en producción.

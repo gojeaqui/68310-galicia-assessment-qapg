@@ -16,11 +16,11 @@ was actively involved (i.e. attending status calls, escalations etc...)
 |Correo Electrónico
 
 // Nombre
-| Andres Iriarte
+| Sebastian Geijo
 // Titulo
 | Project Manager
 // Correo Electrónico
-| airiarte@redhat.com
+| sgeijo@redhat.com
 
 // Nombre
 | Jorge D'Angelo
