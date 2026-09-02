@@ -19,13 +19,13 @@ check_definition:
         oc get secrets -n openshift-ingress
   common_outcomes:
     - key: "advisory01"
-      scenario_description_short_text: "No se configuraron certificados para Ingress"
-      description_long_text: "No se encontró configuración de certificados para el IngressController default"  # Consultant to fill out Ingress certificate info
-      impact_and_risk_text: "Los certificados auto-firmados muestran advertencias en los navegadores y es difícil verificar si son auténticos. Esto puede presentar un problema de seguridad, ya que los usuarios no pueden estar seguros de la identidad del clúster de OpenShift ni de si su comunicación con el clúster está correctamente cifrada"
-      remediation_text: "Se recomienda adquirir certificados de una Autoridad de Certificación interna o externa de confianza y seguir los procedimientos documentados para instalarlos en todos los clústeres."
+      scenario_description_short_text: "Se configuraron certificados firmados por una CA de confianza para Ingress"
+      description_long_text: "Se encontró configuración de certificados firmados por una CA de confianza para el IngressController default"
+      impact_and_risk_text: ""
+      remediation_text: ""
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: changes_recommended
+  status: pass
   common_outcome_key: "advisory01"
   outcome_overrides:
       scenario_description_short_text: ""
@@ -37,58 +37,73 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get proxy/cluster -o yaml
+    [guillermo@darkstar paas-apps1-qapg]$ omc get proxy/cluster -o yaml
     apiVersion: config.openshift.io/v1
     kind: Proxy
     metadata:
-      creationTimestamp: "2022-08-24T17:34:58Z"
-      generation: 2
+      annotations:
+        argocd.argoproj.io/sync-wave: "10"
+        argocd.argoproj.io/tracking-id: paas-apps1-qapg-platform-base:config.openshift.io/Proxy:default/cluster
+      creationTimestamp: "2026-06-01T15:59:14Z"
+      generation: 3
+      labels:
+        app.kubernetes.io/component: config
+        app.kubernetes.io/name: cluster-certs
+        app.kubernetes.io/part-of: cluster-certs
+        gitops.bancogalicia.com.ar/cluster: paas-apps1-qapg
+        gitops.bancogalicia.com.ar/domain: apps
+        gitops.bancogalicia.com.ar/env: qa
+        gitops.bancogalicia.com.ar/managed-by: argocd
+        gitops.bancogalicia.com.ar/site: pg
+        gitops.bancogalicia.com.ar/tier: high
       name: cluster
-      resourceVersion: "14614788"
-      uid: 47190d06-0aed-4506-b7de-6091fd38c858
+      resourceVersion: "20736460"
+      uid: b73239fd-b44a-4d41-80a9-17cf7e72a406
     spec:
-      httpProxy: http://10.2.248.246:8080/
-      httpsProxy: http://10.2.248.246:8080/
-      noProxy: .oscdmzprd01.cc.bna.net,.cc.bna.net,.tcc.tbna.net,api.oscdmzprd01.cc.bna.net,.apps.oscdmzprd01.cc.bna.net,10.0.0.0/8
       trustedCA:
-        name: ""
-    status:
-      httpProxy: http://10.2.248.246:8080/
-      httpsProxy: http://10.2.248.246:8080/
-      noProxy: .apps.oscdmzprd01.cc.bna.net,.cc.bna.net,.cluster.local,.oscdmzprd01.cc.bna.net,.svc,.tcc.tbna.net,10.0.0.0/8,10.10.13.0/24,10.168.0.0/14,127.0.0.1,172.60.0.0/16,api-int.oscdmzprd01.cc.bna.net,api.oscdmzprd01.cc.bna.net,localhost
+        name: custom-canoprd
+    status: {}
+
     ---
 
-    [openshift@bastion ~]$ oc get configmaps -n openshift-config
+    [guillermo@darkstar paas-apps1-qapg]$ omc get configmaps -n openshift-config
     NAME                               DATA   AGE
-    admin-acks                         3      3y60d
-    admin-kubeconfig-client-ca         1      3y60d
-    cloud-provider-config              1      3y60d
-    etcd-ca-bundle                     1      3y60d
-    etcd-metric-serving-ca             1      3y60d
-    etcd-serving-ca                    1      3y60d
-    initial-kube-apiserver-server-ca   1      3y60d
-    kube-root-ca.crt                   1      3y60d
-    ldap-ca-z78k9                      1      3y37d
-    openshift-install                  2      3y60d
-    openshift-install-manifests        2      3y60d
-    openshift-service-ca.crt           1      3y60d
-    ---
+    admin-acks                         0      70d
+    admin-kubeconfig-client-ca         1      70d
+    cloud-provider-config              1      70d
+    custom-ca                          1      69d
+    custom-canoprd                     1      38d
+    etcd-ca-bundle                     1      70d
+    etcd-serving-ca                    1      70d
+    initial-kube-apiserver-server-ca   1      70d
+    installer-images                   1      70d
+    kube-root-ca.crt                   1      70d
+    openshift-install                  2      70d
+    openshift-install-manifests        2      70d
+    openshift-service-ca.crt           1      70d
+    registry-ca                        1      69d
 
-    [openshift@bastion ~]$ oc get secrets -n openshift-ingress
-    NAME                           TYPE                                  DATA   AGE
-    builder-dockercfg-tcjfn        kubernetes.io/dockercfg               1      3y60d
-    builder-token-bxr64            kubernetes.io/service-account-token   4      3y60d
-    builder-token-kbcx9            kubernetes.io/service-account-token   4      3y60d
-    default-dockercfg-zpvxc        kubernetes.io/dockercfg               1      3y60d
-    default-token-chvtn            kubernetes.io/service-account-token   4      3y60d
-    default-token-jvfrx            kubernetes.io/service-account-token   4      3y60d
-    deployer-dockercfg-btq2x       kubernetes.io/dockercfg               1      3y60d
-    deployer-token-kr2wx           kubernetes.io/service-account-token   4      3y60d
-    deployer-token-shpws           kubernetes.io/service-account-token   4      3y60d
-    router-certs-default           kubernetes.io/tls                     2      453d
-    router-dockercfg-65bnt         kubernetes.io/dockercfg               1      3y60d
-    router-metrics-certs-default   kubernetes.io/tls                     2      3y60d
-    router-stats-default           Opaque                                2      3y60d
-    router-token-bj6w9             kubernetes.io/service-account-token   4      3y60d
-    router-token-sqjjh             kubernetes.io/service-account-token   4      3y60d
     ---
+    
+    [guillermo@darkstar paas-apps1-qapg]$ omc get secrets -n openshift-ingress
+    NAME                                 TYPE                      DATA   AGE
+    builder-dockercfg-c9bl7              kubernetes.io/dockercfg   1      69d
+    default-dockercfg-grwmj              kubernetes.io/dockercfg   1      69d
+    deployer-dockercfg-gqfvl             kubernetes.io/dockercfg   1      69d
+    ingress-cert                         kubernetes.io/tls         2      37d
+    ingress-cert02                       kubernetes.io/tls         2      37d
+    router-dockercfg-kzxzp               kubernetes.io/dockercfg   1      69d
+    router-metrics-certs-default         kubernetes.io/tls         2      70d
+    router-metrics-certs-shard1-router   kubernetes.io/tls         2      51d
+    router-metrics-certs-shard2-router   kubernetes.io/tls         2      51d
+    router-metrics-certs-shard3-router   kubernetes.io/tls         2      51d
+    router-metrics-certs-shard4-router   kubernetes.io/tls         2      51d
+    router-metrics-certs-shard5-router   kubernetes.io/tls         2      51d
+    router-metrics-certs-shard6-router   kubernetes.io/tls         2      51d
+    router-stats-default                 Opaque                    2      70d
+    router-stats-shard1-router           Opaque                    2      51d
+    router-stats-shard2-router           Opaque                    2      51d
+    router-stats-shard3-router           Opaque                    2      51d
+    router-stats-shard4-router           Opaque                    2      51d
+    router-stats-shard5-router           Opaque                    2      51d
+    router-stats-shard6-router           Opaque                    2      51d

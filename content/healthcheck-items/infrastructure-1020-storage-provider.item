@@ -43,10 +43,15 @@ check_definition:
       description_long_text: "No existe un mecanismo de copia de seguridad para la configuración del proveedor de almacenamiento"
       impact_and_risk_text: "Riesgo de pérdida de configuración durante los cambios o fallas del sistema"
       remediation_text: "Implementar la solución de respaldo para la configuración del proveedor de almacenamiento"
+    - key: "changes_recommended03"
+      scenario_description_short_text: "Utilización del StorageClass legado 'thin'"
+      description_long_text: "Se encontró el uso del StorageClass legado 'thin' a pesar de ser un cluster 4.20 instalado reciente"
+      impact_and_risk_text: "El StorageClass thin (Legado): Utiliza el provisionador kubernetes.io/vsphere-volume. Es el driver antiguo (in-tree) que está siendo reemplazado en Kubernetes y OpenShift"
+      remediation_text: "Se recomienda revisar porque esta actualmente el StorageClass 'thin' para evaluar su remoción"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: pass
-  common_outcome_key: "advisory01"
+  status: changes_recommended
+  common_outcome_key: "changes_recommended03"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -57,17 +62,9 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    
-    [openshift@bastion ~]$ oc get sc
-    NAME                          PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-    loki-odf-storage              kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  56d
-    ocs-storagecluster-ceph-rbd   openshift-storage.rbd.csi.ceph.com      Delete          Immediate              true                   56d
-    ocs-storagecluster-ceph-rgw   openshift-storage.ceph.rook.io/bucket   Delete          Immediate              false                  56d
-    ocs-storagecluster-cephfs     openshift-storage.cephfs.csi.ceph.com   Delete          Immediate              true                   56d
-    ontap-delete                  csi.trident.netapp.io                   Delete          Immediate              true                   2y277d
-    ontap-retain                  csi.trident.netapp.io                   Retain          Immediate              true                   2y277d
-    openshift-storage.noobaa.io   openshift-storage.noobaa.io/obc         Delete          Immediate              false                  56d
-    thin (default)                csi.vsphere.vmware.com                  Delete          Immediate              true                   120d
-    thin-csi                      csi.vsphere.vmware.com                  Delete          WaitForFirstConsumer   true                   2y67d
-    thin-retain                   csi.vsphere.vmware.com                  Retain          Immediate              true                   120d
-    ---
+    [guillermo@darkstar paas-apps1-qapg]$ omc get sc
+    NAME                        PROVISIONER                                   RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+    nfs-client                  k8s-sigs.io/nfs-subdir-external-provisioner   Delete          Immediate              true                   62d
+    ocs-storagecluster-cephfs   k8s-sigs.io/nfs-subdir-external-provisioner   Delete          Immediate              true                   60d
+    thin-csi                    csi.vsphere.vmware.com                        Delete          WaitForFirstConsumer   true                   70d
+    thin                        kubernetes.io/vsphere-volume                  Delete          Immediate              false                  60d

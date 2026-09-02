@@ -29,8 +29,8 @@ check_definition:
       remediation_text: "Verificar que exista el Operador Cluster Control Plane Machine Set y crear el objecto ControlPlaneMachineSet en base a un MachineSet existente"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: pass
-  common_outcome_key: "no_change01"
+  status: changes_recommended
+  common_outcome_key: "changes_recommended01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -41,93 +41,5 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get controlplanemachineset.machine.openshift.io cluster --namespace openshift-machine-api
-      apiVersion: machine.openshift.io/v1
-      kind: ControlPlaneMachineSet
-      metadata:
-        creationTimestamp: '2025-12-29T14:05:20Z'
-        finalizers:
-          - controlplanemachineset.machine.openshift.io
-        generation: 2
-        name: cluster
-        namespace: openshift-machine-api
-        resourceVersion: '1230089289'
-        uid: 272c54de-ee21-4b0a-abde-3ef39803360e
-      spec:
-        replicas: 3
-        selector:
-          matchLabels:
-            machine.openshift.io/cluster-api-cluster: oscdmzprd01-n5xps
-            machine.openshift.io/cluster-api-machine-role: master
-            machine.openshift.io/cluster-api-machine-type: master
-        state: Active
-        strategy:
-          type: RollingUpdate
-        template:
-          machineType: machines_v1beta1_machine_openshift_io
-          machines_v1beta1_machine_openshift_io:
-            failureDomains:
-              platform: ''
-            metadata:
-              labels:
-                machine.openshift.io/cluster-api-cluster: oscdmzprd01-n5xps
-                machine.openshift.io/cluster-api-machine-role: master
-                machine.openshift.io/cluster-api-machine-type: master
-            spec:
-              lifecycleHooks: {}
-              metadata: {}
-              providerSpec:
-                value:
-                  numCoresPerSocket: 1
-                  diskGiB: 200
-                  snapshot: ''
-                  userDataSecret:
-                    name: master-user-data
-                  memoryMiB: 32768
-                  credentialsSecret:
-                    name: vsphere-cloud-credentials
-                  network:
-                    devices:
-                      - networkName: srv-PSWOS_prod1
-                  metadata:
-                    creationTimestamp: null
-                  numCPUs: 8
-                  kind: VSphereMachineProviderSpec
-                  workspace:
-                    datacenter: BNA
-                    datastore: CPCSOSC0001
-                    folder: /BNA/vm/oscdmzprd01-n5xps
-                    resourcePool: /BNA/host/PRODUCCION-SR850v3/Resources
-                    server: smf99cc0001.cc.bna.net
-                  template: oscdmzprd01-n5xps-rhcos-41434
-                  apiVersion: machine.openshift.io/v1beta1
-      status:
-        conditions:
-          - lastTransitionTime: '2025-12-29T14:05:21Z'
-            message: ''
-            observedGeneration: 2
-            reason: AsExpected
-            status: 'False'
-            type: Error
-          - lastTransitionTime: '2025-12-29T14:05:21Z'
-            message: ''
-            observedGeneration: 2
-            reason: AllReplicasAvailable
-            status: 'True'
-            type: Available
-          - lastTransitionTime: '2025-12-29T15:29:59Z'
-            message: ''
-            observedGeneration: 2
-            reason: AsExpected
-            status: 'False'
-            type: Degraded
-          - lastTransitionTime: '2025-12-29T15:29:58Z'
-            message: ''
-            observedGeneration: 2
-            reason: AllReplicasUpdated
-            status: 'False'
-            type: Progressing
-        observedGeneration: 2
-        readyReplicas: 3
-        replicas: 3
-        updatedReplicas: 3
+    [guillermo@darkstar paas-apps1-qapg]$ omc get controlplanemachineset.machine.openshift.io cluster --namespace openshift-machine-api -o yaml
+    No resources controlplanemachinesets.machine.openshift.io found in openshift-machine-api namespace.

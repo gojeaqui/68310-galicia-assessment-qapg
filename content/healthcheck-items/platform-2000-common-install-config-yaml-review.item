@@ -16,13 +16,13 @@ check_definition:
         oc describe cm -n kube-system cluster-config-v1
   common_outcomes:
     - key: "advisory01"
-      scenario_description_short_text: "Configuracion de 'install-config.yaml' generalmente correcta" 
-      description_long_text: "En general no se encontraron problemas salvo el hecho de que se colocaron varios keys en los nodos"  # Consultant to describe state of install-config
-      impact_and_risk_text: "No se recomienda ingresar a los nodos mediante SSH sino utilizando 'oc debug node/<nodo>' y el uso de multiples llaves SSH afecta la seguridad de los nodos porque eso genera un problema en el manejo de la seguridad de las llaves"
-      remediation_text: "Se recomienda utilizar una sola llave y evitar esta practica para la creación de clusters futuros"
+      scenario_description_short_text: "Configuración de 'install-config.yaml' generalmente correcta" 
+      description_long_text: ""  # Consultant to describe state of install-config
+      impact_and_risk_text: ""
+      remediation_text: ""
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: changes_recommended
+  status: pass
   common_outcome_key: "advisory01"
   outcome_overrides:
       scenario_description_short_text: ""
@@ -34,82 +34,118 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc describe cm -n kube-system cluster-config-v1
-    Name:         cluster-config-v1
-    Namespace:    kube-system
-    Labels:       <none>
-    Annotations:  <none>
-
-    Data
-    ====
-    install-config:
-    ----
+    [guillermo@darkstar paas-apps1-qapg]$ omc get cm -n kube-system cluster-config-v1 -o yaml
     apiVersion: v1
-    baseDomain: cc.bna.net
-    compute:
-    - architecture: amd64
-      hyperthreading: Enabled
-      name: worker
-      platform:
-        vsphere:
-          coresPerSocket: 1
-          cpus: 8
-          memoryMB: 32768
-          osDisk:
-            diskSizeGB: 200
-      replicas: 3
-    controlPlane:
-      architecture: amd64
-      hyperthreading: Enabled
-      name: master
-      platform:
-        vsphere:
-          coresPerSocket: 1
-          cpus: 8
-          memoryMB: 32768
-          osDisk:
-            diskSizeGB: 200
-      replicas: 3
+    data:
+      install-config: |
+        additionalTrustBundlePolicy: Proxyonly
+        apiVersion: v1
+        baseDomain: bancogalicia.com.ar
+        compute:
+        - architecture: amd64
+          hyperthreading: Enabled
+          name: worker
+          platform:
+            vsphere:
+              coresPerSocket: 2
+              cpus: 8
+              dataDisks: null
+              memoryMB: 32768
+              osDisk:
+                diskSizeGB: 120
+              zones:
+              - failure-domain-1
+              - failure-domain-2
+              - failure-domain-3
+          replicas: 3
+        controlPlane:
+          architecture: amd64
+          hyperthreading: Disabled
+          name: master
+          platform:
+            vsphere:
+              coresPerSocket: 2
+              cpus: 8
+              dataDisks: null
+              memoryMB: 32768
+              osDisk:
+                diskSizeGB: 120
+              zones:
+              - failure-domain-1
+              - failure-domain-2
+              - failure-domain-3
+          replicas: 3
+        metadata:
+          creationTimestamp: null
+          name: paas-apps1-qapg
+        networking:
+          clusterNetwork:
+          - cidr: 10.128.0.0/18
+            hostPrefix: 24
+          machineNetwork:
+          - cidr: 10.254.36.0/24
+          networkType: OVNKubernetes
+          serviceNetwork:
+          - 172.30.0.0/16
+        platform:
+          vsphere:
+            apiVIPs:
+            - 10.254.36.1
+            failureDomains:
+            - name: failure-domain-1
+              region: pg
+              server: vcenterocp.bancogalicia.com.ar
+              topology:
+                computeCluster: /cpd intersite/host/OCP-HIGH-PG
+                datacenter: cpd intersite
+                datastore: /cpd intersite/datastore/9500PROD/paas-apps1-qapg/ocp/VM9500PROD-OCP-PAAS-APPS1-QAPG_lun300
+                networks:
+                - dvPG-VMNET-VLAN179
+                resourcePool: /cpd intersite/host/OCP-HIGH-PG/Resources
+              zone: az1
+            - name: failure-domain-2
+              region: pg
+              server: vcenterocp.bancogalicia.com.ar
+              topology:
+                computeCluster: /cpd intersite/host/OCP-HIGH-PG
+                datacenter: cpd intersite
+                datastore: /cpd intersite/datastore/9500PROD/paas-apps1-qapg/ocp/VM9500PROD-OCP-PAAS-APPS1-QAPG_lun301
+                networks:
+                - dvPG-VMNET-VLAN179
+                resourcePool: /cpd intersite/host/OCP-HIGH-PG/Resources
+              zone: az2
+            - name: failure-domain-3
+              region: pg
+              server: vcenterocp.bancogalicia.com.ar
+              topology:
+                computeCluster: /cpd intersite/host/OCP-HIGH-PG
+                datacenter: cpd intersite
+                datastore: /cpd intersite/datastore/9500PROD/paas-apps1-qapg/ocp/VM9500PROD-OCP-PAAS-APPS1-QAPG_lun302
+                networks:
+                - dvPG-VMNET-VLAN179
+                resourcePool: /cpd intersite/host/OCP-HIGH-PG/Resources
+              zone: az3
+            ingressVIPs:
+            - 10.254.36.2
+            vcenters:
+            - datacenters:
+              - cpd intersite
+              password: ""
+              server: vcenterocp.bancogalicia.com.ar
+              user: ""
+        publish: External
+        pullSecret: ""
+        sshKey: ssh-rsa XX
+          root@bastionacm.bancogalicia.com.ar
+    kind: ConfigMap
     metadata:
-      creationTimestamp: null
-      name: oscdmzprd01
-    networking:
-      clusterNetwork:
-      - cidr: 10.168.0.0/14
-        hostPrefix: 23
-      machineNetwork:
-      - cidr: 10.10.13.0/24
-      networkType: OpenShiftSDN
-      serviceNetwork:
-      - 172.60.0.0/16
-    platform:
-      vsphere:
-        apiVIP: 10.10.13.22
-        cluster: PRODUCCION-LENOVO
-        datacenter: BNA
-        defaultDatastore: CPCSOSC0001
-        diskType: thin
-        ingressVIP: 10.10.13.23
-        network: srv-PSWOS_prod1
-        password: ""
-        username: ""
-        vCenter: smf99cc0001.cc.bna.net
-    proxy:
-      httpProxy: http://10.2.248.246:8080/
-      httpsProxy: http://10.2.248.246:8080/
-      noProxy: .oscdmzprd01.cc.bna.net,.cc.bna.net,.tcc.tbna.net,api.oscdmzprd01.cc.bna.net,.apps.oscdmzprd01.cc.bna.net,10.7.0.0/16,10.2.0.0/16,10.10.13.0/24
-    publish: External
-    pullSecret: ""
-    sshKey: |
-      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC96l/CQoGK5/MSoxC+6jOi1D6SOUvEeItNXOthBog5ZzdD99QdfMBHG/m9cE7X26QdIvfHbcxy+VB8MBMe1CAYaywZbyZaoYtspm9GhiWFKIXoYSw3ufga28wL1hyCyIDWHDdsZWDo9q7ulxjVrT6PQCax77OpLpnFJZdzl8SYfMlWrBAA19pXfM3AUJHgwOP/Wg3ufGlz8+aVzXhLyOpxSfq5mJCc9he+ebWf9sp8CLu2m7FrzIISfuKvPtR1soKz4oQLrH+Hi1go+xXrfu78hVISwzokvyYLBtUXlZXFQZOTs0od4OfAyQB3l/9lj0k/OP/GZGhsnIoEoClVQtXlaM2GpQU/mOjjKZXpgbzHU1M43kMA13hmOY3MozkLdG9i1Qj9DJO4Dj2PWn3ktdjStdnZp9PFPeoSVgy6qx07DQEkLOIm3Kb0OL8avl6u0Yt4xrw+IHfnIEGSOl62EUDuPVU447nwVOfe0TINEwavf9DeTo2WgtO1o1bF3Fd6zss= openshift@bastion-oscprd01
-      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0FLkxScX5/wTactYE7IjqEnFw25LsoUUX3DoywWTCUq3dxzmCz167MFoVJfuRAUmYC6l1UVR5IvMJm50p9G4tRHnbXEQOdDdwI6WXkx09OL4pYVRVG3rh7FhDugA5tduGXrBWfKZH6vFOrcFofWpkF/9A2Rq3fV/do6myv9wnnO9OwFlWKH6NHdXPMUSs07ACj36vA7013epdlTcA0LLA31kb4+2NXFyVRKJ0z27Ac+FhxPYwkY1F76fvXwk6jnYADwEHP1s3YDF8cocgMdRS33jJaGE9IiSqjnkw/CTPWIbAT3EYPQdnsBy/fe4oFngu89Eap8bqnkDHjP8oC5SvCmBv3RJtm56qq+4JiRGUiuMD2zdLjODGNn+LGMePw+Qiomq5bFV8ZZmFmKqxRarams13tgFvwl5qbPdoU0d1+HMOgbxfYCH3sVj/Nj+4VcfqceU5843UDfwQkILNmijUcYAyljN7WGoTfydKw9bmzIXewAP/7YYQTjebzgILhk0= root@bastion-oscprd01
-      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEAlzCrOs28VL1x2KC+Nbw4MR+KjgDz3k6n0/QIqvof4gq4CKM3QCUFKvRDCumPNolYNWtvKPenFMXMBMgzZJ5bBnjqylhd6BahKo1BOfz9yzizCZu2QmqYBw38jYCdANJu8zHPzqjH+V7JQSuqUOdrxAYgpTcdC0Gsku47A/Ae3fhzfZ62fVjbu/qsco1LrVUs7xUh3P8QGbj1oKN2B8sxNrx4rrSlyRwvlwU6eygpFmxioal0z8NCdEebzt+WAEJj3ZSCCP4RGKC9qWwbndMfXbLC+YwGkzT7b3jMEfN4KJXbV8afzUQFd/xTNsYBr/NR4OEiXT4r58FNKe9HLgT cc\t67774@P5109CC0001
-      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDxeVbB8JLHKFa4MNoWtJsuXJG8t9SRyCg5gbaz2t8j2EupHWYsydEHo/0SQT9luL1MX74BVfkjIod+DjiiWsM4fO3L1CLWdMMqfjsNfhV+9u33gGtpBZO41bmmYeH+fNrtWKJkgorCU2C8ny2LwVd29+F69b7s7v2UxTl7iiHJljhkWc70pxEezUzxK6G4PUpVh80Kd1YH9ISVNbmlxsWy8IU1wQ9vPFzKuz/KMxSCoAANAWCl8RstRtJO41i/N0VeWvqUJ/+babo3RwSqOWARXBd6cOowYUhR5LaVJIlArhi41ak4rwCsI7NzLRbVsj9AL8Ne7Du6QRVd13MFDWHH root@SUX54AT0001
-      ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAuktgWuIQLQ7yQdt/blP1OANUA9sc37TV20/Fa3DawxH3Nm05WgWgWrL9s3EPL71kYxhT9id9/FL/xWJ3g+tWIKY2UurktkBazKxqHMAg5vWLO23UYKKrP88PZbp6Trr8ojP43WcIekFxjQZiRQOl904VwgzpBY9JCp3BIiUC3/2CEjF8P4Z7V5lihkh/LJXa6PDZNakU34Oe6rmEM3U1wLKViGECEWz0TByzpuvxAKLklpmEP36WaemUrIlgt8iqClppHuopsmWyZ1NpwQVXh37rQ+31/o6YDnYTYz/8BXyQwh2WH9Vm+eJ4qWeFsE/fELg9DwYKmVVxT0lCXWCPQw== root@SUX54CT0001
-
-
-    BinaryData
-    ====
-
-    Events:  <none>
-    ---
+      annotations:
+        kubernetes.io/description: The install-config content used to create the cluster.  The
+          cluster configuration may have evolved since installation, so check cluster
+          configuration resources directly if you are interested in the current cluster
+          state.
+      creationTimestamp: "2026-06-01T15:59:12Z"
+      name: cluster-config-v1
+      namespace: kube-system
+      resourceVersion: "535"
+      uid: 57668cf3-a19d-4472-a960-3be2466e5aa8

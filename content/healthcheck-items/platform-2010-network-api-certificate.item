@@ -23,12 +23,12 @@ check_definition:
       impact_and_risk_text: "Los certificados auto-firmados muestran advertencias en los navegadores y es difícil verificar si son auténticos. Esto puede presentar un problema de seguridad, ya que los usuarios no pueden estar seguros de la identidad del clúster de OpenShift ni de si su comunicación con el clúster está correctamente cifrada."
       remediation_text: "Se recomienda adquirir certificados de una Autoridad de Certificación interna o externa de confianza y seguir los procedimientos documentados para instalarlos en todos los clústeres."
     - key: "nochange01"
-      scenario_description_short_text: "Trusted Certificates."
-      description_long_text: "{cust} is using a trusted certificate from an internal or external Certificate Authority."  
+      scenario_description_short_text: "Certificados de confianza."
+      description_long_text: "Se esta utilizando un certificado de confianza emitido por una Autoridad de Certificación interna."  
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: changes_recommended
-  common_outcome_key: "recommend01"
+  status: pass
+  common_outcome_key: "nochange01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -39,50 +39,57 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get apiserver cluster -o yaml
+    [guillermo@darkstar paas-apps1-qapg]$ omc get apiserver cluster -o yaml
     apiVersion: config.openshift.io/v1
     kind: APIServer
     metadata:
       annotations:
+        argocd.argoproj.io/sync-wave: "10"
+        argocd.argoproj.io/tracking-id: paas-apps1-qapg-platform-base:config.openshift.io/APIServer:default/cluster
         include.release.openshift.io/ibm-cloud-managed: "true"
         include.release.openshift.io/self-managed-high-availability: "true"
-        include.release.openshift.io/single-node-developer: "true"
         oauth-apiserver.openshift.io/secure-token-storage: "true"
         release.openshift.io/create-only: "true"
-      creationTimestamp: "2022-08-24T17:35:26Z"
-      generation: 1
+      creationTimestamp: "2026-06-01T15:59:38Z"
+      generation: 2
+      labels:
+        app.kubernetes.io/component: config
+        app.kubernetes.io/name: cluster-certs
+        app.kubernetes.io/part-of: cluster-certs
+        gitops.bancogalicia.com.ar/cluster: paas-apps1-qapg
+        gitops.bancogalicia.com.ar/domain: apps
+        gitops.bancogalicia.com.ar/env: qa
+        gitops.bancogalicia.com.ar/managed-by: argocd
+        gitops.bancogalicia.com.ar/site: pg
+        gitops.bancogalicia.com.ar/tier: high
       name: cluster
       ownerReferences:
       - apiVersion: config.openshift.io/v1
         kind: ClusterVersion
         name: version
-        uid: e3eb1514-02ac-42ec-a68e-4a5a6e2a17c0
-      resourceVersion: "955"
-      uid: 9231275f-3bf8-435b-a1f2-d756a032bbd7
+        uid: 1079c954-6109-4583-bb1a-1c647dd2c64f
+      resourceVersion: "448169"
+      uid: a3039e79-fb42-4a6d-b0c3-7bbc6c3b0bd8
     spec:
       audit:
         profile: Default
+      servingCerts:
+        namedCertificates:
+        - names:
+          - api.paas-apps1-qapg.bancogalicia.com.ar
+          servingCertificate:
+            name: api-cert
+
     ---
 
-    [openshift@bastion ~]$ oc get secrets -n openshift-config
-    NAME                                      TYPE                                  DATA   AGE
-    builder-dockercfg-kb6wv                   kubernetes.io/dockercfg               1      3y60d
-    builder-token-2shkl                       kubernetes.io/service-account-token   4      3y60d
-    builder-token-ptv7b                       kubernetes.io/service-account-token   4      3y60d
-    default-dockercfg-2827h                   kubernetes.io/dockercfg               1      3y60d
-    default-token-94v7z                       kubernetes.io/service-account-token   4      3y60d
-    default-token-mjj8h                       kubernetes.io/service-account-token   4      3y60d
-    deployer-dockercfg-klmp6                  kubernetes.io/dockercfg               1      3y60d
-    deployer-token-k4z8c                      kubernetes.io/service-account-token   4      3y60d
-    deployer-token-th9tj                      kubernetes.io/service-account-token   4      3y60d
-    etcd-client                               kubernetes.io/tls                     2      3y60d
-    etcd-metric-client                        kubernetes.io/tls                     2      3y60d
-    etcd-metric-signer                        kubernetes.io/tls                     2      3y60d
-    etcd-signer                               kubernetes.io/tls                     2      3y60d
-    htpasswd-4n9kz                            Opaque                                1      3y37d
-    initial-service-account-private-key       Opaque                                1      3y60d
-    ldap-bind-password-97d6p                  Opaque                                1      3y37d
-    ldap-secret                               Opaque                                1      113d
-    pull-secret                               kubernetes.io/dockerconfigjson        1      3y60d
-    webhook-authentication-integrated-oauth   Opaque                                1      3y60d
-    ---
+    [guillermo@darkstar paas-apps1-qapg]$ omc get secrets -n openshift-config
+    NAME                                      TYPE                             DATA   AGE
+    api-cert                                  kubernetes.io/tls                2      37d
+    builder-dockercfg-kfhz9                   kubernetes.io/dockercfg          1      69d
+    default-dockercfg-snnc4                   kubernetes.io/dockercfg          1      69d
+    deployer-dockercfg-z84kq                  kubernetes.io/dockercfg          1      69d
+    etcd-client                               kubernetes.io/tls                2      70d
+    initial-service-account-private-key       Opaque                           1      70d
+    ldap-bind-password                        Opaque                           1      69d
+    pull-secret                               kubernetes.io/dockerconfigjson   1      70d
+    webhook-authentication-integrated-oauth   Opaque                           1      70d

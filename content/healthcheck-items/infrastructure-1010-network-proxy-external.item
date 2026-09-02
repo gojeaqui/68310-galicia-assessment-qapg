@@ -56,27 +56,32 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc describe proxy
-    Name:         cluster
-    Namespace:    
-    Labels:       <none>
-    Annotations:  <none>
-    API Version:  config.openshift.io/v1
-    Kind:         Proxy
-    Metadata:
-      Creation Timestamp:  2022-08-24T17:34:58Z
-      Generation:          2
-      Resource Version:    14614788
-      UID:                 47190d06-0aed-4506-b7de-6091fd38c858
-    Spec:
-      Http Proxy:   http://10.2.248.246:8080/
-      Https Proxy:  http://10.2.248.246:8080/
-      No Proxy:     .oscdmzprd01.cc.bna.net,.cc.bna.net,.tcc.tbna.net,api.oscdmzprd01.cc.bna.net,.apps.oscdmzprd01.cc.bna.net,10.0.0.0/8
-      Trusted CA:
-        Name:  
-    Status:
-      Http Proxy:   http://10.2.248.246:8080/
-      Https Proxy:  http://10.2.248.246:8080/
-      No Proxy:     .apps.oscdmzprd01.cc.bna.net,.cc.bna.net,.cluster.local,.oscdmzprd01.cc.bna.net,.svc,.tcc.tbna.net,10.0.0.0/8,10.10.13.0/24,10.168.0.0/14,127.0.0.1,172.60.0.0/16,api-int.oscdmzprd01.cc.bna.net,api.oscdmzprd01.cc.bna.net,localhost
-    Events:         <none>
-    ---
+    [guillermo@darkstar paas-apps1-qapg]$ omc get proxy -o yaml
+    apiVersion: v1
+    items:
+    - apiVersion: config.openshift.io/v1
+      kind: Proxy
+      metadata:
+        annotations:
+          argocd.argoproj.io/sync-wave: "10"
+          argocd.argoproj.io/tracking-id: paas-apps1-qapg-platform-base:config.openshift.io/Proxy:default/cluster
+        creationTimestamp: "2026-06-01T15:59:14Z"
+        generation: 3
+        labels:
+          app.kubernetes.io/component: config
+          app.kubernetes.io/name: cluster-certs
+          app.kubernetes.io/part-of: cluster-certs
+          gitops.bancogalicia.com.ar/cluster: paas-apps1-qapg
+          gitops.bancogalicia.com.ar/domain: apps
+          gitops.bancogalicia.com.ar/env: qa
+          gitops.bancogalicia.com.ar/managed-by: argocd
+          gitops.bancogalicia.com.ar/site: pg
+          gitops.bancogalicia.com.ar/tier: high
+        name: cluster
+        resourceVersion: "20736460"
+        uid: b73239fd-b44a-4d41-80a9-17cf7e72a406
+      spec:
+        trustedCA:
+          name: custom-canoprd
+      status: {}
+    kind: List

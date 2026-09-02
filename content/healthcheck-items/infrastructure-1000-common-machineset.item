@@ -53,14 +53,11 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get machineset -n openshift-machine-api
-    NAME                          DESIRED   CURRENT   READY   AVAILABLE   AGE
-    oscdmzprd01-n5xps-infra       4         4         4       4           3y59d
-    oscdmzprd01-n5xps-loki        3         3         3       3           57d
-    oscdmzprd01-n5xps-storage-1   1         1         1       1           57d
-    oscdmzprd01-n5xps-storage-2   1         1         1       1           57d
-    oscdmzprd01-n5xps-storage-3   1         1         1       1           57d
-    oscdmzprd01-n5xps-storage-4   1         1         1       1           57d
-    oscdmzprd01-n5xps-storage-5   1         1         1       1           57d
-    oscdmzprd01-n5xps-worker      7         7         7       7           3y60d
-    ---
+    [guillermo@darkstar paas-apps1-qapg]$ omc get machineset -n openshift-machine-api
+    NAME                                  DESIRED   CURRENT   READY   AVAILABLE   AGE
+    paas-apps1-qapg-2xs5x-infra-0         1         1         1       1           69d
+    paas-apps1-qapg-2xs5x-infra-1         1         1         1       1           69d
+    paas-apps1-qapg-2xs5x-infra-2         1         1         1       1           69d
+    paas-apps1-qapg-2xs5x-worker-apps-0   6         6         6       6           69d
+    paas-apps1-qapg-2xs5x-worker-apps-1   6         6         6       6           69d
+    paas-apps1-qapg-2xs5x-worker-apps-2   6         6         6       6           69d

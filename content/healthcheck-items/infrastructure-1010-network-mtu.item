@@ -51,35 +51,40 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    
-    [openshift@bastion ~]$ oc describe network.config cluster
-    Name:         cluster
-    Namespace:    
-    Labels:       <none>
-    Annotations:  <none>
-    API Version:  config.openshift.io/v1
-    Kind:         Network
-    Metadata:
-      Creation Timestamp:  2022-08-24T17:34:58Z
-      Generation:          6
-      Resource Version:    960068894
-      UID:                 fffa9a3b-7e35-4c69-be95-22481a7866c6
-    Spec:
-      Cluster Network:
-        Cidr:         10.168.0.0/14
-        Host Prefix:  23
-      External IP:
-        Policy:
-      Network Type:  OVNKubernetes
-      Service Network:
-        172.60.0.0/16
-    Status:
-      Cluster Network:
-        Cidr:               10.168.0.0/14
-        Host Prefix:        23
-      Cluster Network MTU:  1400
-      Network Type:         OVNKubernetes
-      Service Network:
-        172.60.0.0/16
-    Events:  <none>
-    ---
+    [guillermo@darkstar paas-apps1-qapg]$ omc get network.config cluster -o yaml
+    apiVersion: config.openshift.io/v1
+    kind: Network
+    metadata:
+      creationTimestamp: "2026-06-01T15:59:13Z"
+      generation: 17
+      name: cluster
+      resourceVersion: "54111274"
+      uid: 8d964838-0128-42b3-87c8-1f0f48d428c5
+    spec:
+      clusterNetwork:
+      - cidr: 10.128.0.0/18
+        hostPrefix: 24
+      externalIP:
+        policy: {}
+      networkDiagnostics:
+        mode: ""
+        sourcePlacement: {}
+        targetPlacement: {}
+      networkType: OVNKubernetes
+      serviceNetwork:
+      - 172.30.0.0/16
+    status:
+      clusterNetwork:
+      - cidr: 10.128.0.0/18
+        hostPrefix: 24
+      clusterNetworkMTU: 1400
+      conditions:
+      - lastTransitionTime: "2026-08-07T14:47:34Z"
+        message: ""
+        observedGeneration: 0
+        reason: AsExpected
+        status: "True"
+        type: NetworkDiagnosticsAvailable
+      networkType: OVNKubernetes
+      serviceNetwork:
+      - 172.30.0.0/16

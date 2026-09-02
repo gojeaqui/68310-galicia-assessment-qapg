@@ -37,10 +37,15 @@ check_definition:
     description_long_text: "La versión actual del clúster cuenta con el soporte de Red Hat, pero no es la más reciente."
     impact_and_risk_text: "Para que un clúster de OpenShift funcione correctamente, puede ser necesario acceder a servicios alojados proporcionados por Red Hat. No se puede garantizar la disponibilidad de estos servicios para versiones de OpenShift sin mantenimiento ni soporte."
     remediation_text: "Actualice a la última versión compatible de OpenShift."
+  - key: "changes_recommended02"
+    scenario_description_short_text: "Versión del clúster actualizada (pero hay problemas reportados)"
+    description_long_text: "La versión actual del clúster cuenta con el soporte de Red Hat, pero el objeto ClusterVersion reporta problemas con algunos ClusterOperators."
+    impact_and_risk_text: "Se observa que durante la toma del 'must-gather' habian nodos infra en proceso de actualizacion y eso pudo provocar que se vean operadores degradados."
+    remediation_text: "Revisar que el mcp 'infra' haya terminado de actualizar."
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
   status: changes_recommended
-  common_outcome_key: "changes_recommended01"
+  common_outcome_key: "changes_recommended02"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -51,7 +56,17 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get clusterversion
+    [guillermo@darkstar paas-apps1-qapg]$ omc get clusterversion
     NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
-    version   4.14.52   True        False         120d    Cluster version is 4.14.52
+    version   4.20.17   True        False         28m     Error while reconciling 4.20.17: ingress, machine-config has an unknown error: ClusterOperatorsDegraded
+
     ---
+
+    [guillermo@darkstar paas-apps1-qapg]$ omc get mcp
+    NAME            CONFIG                                                    UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
+    infra           rendered-infra-531598b8e706862da7705f7fd299ff1a           False     True       True       3              2                   2                     1                      69d
+    master          rendered-master-1c931772a0c85070f3f96f58cd21e7c4          True      False      False      3              3                   3                     0                      70d
+    worker-apps-0   rendered-worker-apps-0-6abdf5d3dbabc90afc345e07446b7008   True      False      False      6              6                   6                     0                      69d
+    worker-apps-1   rendered-worker-apps-1-6abdf5d3dbabc90afc345e07446b7008   True      False      False      6              6                   6                     0                      69d
+    worker-apps-2   rendered-worker-apps-2-6abdf5d3dbabc90afc345e07446b7008   True      False      False      6              6                   6                     0                      69d
+    worker          rendered-worker-c5ece5426b563f96a68b1b6f928d8a95          True      False      False      0              0                   0                     0                      70d
