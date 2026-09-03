@@ -55,3 +55,13 @@ customer_environment_findings:
     impact_risk_additional_text: ""
     remediation_additional_text: ""
     additional_comments_text: ""
+  outcome_evidence: |
+    [guillermo@darkstar paas-apps1-qapg]$ omc get ingresscontroller -A
+    NAMESPACE                    NAME            AGE
+    openshift-ingress-operator   default         70d
+    openshift-ingress-operator   shard1-router   51d
+    openshift-ingress-operator   shard2-router   51d
+    openshift-ingress-operator   shard3-router   51d
+    openshift-ingress-operator   shard4-router   51d
+    openshift-ingress-operator   shard5-router   51d
+    openshift-ingress-operator   shard6-router   51d

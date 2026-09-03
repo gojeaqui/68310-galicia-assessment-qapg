@@ -39,133 +39,38 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get ingresscontroller --all-namespaces -o yaml
-    apiVersion: v1
-    items:
-    - apiVersion: operator.openshift.io/v1
-      kind: IngressController
-      metadata:
-        creationTimestamp: "2022-08-24T17:42:48Z"
-        finalizers:
-        - ingresscontroller.operator.openshift.io/finalizer-ingresscontroller
-        generation: 4
-        name: default
-        namespace: openshift-ingress-operator
-        resourceVersion: "998557534"
-        uid: 1054a877-0cd5-472e-b6db-ece3660c8666
-      spec:
-        clientTLS:
-          clientCA:
-            name: ""
-          clientCertificatePolicy: ""
-        httpCompression: {}
-        httpEmptyRequestsPolicy: Respond
-        httpErrorCodePages:
-          name: ""
-        nodePlacement:
-          nodeSelector:
-            matchLabels:
-              node-role.kubernetes.io/infra: ""
-          tolerations:
-          - effect: NoSchedule
-            key: node-role.kubernetes.io/infra
-          - effect: NoExecute
-            key: node-role.kubernetes.io/infra
-        replicas: 3
-        tuningOptions: {}
-        unsupportedConfigOverrides: null
-      status:
-        availableReplicas: 3
-        conditions:
-        - lastTransitionTime: "2022-08-24T17:42:49Z"
-          reason: Valid
-          status: "True"
-          type: Admitted
-        - lastTransitionTime: "2025-07-27T10:58:33Z"
-          message: The deployment has Available status condition set to True
-          reason: DeploymentAvailable
-          status: "True"
-          type: DeploymentAvailable
-        - lastTransitionTime: "2025-07-27T10:58:33Z"
-          message: Minimum replicas requirement is met
-          reason: DeploymentMinimumReplicasMet
-          status: "True"
-          type: DeploymentReplicasMinAvailable
-        - lastTransitionTime: "2025-07-27T10:58:33Z"
-          message: All replicas are available
-          reason: DeploymentReplicasAvailable
-          status: "True"
-          type: DeploymentReplicasAllAvailable
-        - lastTransitionTime: "2022-08-24T17:42:49Z"
-          message: The configured endpoint publishing strategy does not include a managed
-            load balancer
-          reason: EndpointPublishingStrategyExcludesManagedLoadBalancer
-          status: "False"
-          type: LoadBalancerManaged
-        - lastTransitionTime: "2022-08-24T17:42:49Z"
-          message: No DNS zones are defined in the cluster dns config.
-          reason: NoDNSZones
-          status: "False"
-          type: DNSManaged
-        - lastTransitionTime: "2025-07-27T10:58:33Z"
-          status: "True"
-          type: Available
-        - lastTransitionTime: "2025-07-27T10:58:33Z"
-          status: "False"
-          type: Progressing
-        - lastTransitionTime: "2025-07-27T10:58:33Z"
-          status: "False"
-          type: Degraded
-        - lastTransitionTime: "2022-08-24T17:42:49Z"
-          message: IngressController is upgradeable.
-          reason: Upgradeable
-          status: "True"
-          type: Upgradeable
-        - lastTransitionTime: "2023-03-09T23:51:26Z"
-          message: Canary route checks for the default ingress controller are successful
-          reason: CanaryChecksSucceeding
-          status: "True"
-          type: CanaryChecksSucceeding
-        - lastTransitionTime: "2025-07-27T10:58:33Z"
-          message: Deployment is not actively rolling out
-          reason: DeploymentNotRollingOut
-          status: "False"
-          type: DeploymentRollingOut
-        - lastTransitionTime: "2024-04-27T01:50:42Z"
-          message: LoadBalancer is not progressing
-          reason: LoadBalancerNotProgressing
-          status: "False"
-          type: LoadBalancerProgressing
-        - lastTransitionTime: "2024-04-27T01:50:42Z"
-          message: No evaluation condition is detected.
-          reason: NoEvaluationCondition
-          status: "False"
-          type: EvaluationConditionsDetected
-        domain: apps.oscdmzprd01.cc.bna.net
-        endpointPublishingStrategy:
-          hostNetwork:
-            httpPort: 80
-            httpsPort: 443
-            protocol: TCP
-            statsPort: 1936
-          type: HostNetwork
-        observedGeneration: 4
-        selector: ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default
-        tlsProfile:
-          ciphers:
-          - ECDHE-ECDSA-AES128-GCM-SHA256
-          - ECDHE-RSA-AES128-GCM-SHA256
-          - ECDHE-ECDSA-AES256-GCM-SHA384
-          - ECDHE-RSA-AES256-GCM-SHA384
-          - ECDHE-ECDSA-CHACHA20-POLY1305
-          - ECDHE-RSA-CHACHA20-POLY1305
-          - DHE-RSA-AES128-GCM-SHA256
-          - DHE-RSA-AES256-GCM-SHA384
-          - TLS_AES_128_GCM_SHA256
-          - TLS_AES_256_GCM_SHA384
-          - TLS_CHACHA20_POLY1305_SHA256
-          minTLSVersion: VersionTLS12
-    kind: List
-    metadata:
-      resourceVersion: ""
+    [guillermo@darkstar paas-apps1-qapg]$ omc get ingresscontroller -A
+    NAMESPACE                    NAME            AGE
+    openshift-ingress-operator   default         70d
+    openshift-ingress-operator   shard1-router   51d
+    openshift-ingress-operator   shard2-router   51d
+    openshift-ingress-operator   shard3-router   51d
+    openshift-ingress-operator   shard4-router   51d
+    openshift-ingress-operator   shard5-router   51d
+    openshift-ingress-operator   shard6-router   51d
+
     ---
+
+    [guillermo@darkstar paas-apps1-qapg]$ omc get pods -o wide -n openshift-ingress
+    NAME                                    READY   STATUS    RESTARTS   AGE   IP             NODE                                  NOMINATED NODE   READINESS GATES
+    router-default-796ccd494f-k7rwm         0/1     Pending   0          2h    <none>         <none>                                <none>           <none>
+    router-default-796ccd494f-nnrnw         1/1     Running   0          2d    10.254.36.21   paas-apps1-qapg-2xs5x-infra-1-lzpnp   <none>           <none>
+    router-default-796ccd494f-rkd9v         1/1     Running   0          3d    10.254.36.20   paas-apps1-qapg-2xs5x-infra-0-n92j9   <none>           <none>
+    router-shard1-router-8b9dc678f-9x8tz    0/1     Pending   0          2h    <none>         <none>                                <none>           <none>
+    router-shard1-router-8b9dc678f-tv2d2    1/1     Running   0          3d    10.254.36.20   paas-apps1-qapg-2xs5x-infra-0-n92j9   <none>           <none>
+    router-shard1-router-8b9dc678f-xwftn    1/1     Running   0          2d    10.254.36.21   paas-apps1-qapg-2xs5x-infra-1-lzpnp   <none>           <none>
+    router-shard2-router-584bc4f965-rc99b   0/1     Pending   0          2h    <none>         <none>                                <none>           <none>
+    router-shard2-router-584bc4f965-rj7gr   1/1     Running   0          3d    10.254.36.20   paas-apps1-qapg-2xs5x-infra-0-n92j9   <none>           <none>
+    router-shard2-router-584bc4f965-x7qfg   1/1     Running   0          2d    10.254.36.21   paas-apps1-qapg-2xs5x-infra-1-lzpnp   <none>           <none>
+    router-shard3-router-bfcb794d9-f57fl    1/1     Running   0          2d    10.254.36.21   paas-apps1-qapg-2xs5x-infra-1-lzpnp   <none>           <none>
+    router-shard3-router-bfcb794d9-q4cv5    0/1     Pending   0          2h    <none>         <none>                                <none>           <none>
+    router-shard3-router-bfcb794d9-snqds    1/1     Running   0          3d    10.254.36.20   paas-apps1-qapg-2xs5x-infra-0-n92j9   <none>           <none>
+    router-shard4-router-849fc59575-7w46g   0/1     Pending   0          2h    <none>         <none>                                <none>           <none>
+    router-shard4-router-849fc59575-s7xpj   1/1     Running   0          3d    10.254.36.20   paas-apps1-qapg-2xs5x-infra-0-n92j9   <none>           <none>
+    router-shard4-router-849fc59575-tl9ms   1/1     Running   0          2d    10.254.36.21   paas-apps1-qapg-2xs5x-infra-1-lzpnp   <none>           <none>
+    router-shard5-router-6df9c67bcc-hlv8k   0/1     Pending   0          2h    <none>         <none>                                <none>           <none>
+    router-shard5-router-6df9c67bcc-nd964   1/1     Running   0          3d    10.254.36.20   paas-apps1-qapg-2xs5x-infra-0-n92j9   <none>           <none>
+    router-shard5-router-6df9c67bcc-pj9nf   1/1     Running   0          2d    10.254.36.21   paas-apps1-qapg-2xs5x-infra-1-lzpnp   <none>           <none>
+    router-shard6-router-57f6dc4859-9h6qp   0/1     Pending   0          2h    <none>         <none>                                <none>           <none>
+    router-shard6-router-57f6dc4859-fnkzt   1/1     Running   0          2d    10.254.36.21   paas-apps1-qapg-2xs5x-infra-1-lzpnp   <none>           <none>
+    router-shard6-router-57f6dc4859-spsjj   1/1     Running   0          3d    10.254.36.20   paas-apps1-qapg-2xs5x-infra-0-n92j9   <none>           <none>

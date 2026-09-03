@@ -25,8 +25,8 @@ check_definition:
         oc get configmap -n openshift-monitoring cluster-monitoring-config -o yaml
   common_outcomes:
   - key: "no_change01"
-    scenario_description_short_text: "External Alerting Configured"
-    description_long_text: "OpenShift alerts are sent to an external system that is monitored by the administrators responsible for maintaining the platform."
+    scenario_description_short_text: "Alertas externas configuradas"
+    description_long_text: "Las alertas de OpenShift se envían a un sistema externo supervisado por los administradores responsables del mantenimiento de la plataforma."
     impact_and_risk_text: ""
     remediation_text: ""
   - key: "changes_recommended01"
@@ -36,8 +36,8 @@ check_definition:
     remediation_text: "Configurar los receptores de alertas en sistemas externos adicionales al mail"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: changes_recommended
-  common_outcome_key: "changes_recommended01"
+  status: pass
+  common_outcome_key: "no_change01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -48,142 +48,62 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get secret -n openshift-monitoring alertmanager-main -o yaml
     apiVersion: v1
-    data:
-      alertmanager.yaml: Z2xvYmFsOgogIHJlc29sdmVfdGltZW91dDogMzBtCiAgc210cF9mcm9tOiAnIk9wZW5TaGlmdCBDbHVzdGVyIFBST0QgLSBPU0NETVpQUkQwMSI8b3BlbnNoaWZ0LXByb2QtYWxlcnRtYW5hZ2VyQGJuYS5jb20uYXI+JwogIHNtdHBfc21hcnRob3N0OiAnYXBzbXRwMDAwMi5jYy5ibmEubmV0OjI1JwogIHNtdHBfaGVsbG86IGFwc210cDAwMDIuY2MuYm5hLm5ldAogIHNtdHBfcmVxdWlyZV90bHM6IGZhbHNlCmluaGliaXRfcnVsZXM6CiAgLSBlcXVhbDoKICAgICAgLSBuYW1lc3BhY2UKICAgICAgLSBhbGVydG5hbWUKICAgIHNvdXJjZV9tYXRjaGVyczoKICAgICAgLSBzZXZlcml0eSA9IGNyaXRpY2FsCiAgICB0YXJnZXRfbWF0Y2hlcnM6CiAgICAgIC0gc2V2ZXJpdHkgPX4gd2FybmluZ3xpbmZvCiAgLSBlcXVhbDoKICAgICAgLSBuYW1lc3BhY2UKICAgICAgLSBhbGVydG5hbWUKICAgIHNvdXJjZV9tYXRjaGVyczoKICAgICAgLSBzZXZlcml0eSA9IHdhcm5pbmcKICAgIHRhcmdldF9tYXRjaGVyczoKICAgICAgLSBzZXZlcml0eSA9IGluZm8KcmVjZWl2ZXJzOgogIC0gbmFtZTogRGVmYXVsdAogIC0gbmFtZTogV2F0Y2hkb2cKICAtIG5hbWU6IENyaXRpY2FsCiAgICBlbWFpbF9jb25maWdzOgogICAgICAtIHRvOiAnX2F0X2luZnJhZXN0cnVjdHVyYWRpc3RyaWJ1aWRvQGJuYS5jb20uYXInCiAgICAgICAgc2VuZF9yZXNvbHZlZDogdHJ1ZQpyb3V0ZToKICBncm91cF9ieToKICAgIC0gbmFtZXNwYWNlCiAgICAtIGNsdXN0ZXIKICAgIC0gc2VydmljZQogIGdyb3VwX2ludGVydmFsOiA1bQogIGdyb3VwX3dhaXQ6IDMwcwogIHJlY2VpdmVyOiBEZWZhdWx0CiAgcmVwZWF0X2ludGVydmFsOiAzaAogIHJvdXRlczoKICAgIC0gbWF0Y2hlcnM6CiAgICAgICAgLSBhbGVydG5hbWUgPSBXYXRjaGRvZwogICAgICByZWNlaXZlcjogV2F0Y2hkb2cKICAgIC0gbWF0Y2hlcnM6CiAgICAgICAgLSBzZXZlcml0eSA9IGNyaXRpY2FsCiAgICAgIHJlY2VpdmVyOiBDcml0aWNhbAo=
     kind: Secret
     metadata:
-      creationTimestamp: "2022-08-24T17:54:41Z"
+      creationTimestamp: "2026-06-01T16:21:43Z"
       labels:
         app.kubernetes.io/component: alert-router
         app.kubernetes.io/instance: main
+        app.kubernetes.io/managed-by: cluster-monitoring-operator
         app.kubernetes.io/name: alertmanager
         app.kubernetes.io/part-of: openshift-monitoring
-        app.kubernetes.io/version: 0.23.0
+        app.kubernetes.io/version: 0.28.1
       name: alertmanager-main
       namespace: openshift-monitoring
-      resourceVersion: "965239560"
-      uid: b8e237ec-2a83-4e3c-8bb3-3045474707fe
+      resourceVersion: "31347420"
+      uid: c58dfcb5-e742-424e-a54d-d8c05fa7ceb0
     type: Opaque
-    ---
-
-    [openshift@bastion ~]$ oc get configmap -n openshift-monitoring cluster-monitoring-config -o yaml
-    apiVersion: v1
     data:
-      config.yaml: |
-        alertmanagerMain:
-          nodeSelector:
-            node-role.kubernetes.io/infra: ""
-          tolerations:
-          - effect: NoSchedule
-            key: node-role.kubernetes.io/infra
-          - effect: NoExecute
-            key: node-role.kubernetes.io/infra
-          volumeClaimTemplate:
-            metadata: {}
-            spec:
-              resources:
-                requests:
-                  storage: 10Gi
-              storageClassName: thin
-            status: {}
-        enableUserWorkload: true
-        k8sPrometheusAdapter:
-          nodeSelector:
-            node-role.kubernetes.io/infra: ""
-          tolerations:
-          - effect: NoSchedule
-            key: node-role.kubernetes.io/infra
-          - effect: NoExecute
-            key: node-role.kubernetes.io/infra
-        kubeStateMetrics:
-          nodeSelector:
-            node-role.kubernetes.io/infra: ""
-          tolerations:
-          - effect: NoSchedule
-            key: node-role.kubernetes.io/infra
-          - effect: NoExecute
-            key: node-role.kubernetes.io/infra
-        nodeExporter:
-          collectors:
-            buddyinfo: {}
-            cpufreq: {}
-            ksmd: {}
-            mountstats: {}
-            netclass: {}
-            netdev: {}
-            processes: {}
-            systemd: {}
-            tcpstat: {}
-        openshiftStateMetrics:
-          nodeSelector:
-            node-role.kubernetes.io/infra: ""
-          tolerations:
-          - effect: NoSchedule
-            key: node-role.kubernetes.io/infra
-          - effect: NoExecute
-            key: node-role.kubernetes.io/infra
-        prometheusK8s:
-          additionalAlertmanagerConfigs:
-          - apiVersion: v2
-            bearerToken:
-              key: token
-              name: observability-alertmanager-accessor
-            scheme: https
-            staticConfigs:
-            - alertmanager-open-cluster-management-observability.apps.oscprdacm.cc.bna.net
-            tlsConfig:
-              ca:
-                key: service-ca.crt
-                name: hub-alertmanager-router-ca
-              insecureSkipVerify: false
-          externalLabels:
-            managed_cluster: 7bdefcf9-9c51-46c7-a238-55aa6c36f3af
-          nodeSelector:
-            node-role.kubernetes.io/infra: ""
-          tolerations:
-          - effect: NoSchedule
-            key: node-role.kubernetes.io/infra
-          - effect: NoExecute
-            key: node-role.kubernetes.io/infra
-          volumeClaimTemplate:
-            metadata: {}
-            spec:
-              resources:
-                requests:
-                  storage: 250Gi
-              storageClassName: thin
-            status: {}
-        prometheusOperator:
-          nodeSelector:
-            node-role.kubernetes.io/infra: ""
-          tolerations:
-          - effect: NoSchedule
-            key: node-role.kubernetes.io/infra
-          - effect: NoExecute
-            key: node-role.kubernetes.io/infra
-        telemeterClient:
-          nodeSelector:
-            node-role.kubernetes.io/infra: ""
-          tolerations:
-          - effect: NoSchedule
-            key: node-role.kubernetes.io/infra
-          - effect: NoExecute
-            key: node-role.kubernetes.io/infra
-        thanosQuerier:
-          nodeSelector:
-            node-role.kubernetes.io/infra: ""
-          tolerations:
-          - effect: NoSchedule
-            key: node-role.kubernetes.io/infra
-          - effect: NoExecute
-            key: node-role.kubernetes.io/infra
-    kind: ConfigMap
-    metadata:
-      creationTimestamp: "2022-08-24T21:01:29Z"
-      name: cluster-monitoring-config
-      namespace: openshift-monitoring
-      resourceVersion: "1029540661"
-      uid: 09920ba7-bb72-453f-a221-4b5f1fb9cc70
-    ---
+      alertmanager.yaml:
+        global:
+          http_config:
+            proxy_from_environment: true
+        inhibit_rules:
+          - equal:
+              - namespace
+              - alertname
+            source_matchers:
+              - severity = critical
+            target_matchers:
+              - severity =~ warning|info
+          - equal:
+              - namespace
+              - alertname
+            source_matchers:
+              - severity = warning
+            target_matchers:
+              - severity = info
+        receivers:
+          - name: Default
+            webhook_configs:
+              - url: >-
+                  https://integrations.bigpanda.io/oim/prometheus/alerts?app_key=XX
+                http_config:
+                  bearer_token: XX
+          - name: Watchdog
+          - name: Critical
+        route:
+          group_by:
+            - namespace
+          group_interval: 5m
+          group_wait: 30s
+          receiver: Default
+          repeat_interval: 12h
+          routes:
+            - matchers:
+                - alertname = Watchdog
+              receiver: Watchdog
+            - matchers:
+                - severity = critical
+              receiver: Critical
