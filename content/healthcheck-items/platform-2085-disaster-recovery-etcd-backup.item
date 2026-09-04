@@ -37,7 +37,7 @@ check_definition:
     remediation_text: "Automate etcd backups"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: pass
+  status: tbe
   common_outcome_key: "nochange_01"
   outcome_overrides:
       scenario_description_short_text: ""

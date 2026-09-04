@@ -1,0 +1,257 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Tenant Architecture"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Openshift Cluster Configuration"
+  description: "Single or Multi-tenant workloads"
+  references: 
+    - title: "Multitenant OpenShift Container Platform clusters"
+      url: "https://docs.openshift.com/container-platform/latest/authentication/using-rbac.html#rbac-projects-namespaces_using-rbac"
+  check_procedures:
+    - type: survey
+      question: "Is this a single-tenant or multi-tenant environment? Use 'oc get namespaces' to review namespace structure"
+    - type: survey
+      question: "What isolation mechanisms are in place between tenants? (NetworkPolicies, ResourceQuotas, etc.)"
+    - type: survey
+      question: "How are RBAC policies configured for different tenants? Use 'oc get rolebindings,clusterrolebindings'"
+    - type: survey
+      question: "Are there resource quotas defined for tenants? Use 'oc get resourcequotas --all-namespaces'"
+    - type: survey
+      question: "How is monitoring and logging segregated between tenants?"
+    - type: survey
+      question: "What is the namespace naming convention for different tenants?"
+    - type: "command"
+      question: ""
+      command: |
+        oc get resourcequotas --all-namespaces
+  common_outcomes:
+    - key: "advisory01"
+      scenario_description_short_text: "Review tenant isolation"
+      description_long_text: "Current tenant isolation configuration may need enhancement"
+      impact_and_risk_text: "Potential security risks due to insufficient tenant isolation"
+      remediation_text: "Review and strengthen tenant isolation mechanisms"
+    - key: "no_change01"
+      scenario_description_short_text: "No hay aislación entre los namespaces en términos del uso de recursos"
+      description_long_text: "Si bien no hay aislación entre los namespaces en términos de limites de recursos, no se espera que corran otras aplicaciones en el cluster asi que no lo vemos como un problema"
+      impact_and_risk_text: "None"
+      remediation_text: "None required"
+    - key: "changes_recommended01"
+      scenario_description_short_text: "Enhance tenant isolation"
+      description_long_text: "Tenant isolation mechanisms require strengthening"
+      impact_and_risk_text: "Insufficient isolation between tenants could lead to security issues"
+      remediation_text: "Implement additional isolation measures between tenants"
+    - key: "advisory02"
+      scenario_description_short_text: "Review resource management"
+      description_long_text: "Resource allocation and quotas need review"
+      impact_and_risk_text: "Potential resource contention between tenants"
+      remediation_text: "Evaluate and adjust resource quotas and limits"
+    - key: "no_change02"
+      scenario_description_short_text: "Resource management is appropriate"
+      description_long_text: "Current resource management configuration is suitable"
+      impact_and_risk_text: "None"
+      remediation_text: "None required"
+    - key: "changes_recommended02"
+      scenario_description_short_text: "Update resource management"
+      description_long_text: "Resource management policies need updates"
+      impact_and_risk_text: "Inefficient resource utilization across tenants"
+      remediation_text: "Implement updated resource management policies"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: pass
+  common_outcome_key: "no_change01"
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [openshift@bastion ~]$ oc get resourcequotas --all-namespaces
+    NAMESPACE                  NAME                            REQUEST                                                              LIMIT                                 AGE
+    acin-acercandoinv-qas      burst-quota                     cpu: 810m/4, memory: 2684Mi/16Gi                                                                           22d
+    acin-acercandoinv-qas      quota                           cpu: 810m/3, memory: 2684Mi/14Gi                                                                           22d
+    aeic-integraccis-qas       burst-quota                     cpu: 600m/4, memory: 3Gi/14Gi                                                                              21d
+    aeic-integraccis-qas       quota                           cpu: 600m/3, memory: 3Gi/12Gi                                                                              21d
+    aepi-platintegraccis-qas   burst-quota                     cpu: 530m/4, memory: 3896Mi/8Gi                                                                            18d
+    aepi-platintegraccis-qas   quota                           cpu: 530m/3, memory: 3896Mi/6Gi                                                                            18d
+    almc-integrations-qas      burst-quota                     cpu: 180m/4, memory: 1040Mi/8Gi                                                                            21d
+    almc-integrations-qas      quota                           cpu: 180m/3, memory: 1040Mi/6Gi                                                                            21d
+    arcm-archmodeler-qas       burst-quota                     cpu: 50m/4, memory: 128Mi/8Gi                                                                              5d23h
+    arcm-archmodeler-qas       quota                           cpu: 50m/3, memory: 128Mi/6Gi                                                                              5d23h
+    ardx-crossbgba-qas         burst-quota                     cpu: 5480m/14, memory: 19368Mi/24Gi                                                                        21d
+    ardx-crossbgba-qas         quota                           cpu: 5480m/12, memory: 19368Mi/22Gi                                                                        21d
+    arqa-arquitectura-qas      burst-quota                     cpu: 640m/7, memory: 1792Mi/13Gi                                                                           25d
+    arqa-arquitectura-qas      quota                           cpu: 640m/6, memory: 1792Mi/12Gi                                                                           25d
+    arqp-plataforma-qas        burst-quota                     cpu: 0/4, memory: 0/8Gi                                                                                    13d
+    arqp-plataforma-qas        quota                           cpu: 0/3, memory: 0/6Gi                                                                                    13d
+    arqr-codereview-qas        burst-quota                     cpu: 400m/4, memory: 600Mi/8Gi                                                                             21d
+    arqr-codereview-qas        quota                           cpu: 400m/3, memory: 600Mi/6Gi                                                                             21d
+    arqs-clusterstatus-qas     burst-quota                     cpu: 1/10, memory: 3136Mi/22Gi                                                                             24d
+    arqs-clusterstatus-qas     quota                           cpu: 1/8, memory: 3136Mi/20Gi                                                                              24d
+    atpf-tasasplazofijo-qas    burst-quota                     cpu: 820m/4, memory: 3280Mi/8Gi                                                                            21d
+    atpf-tasasplazofijo-qas    quota                           cpu: 820m/3, memory: 3280Mi/6Gi                                                                            21d
+    birm-impresionpf-qas       burst-quota                     cpu: 240m/4, memory: 768Mi/8Gi                                                                             20d
+    birm-impresionpf-qas       quota                           cpu: 240m/3, memory: 768Mi/6Gi                                                                             20d
+    botd-botdedatos-qas        burst-quota                     cpu: 220m/4, memory: 1408Mi/8Gi                                                                            21d
+    botd-botdedatos-qas        quota                           cpu: 220m/3, memory: 1408Mi/6Gi                                                                            21d
+    boti-botinversiones-qas    burst-quota                     cpu: 1350m/4, memory: 6712Mi/12Gi                                                                          20d
+    boti-botinversiones-qas    quota                           cpu: 1350m/3, memory: 6712Mi/10Gi                                                                          20d
+    bots-bothelpdesk-qas       burst-quota                     cpu: 1150m/7, memory: 6240Mi/17Gi                                                                          21d
+    bots-bothelpdesk-qas       quota                           cpu: 1150m/6, memory: 6240Mi/15Gi                                                                          21d
+    bpmo-ctrolctabenef-qas     burst-quota                     cpu: 200m/4, memory: 256Mi/8Gi                                                                             19d
+    bpmo-ctrolctabenef-qas     quota                           cpu: 200m/3, memory: 256Mi/6Gi                                                                             19d
+    ccnc-nameconvention-qas    burst-quota                     cpu: 20m/4, memory: 128Mi/8Gi                                                                              21d
+    ccnc-nameconvention-qas    quota                           cpu: 20m/3, memory: 128Mi/6Gi                                                                              21d
+    cdip-plazofijoelect-qas    burst-quota                     cpu: 140m/4, memory: 1664Mi/8Gi                                                                            17d
+    cdip-plazofijoelect-qas    quota                           cpu: 140m/3, memory: 1664Mi/6Gi                                                                            17d
+    cias-logs-qas              burst-quota                     cpu: 0/4, memory: 0/8Gi                                                                                    17d
+    cias-logs-qas              quota                           cpu: 0/3, memory: 0/6Gi                                                                                    17d
+    cnet-crossnetcore-qas      burst-quota                     cpu: 7060m/14, memory: 10128Mi/18Gi                                                                        21d
+    cnet-crossnetcore-qas      quota                           cpu: 7060m/13, memory: 10128Mi/16Gi                                                                        21d
+    cocp-cosautomation-qas     burst-quota                     cpu: 100m/3, memory: 328Mi/11Gi                                                                            21d
+    cocp-cosautomation-qas     quota                           cpu: 100m/2, memory: 328Mi/9Gi                                                                             21d
+    crpt-criptomonedas-qas     burst-quota                     cpu: 1920m/6, memory: 5300Mi/12Gi                                                                          21d
+    crpt-criptomonedas-qas     quota                           cpu: 1920m/5, memory: 5300Mi/10Gi                                                                          21d
+    cust-crosscustodia-qas     burst-quota                     cpu: 350m/4, memory: 1028Mi/8Gi                                                                            19d
+    cust-crosscustodia-qas     quota                           cpu: 350m/3, memory: 1028Mi/6Gi                                                                            19d
+    cutf-tenenciafisica-qas    burst-quota                     cpu: 60m/4, memory: 384Mi/8Gi                                                                              18d
+    cutf-tenenciafisica-qas    quota                           cpu: 60m/3, memory: 384Mi/6Gi                                                                              18d
+    dcia-defcoia-qas           burst-quota                     cpu: 250m/4, memory: 2000Mi/8Gi                                                                            19d
+    dcia-defcoia-qas           quota                           cpu: 250m/3, memory: 2000Mi/6Gi                                                                            19d
+    dedo-descdocumentos-qas    burst-quota                     cpu: 500m/8, memory: 2816Mi/16Gi                                                                           19d
+    dedo-descdocumentos-qas    quota                           cpu: 500m/7, memory: 2816Mi/14Gi                                                                           19d
+    devp-devops-qas            burst-quota                     cpu: 1206m/4, memory: 5864Mi/14Gi                                                                          21d
+    devp-devops-qas            quota                           cpu: 1206m/3, memory: 5864Mi/12Gi                                                                          21d
+    devq-ocpquay-qas           burst-quota                     cpu: 0/14, memory: 0/18Gi                                                                                  13d
+    devq-ocpquay-qas           quota                           cpu: 0/13, memory: 0/16Gi                                                                                  13d
+    devs-galicia-qas           burst-quota                     cpu: 150m/4, memory: 428Mi/8Gi                                                                             21d
+    devs-galicia-qas           quota                           cpu: 150m/3, memory: 428Mi/6Gi                                                                             21d
+    devx-devextools-qas        burst-quota                     cpu: 200m/4, memory: 1128Mi/8Gi                                                                            19d
+    devx-devextools-qas        quota                           cpu: 200m/3, memory: 1128Mi/6Gi                                                                            19d
+    dmep-dolarmep-qas          burst-quota                     cpu: 1500m/8, memory: 4200Mi/16Gi                                                                          21d
+    dmep-dolarmep-qas          quota                           cpu: 1500m/7, memory: 4200Mi/14Gi                                                                          21d
+    dwms-consumostctd-qas      burst-quota                     cpu: 40m/9, memory: 256Mi/8Gi                                                                              18d
+    dwms-consumostctd-qas      quota                           cpu: 40m/8, memory: 256Mi/6Gi                                                                              18d
+    dwos-dataanalytics-qas     burst-quota                     cpu: 20m/4, memory: 128Mi/8Gi                                                                              19d
+    dwos-dataanalytics-qas     quota                           cpu: 20m/3, memory: 128Mi/6Gi                                                                              19d
+    ecna-econaranja-qas        burst-quota                     cpu: 820m/10, memory: 8252Mi/13Gi                                                                          18d
+    ecna-econaranja-qas        quota                           cpu: 820m/9, memory: 8252Mi/11Gi                                                                           18d
+    ecoc-ecocreditos-qas       burst-quota                     cpu: 120m/4, memory: 768Mi/8Gi                                                                             19d
+    ecoc-ecocreditos-qas       quota                           cpu: 120m/3, memory: 768Mi/6Gi                                                                             19d
+    esdv-ecosistemasdv-qas     burst-quota                     cpu: 510m/4, memory: 1684Mi/8Gi                                                                            17d
+    esdv-ecosistemasdv-qas     quota                           cpu: 510m/3, memory: 1684Mi/6Gi                                                                            17d
+    evnt-eventcatalog-qas      burst-quota                     cpu: 40m/4, memory: 256Mi/8Gi                                                                              24d
+    evnt-eventcatalog-qas      quota                           cpu: 40m/3, memory: 256Mi/6Gi                                                                              24d
+    evos-viajes-qas            burst-quota                     cpu: 460m/9, memory: 2900Mi/12Gi                                                                           17d
+    evos-viajes-qas            quota                           cpu: 460m/8, memory: 2900Mi/11Gi                                                                           17d
+    fcib-broker-qas            burst-quota                     cpu: 20m/4, memory: 128Mi/8Gi                                                                              19d
+    fcib-broker-qas            quota                           cpu: 20m/3, memory: 128Mi/6Gi                                                                              19d
+    fcim-fcimfima-qas          burst-quota                     cpu: 300m/4, memory: 700Mi/8Gi                                                                             17d
+    fcim-fcimfima-qas          quota                           cpu: 300m/3, memory: 700Mi/6Gi                                                                             17d
+    fcir-profitability-qas     burst-quota                     cpu: 200m/4, memory: 600Mi/8Gi                                                                             21d
+    fcir-profitability-qas     quota                           cpu: 200m/3, memory: 600Mi/6Gi                                                                             21d
+    febg-commons-qas           burst-quota                     cpu: 170m/4, memory: 768Mi/8Gi                                                                             5d19h
+    febg-commons-qas           quota                           cpu: 170m/3, memory: 768Mi/6Gi                                                                             5d19h
+    fiia-finanzasia-qas        burst-quota                     cpu: 200m/4, memory: 1600Mi/8Gi                                                                            17d
+    fiia-finanzasia-qas        quota                           cpu: 200m/3, memory: 1600Mi/6Gi                                                                            17d
+    fiwa-fondos-qas            burst-quota                     cpu: 20m/4, memory: 128Mi/8Gi                                                                              19d
+    fiwa-fondos-qas            quota                           cpu: 20m/3, memory: 128Mi/6Gi                                                                              19d
+    fppo-yieldgatefima-qas     burst-quota                     cpu: 120m/4, memory: 840Mi/8Gi                                                                             17d
+    fppo-yieldgatefima-qas     quota                           cpu: 120m/3, memory: 840Mi/6Gi                                                                             17d
+    gefi-gestionfinanc-qas     burst-quota                     cpu: 300m/4, memory: 1000Mi/8Gi                                                                            19d
+    gefi-gestionfinanc-qas     quota                           cpu: 300m/3, memory: 1000Mi/6Gi                                                                            19d
+    gse2-gsecurities-qas       burst-quota                     cpu: 920m/4, memory: 2628Mi/8Gi                                                                            21d
+    gse2-gsecurities-qas       quota                           cpu: 920m/3, memory: 2628Mi/6Gi                                                                            21d
+    gson-gsonboarding-qas      burst-quota                     cpu: 600m/4, memory: 1616Mi/8Gi                                                                            19d
+    gson-gsonboarding-qas      quota                           cpu: 600m/3, memory: 1616Mi/6Gi                                                                            19d
+    gstp-cambios-qas           burst-quota                     cpu: 150m/4, memory: 500Mi/8Gi                                                                             17d
+    gstp-cambios-qas           quota                           cpu: 150m/3, memory: 500Mi/6Gi                                                                             17d
+    hava-vault-qas             burst-quota                     cpu: 900m/12, memory: 2304Mi/26Gi                                                                          61d
+    hava-vault-qas             quota                           cpu: 900m/10, memory: 2304Mi/24Gi                                                                          61d
+    hppe-escribanos-qas        burst-quota                     cpu: 20m/4, memory: 128Mi/8Gi                                                                              17d
+    hppe-escribanos-qas        quota                           cpu: 20m/3, memory: 128Mi/6Gi                                                                              17d
+    icea-iccmsafip-qas         burst-quota                     cpu: 420m/4, memory: 640Mi/8Gi                                                                             17d
+    icea-iccmsafip-qas         quota                           cpu: 420m/3, memory: 640Mi/6Gi                                                                             17d
+    icta-ictransapi-qas        burst-quota                     cpu: 850m/7, memory: 1224Mi/16Gi                                                                           19d
+    icta-ictransapi-qas        quota                           cpu: 850m/6, memory: 1224Mi/14Gi                                                                           19d
+    incc-comcustodia-qas       burst-quota                     cpu: 40m/4, memory: 256Mi/8Gi                                                                              21d
+    incc-comcustodia-qas       quota                           cpu: 40m/3, memory: 256Mi/6Gi                                                                              21d
+    inci-invercuentas-qas      burst-quota                     cpu: 160m/4, memory: 1Gi/8Gi                                                                               19d
+    inci-invercuentas-qas      quota                           cpu: 160m/3, memory: 1Gi/6Gi                                                                               19d
+    incu-invercustodia-qas     burst-quota                     cpu: 4640m/8, memory: 5244Mi/8Gi                                                                           17d
+    incu-invercustodia-qas     quota                           cpu: 4640m/8, memory: 5244Mi/8Gi                                                                           17d
+    inov-inoverview-qas        burst-quota                     cpu: 600m/9, memory: 1112Mi/13Gi                                                                           21d
+    inov-inoverview-qas        quota                           cpu: 600m/8, memory: 1112Mi/12Gi                                                                           21d
+    intb-fimainterbank-qas     burst-quota                     cpu: 100m/4, memory: 694Mi/14Gi                                                                            19d
+    intb-fimainterbank-qas     quota                           cpu: 100m/3, memory: 694Mi/12Gi                                                                            19d
+    intr-transftitulos-qas     burst-quota                     cpu: 120m/4, memory: 768Mi/8Gi                                                                             17d
+    intr-transftitulos-qas     quota                           cpu: 120m/3, memory: 768Mi/6Gi                                                                             17d
+    lbgt-libgarantias-qas      burst-quota                     cpu: 520m/4, memory: 940Mi/8Gi                                                                             19d
+    lbgt-libgarantias-qas      quota                           cpu: 520m/3, memory: 940Mi/6Gi                                                                             19d
+    lici-lictacionprim-qas     burst-quota                     cpu: 220m/4, memory: 1068Mi/8Gi                                                                            21d
+    lici-lictacionprim-qas     quota                           cpu: 220m/3, memory: 1068Mi/6Gi                                                                            21d
+    lsgo-sitioleasing-qas      burst-quota                     cpu: 350m/4, memory: 1864Mi/8Gi                                                                            19d
+    lsgo-sitioleasing-qas      quota                           cpu: 350m/3, memory: 1864Mi/6Gi                                                                            19d
+    misr-misr-qas              burst-quota                     cpu: 40m/4, memory: 256Mi/8Gi                                                                              19d
+    misr-misr-qas              quota                           cpu: 40m/3, memory: 256Mi/6Gi                                                                              19d
+    moga-monitorgar-qas        burst-quota                     cpu: 60m/4, memory: 384Mi/8Gi                                                                              19d
+    moga-monitorgar-qas        quota                           cpu: 60m/3, memory: 384Mi/6Gi                                                                              19d
+    nlpc-nlpcross-qas          burst-quota                     cpu: 550m/4, memory: 3440Mi/8Gi                                                                            17d
+    nlpc-nlpcross-qas          quota                           cpu: 550m/3, memory: 3440Mi/6Gi                                                                            17d
+    nlpf-nlpf-qas              burst-quota                     cpu: 450m/4, memory: 3440Mi/8Gi                                                                            19d
+    nlpf-nlpf-qas              quota                           cpu: 450m/3, memory: 3440Mi/6Gi                                                                            19d
+    obaf-perfil-qas            burst-quota                     cpu: 70m/4, memory: 256Mi/8Gi                                                                              17d
+    obaf-perfil-qas            quota                           cpu: 70m/3, memory: 256Mi/6Gi                                                                              17d
+    ofbf-financiaciones-qas    burst-quota                     cpu: 20m/4, memory: 128Mi/8Gi                                                                              17d
+    ofbf-financiaciones-qas    quota                           cpu: 20m/3, memory: 128Mi/6Gi                                                                              17d
+    ofdc-documentacion-qas     burst-quota                     cpu: 60m/8, memory: 384Mi/14Gi                                                                             19d
+    ofdc-documentacion-qas     quota                           cpu: 60m/6, memory: 384Mi/12Gi                                                                             19d
+    ofwt-workflowtasas-qas     burst-quota                     cpu: 540m/4, memory: 1792Mi/8Gi                                                                            17d
+    ofwt-workflowtasas-qas     quota                           cpu: 540m/3, memory: 1792Mi/6Gi                                                                            17d
+    openshift-host-network     host-network-namespace-quotas   count/daemonsets.apps: 0/0, count/deployments.apps: 0/0, pods: 0/0   limits.cpu: 0/0, limits.memory: 0/0   91d
+    pbkn-platformbanking-qas   burst-quota                     cpu: 0/4, memory: 0/18Gi                                                                                   17d
+    pbkn-platformbanking-qas   quota                           cpu: 0/3, memory: 0/11Gi                                                                                   17d
+    pbpe-portalexterno-qas     burst-quota                     cpu: 260m/4, memory: 1324Mi/8Gi                                                                            17d
+    pbpe-portalexterno-qas     quota                           cpu: 260m/3, memory: 1324Mi/6Gi                                                                            17d
+    plaf-plazofijoprogra-qas   burst-quota                     cpu: 40m/4, memory: 256Mi/8Gi                                                                              19d
+    plaf-plazofijoprogra-qas   quota                           cpu: 40m/3, memory: 256Mi/6Gi                                                                              19d
+    plzf-plazofijo-qas         burst-quota                     cpu: 860m/8, memory: 4120Mi/12Gi                                                                           17d
+    plzf-plazofijo-qas         quota                           cpu: 860m/7, memory: 4120Mi/10Gi                                                                           17d
+    pobo-backoffice-qas        burst-quota                     cpu: 90m/4, memory: 456Mi/8Gi                                                                              19d
+    pobo-backoffice-qas        quota                           cpu: 90m/3, memory: 456Mi/6Gi                                                                              19d
+    posc-sessioncontrol-qas    burst-quota                     cpu: 200m/4, memory: 1400Mi/16Gi                                                                           17d
+    posc-sessioncontrol-qas    quota                           cpu: 200m/6, memory: 1400Mi/20Gi                                                                           17d
+    ppco-gconvenio-qas         burst-quota                     cpu: 60m/4, memory: 384Mi/8Gi                                                                              17d
+    ppco-gconvenio-qas         quota                           cpu: 60m/3, memory: 384Mi/6Gi                                                                              17d
+    ptrd-radar-qas             burst-quota                     cpu: 60m/4, memory: 384Mi/8Gi                                                                              19d
+    ptrd-radar-qas             quota                           cpu: 60m/3, memory: 384Mi/6Gi                                                                              19d
+    pwbi-botdevx-qas           burst-quota                     cpu: 0/4, memory: 0/8Gi                                                                                    5d23h
+    pwbi-botdevx-qas           quota                           cpu: 0/3, memory: 0/6Gi                                                                                    5d23h
+    qevn-qevintnode-qas        burst-quota                     cpu: 50m/4, memory: 400Mi/8Gi                                                                              21d
+    qevn-qevintnode-qas        quota                           cpu: 50m/3, memory: 400Mi/6Gi                                                                              21d
+    qrrm-apiqrcode-qas         burst-quota                     cpu: 200m/4, memory: 512Mi/8Gi                                                                             17d
+    qrrm-apiqrcode-qas         quota                           cpu: 200m/3, memory: 512Mi/6Gi                                                                             17d
+    ramf-ofbcredentials-qas    burst-quota                     cpu: 350m/4, memory: 2136Mi/8Gi                                                                            19d
+    ramf-ofbcredentials-qas    quota                           cpu: 350m/3, memory: 2136Mi/6Gi                                                                            19d
+    srea-assets-qas            burst-quota                     cpu: 640m/4, memory: 2928Mi/9Gi                                                                            41d
+    srea-assets-qas            quota                           cpu: 640m/3, memory: 2928Mi/7Gi                                                                            41d
+    sret-test-qas              burst-quota                     cpu: 120m/4, memory: 528Mi/8Gi                                                                             24d
+    sret-test-qas              quota                           cpu: 120m/3, memory: 528Mi/6Gi                                                                             24d
+    test-devops-qas            burst-quota                     cpu: 570m/4, memory: 2340Mi/8Gi                                                                            41d
+    test-devops-qas            quota                           cpu: 570m/3, memory: 2340Mi/6Gi                                                                            41d
+    tico-tituconsultas-qas     burst-quota                     cpu: 3500m/13, memory: 3700Mi/14Gi                                                                         21d
+    tico-tituconsultas-qas     quota                           cpu: 3500m/12, memory: 3700Mi/12Gi                                                                         21d
+    trad-tradingfinance-qas    burst-quota                     cpu: 100m/4, memory: 300Mi/8Gi                                                                             19d
+    trad-tradingfinance-qas    quota                           cpu: 100m/3, memory: 300Mi/6Gi                                                                             19d
+    tsmp-mptokens-qas          burst-quota                     cpu: 20m/4, memory: 128Mi/8Gi                                                                              17d
+    tsmp-mptokens-qas          quota                           cpu: 20m/3, memory: 128Mi/6Gi                                                                              17d
+    tytm-middleware-qas        burst-quota                     cpu: 2360m/4, memory: 7128Mi/8Gi                                                                           24d
+    tytm-middleware-qas        quota                           cpu: 2360m/3, memory: 7128Mi/9Gi                                                                           24d
+    vacs-cognitiveserv-qas     burst-quota                     cpu: 1350m/7, memory: 4528Mi/13Gi                                                                          19d
+    vacs-cognitiveserv-qas     quota                           cpu: 1350m/5, memory: 4528Mi/12Gi                                                                          19d
