@@ -49,16 +49,155 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc -n openshift-monitoring get configmap cluster-monitoring-config
-    NAME                        DATA   AGE
-    cluster-monitoring-config   1      3y59d
+    [guillermo@darkstar paas-apps1-qapg]$ omc -n openshift-monitoring get configmap cluster-monitoring-config -o yaml
+    apiVersion: v1
+    data:
+      config.yaml: |
+        enableUserWorkload: true
+        prometheusOperator:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+        prometheusK8s:
+          externalLabels:
+            cluster_name: paas-apps1-qapg
+            environment: qa
+          remoteWrite:
+          - basicAuth:
+              username:
+                name: prometheus-corpo-secret
+                key: user
+              password:
+                name: prometheus-corpo-secret
+                key: password
+            tlsConfig:
+              ca: {}
+              cert: {}
+              insecureSkipVerify: true
+            url: "https://prometheus.bancogalicia.com.ar/prometheus/api/v1/write"
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+          retention: 15d
+          retentionSize: 200GB
+          volumeClaimTemplate:
+            spec:
+              storageClassName: thin-csi
+              resources:
+                requests:
+                  storage: 300Gi
+          resources:
+            requests:
+              cpu: 500m
+              memory: 2Gi
+        alertmanagerMain:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+          volumeClaimTemplate:
+            metadata:
+              name: ocs-alertmanager-claim
+            spec:
+              resources:
+                requests:
+                  storage: 40Gi
+              storageClassName: thin-csi
+        kubeStateMetrics:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+        telemeterClient:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+        k8sPrometheusAdapter:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+        openshiftStateMetrics:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+        thanosQuerier:
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/infra
+              value: reserved
+            - effect: NoExecute
+              key: node-role.kubernetes.io/infra
+              value: reserved
+    kind: ConfigMap
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-wave: "20"
+        argocd.argoproj.io/tracking-id: paas-apps1-qapg-infra-nodes:/ConfigMap:openshift-monitoring/cluster-monitoring-config
+        kubectl.kubernetes.io/last-applied-configuration: |
+          {"apiVersion":"v1","data":{"config.yaml":"prometheusOperator:\n  nodeSelector:\n    node-role.kubernetes.io/infra: \"\"\n  tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io/infra\n      value: reserved\n    - effect: NoExecute\n      key: node-role.kubernetes.io/infra\n      value: reserved\nprometheusK8s:\n  nodeSelector:\n    node-role.kubernetes.io/infra: \"\"\n  tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io/infra\n      value: reserved\n    - effect: NoExecute\n      key: node-role.kubernetes.io/infra\n      value: reserved\n  retention: 15d\n  retentionSize: 200GB\n  volumeClaimTemplate:\n    spec:\n      storageClassName: thin-csi\n      resources:\n        requests:\n          storage: 300Gi\n  resources:\n    requests:\n      cpu: 500m\n      memory: 2Gi\nalertmanagerMain:\n  nodeSelector:\n    node-role.kubernetes.io/infra: \"\"\n  tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io/infra\n      value: reserved\n    - effect: NoExecute\n      key: node-role.kubernetes.io/infra\n      value: reserved\nkubeStateMetrics:\n  nodeSelector:\n    node-role.kubernetes.io/infra: \"\"\n  tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io/infra\n      value: reserved\n    - effect: NoExecute\n      key: node-role.kubernetes.io/infra\n      value: reserved\ntelemeterClient:\n  nodeSelector:\n    node-role.kubernetes.io/infra: \"\"\n  tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io/infra\n      value: reserved\n    - effect: NoExecute\n      key: node-role.kubernetes.io/infra\n      value: reserved\nk8sPrometheusAdapter:\n  nodeSelector:\n    node-role.kubernetes.io/infra: \"\"\n  tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io/infra\n      value: reserved\n    - effect: NoExecute\n      key: node-role.kubernetes.io/infra\n      value: reserved\nopenshiftStateMetrics:\n  nodeSelector:\n    node-role.kubernetes.io/infra: \"\"\n  tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io/infra\n      value: reserved\n    - effect: NoExecute\n      key: node-role.kubernetes.io/infra\n      value: reserved\nthanosQuerier:\n  nodeSelector:\n    node-role.kubernetes.io/infra: \"\"\n  tolerations:\n    - effect: NoSchedule\n      key: node-role.kubernetes.io/infra\n      value: reserved\n    - effect: NoExecute\n      key: node-role.kubernetes.io/infra\n      value: reserved\n"},"kind":"ConfigMap","metadata":{"annotations":{"argocd.argoproj.io/sync-wave":"20","argocd.argoproj.io/tracking-id":"paas-apps1-qapg-infra-nodes:/ConfigMap:openshift-monitoring/cluster-monitoring-config"},"creationTimestamp":"2026-06-01T20:53:13Z","labels":{"app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/part-of":"infra-nodes","gitops.bancogalicia.com.ar/cluster":"paas-apps1-qapg","gitops.bancogalicia.com.ar/domain":"apps","gitops.bancogalicia.com.ar/env":"qa","gitops.bancogalicia.com.ar/managed-by":"argocd","gitops.bancogalicia.com.ar/tier":"high","helm.sh/chart":"infra-nodes-0.1.0"},"managedFields":[{"apiVersion":"v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:argocd.argoproj.io/sync-wave":{},"f:argocd.argoproj.io/tracking-id":{}},"f:labels":{"f:app.kubernetes.io/managed-by":{},"f:app.kubernetes.io/part-of":{},"f:gitops.bancogalicia.com.ar/cluster":{},"f:gitops.bancogalicia.com.ar/domain":{},"f:gitops.bancogalicia.com.ar/env":{},"f:gitops.bancogalicia.com.ar/managed-by":{},"f:gitops.bancogalicia.com.ar/tier":{},"f:helm.sh/chart":{}}}},"manager":"argocd-controller","operation":"Apply","time":"2026-06-01T20:53:13Z"},{"apiVersion":"v1","fieldsType":"FieldsV1","fieldsV1":{"f:data":{"f:config.yaml":{}}},"manager":"Mozilla","operation":"Update","time":"2026-07-01T14:26:06Z"}],"name":"cluster-monitoring-config","namespace":"openshift-monitoring","resourceVersion":"19266433","uid":"c380262e-b0e9-45fd-9d4e-f4c62ef68df2"}}
+      creationTimestamp: "2026-06-01T20:53:13Z"
+      labels:
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: infra-nodes
+        gitops.bancogalicia.com.ar/cluster: paas-apps1-qapg
+        gitops.bancogalicia.com.ar/domain: apps
+        gitops.bancogalicia.com.ar/env: qa
+        gitops.bancogalicia.com.ar/managed-by: argocd
+        gitops.bancogalicia.com.ar/tier: high
+        helm.sh/chart: infra-nodes-0.1.0
+      name: cluster-monitoring-config
+      namespace: openshift-monitoring
+      resourceVersion: "43019724"
+      uid: c380262e-b0e9-45fd-9d4e-f4c62ef68df2
+
     ---
 
-    [openshift@bastion ~]$ oc -n openshift-user-workload-monitoring get pod
+    [guillermo@darkstar paas-apps1-qapg]$ omc -n openshift-user-workload-monitoring get pod
     NAME                                   READY   STATUS    RESTARTS   AGE
-    prometheus-operator-55df8bbdbd-w29pf   2/2     Running   2          113d
-    prometheus-user-workload-0             6/6     Running   0          57d
-    prometheus-user-workload-1             6/6     Running   0          57d
-    thanos-ruler-user-workload-0           4/4     Running   0          57d
-    thanos-ruler-user-workload-1           4/4     Running   0          57d
-    ---
+    prometheus-operator-5b6ddd9b5f-nz2x5   2/2     Running   0          3d
+    prometheus-user-workload-0             6/6     Running   0          11d
+    prometheus-user-workload-1             6/6     Running   0          11d
+    thanos-ruler-user-workload-0           4/4     Running   0          11d
+    thanos-ruler-user-workload-1           4/4     Running   0          11d

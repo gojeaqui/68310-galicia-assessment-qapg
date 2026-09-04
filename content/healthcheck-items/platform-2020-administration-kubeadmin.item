@@ -39,9 +39,7 @@ customer_environment_findings:
     impact_risk_additional_text: ""
     remediation_additional_text: ""
     additional_comments_text: ""
-
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get secrets kubeadmin -n kube-system
+    [guillermo@darkstar paas-apps1-qapg]$ omc get secrets kubeadmin -n kube-system
     NAME        TYPE     DATA   AGE
-    kubeadmin   Opaque   1      3y60d
-    ---
+    kubeadmin   Opaque   1      70d

@@ -1,0 +1,66 @@
+version: v2
+check_definition:
+  category_key: "Platform"
+  subcategory_key: "Monitoring & Logging"
+  severity_key: "Not defined"
+  tags: []
+  tag_keys:
+    - "Observability"
+    - "Storage"
+  description: "Persistent storage for Logging is appropriate"
+  references: 
+  - title: "Configuring persistent storage for the log store"
+    url: "https://docs.openshift.com/container-platform/latest/observability/logging/log_storage/cluster-logging-loki.html"
+  check_procedures:
+    - type: gui_action
+      steps: 
+      - "verify the object in the UI"
+    - type: "survey"
+      question: "Log store is saved to persistent volumes"
+    - type: "survey"
+      question: "Log store is not on NFS"
+    - type: "survey"
+      question: "Is logging using local raw block volumes? If you use a local volume for persistent storage, do not use a raw block volume, which is described with volumeMode: block in the LocalVolume object."
+    - type: "survey"
+      question: "Is the persistent volume backed by SSD / NVMe devices?"
+    - type: "command"
+      question: ""
+      command: |
+          oc get sc
+          oc get pvc -n openshift-logging
+  common_outcomes:
+  - key: "no_change01"
+    scenario_description_short_text: ""
+    description_long_text: "Logging has the appropriate type and speed of underlying storage to perform as expected under the current load"
+    impact_and_risk_text: ""
+    remediation_text: ""
+  - key: "changes_required01"
+    scenario_description_short_text: ""
+    description_long_text: "The underlying storage provided to OpenShift Logging's  deployment is non-optimal and will result in poor performance and/or unreliability"
+    impact_and_risk_text: "Logging requires persistent storage. The faster the storage, the faster the Logging performance. SSD/NVMe level performance is required to handle the high IOPS logging needs. Certain types of storage such as NFS or local raw block volumes can result in unreliability and corruption to data."
+    remediation_text: "Configure Logging persistent storage with SSD/NVMe backed storage"
+customer_environment_findings:
+  # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
+  status: tbe
+  common_outcome_key: ""
+  outcome_overrides:
+      scenario_description_short_text: ""
+      description_long_text: ""
+      impact_and_risk_text: ""
+      remediation_text: ""
+  additional_comments:
+    impact_risk_additional_text: ""
+    remediation_additional_text: ""
+    additional_comments_text: ""
+  outcome_evidence: |
+    [guillermo@darkstar paas-apps1-qapg]$ omc get sc
+    NAME                        PROVISIONER                                   RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+    nfs-client                  k8s-sigs.io/nfs-subdir-external-provisioner   Delete          Immediate              true                   62d
+    ocs-storagecluster-cephfs   k8s-sigs.io/nfs-subdir-external-provisioner   Delete          Immediate              true                   60d
+    thin-csi                    csi.vsphere.vmware.com                        Delete          WaitForFirstConsumer   true                   70d
+    thin                        kubernetes.io/vsphere-volume                  Delete          Immediate              false                  60d
+
+    ---
+
+    [guillermo@darkstar paas-apps1-qapg]$ omc get pvc -n openshift-logging
+    No resources persistentvolumeclaims.core found in openshift-logging namespace.

@@ -42,136 +42,54 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get nodes -l node-role.kubernetes.io/infra -o json | jq '.items[] | {name: .metadata.name, taints: .spec.taints}'
+    [guillermo@darkstar paas-apps1-qapg]$ omc get nodes -l node-role.kubernetes.io/infra='' -o json | jq '.items[] | {name: .metadata.name, taints: .spec.taints}'
     {
-      "name": "oscdmzprd01-n5xps-infra-6bjvr",
+      "name": "paas-apps1-qapg-2xs5x-infra-0-n92j9",
       "taints": [
         {
           "effect": "NoSchedule",
-          "key": "node-role.kubernetes.io/infra"
+          "key": "node-role.kubernetes.io/infra",
+          "value": "reserved"
         },
         {
           "effect": "NoExecute",
-          "key": "node-role.kubernetes.io/infra"
+          "key": "node-role.kubernetes.io/infra",
+          "value": "reserved"
         }
       ]
     }
     {
-      "name": "oscdmzprd01-n5xps-infra-hdwjx",
+      "name": "paas-apps1-qapg-2xs5x-infra-1-lzpnp",
       "taints": [
         {
           "effect": "NoSchedule",
-          "key": "node-role.kubernetes.io/infra"
+          "key": "node-role.kubernetes.io/infra",
+          "value": "reserved"
         },
         {
           "effect": "NoExecute",
-          "key": "node-role.kubernetes.io/infra"
+          "key": "node-role.kubernetes.io/infra",
+          "value": "reserved"
         }
       ]
     }
     {
-      "name": "oscdmzprd01-n5xps-infra-xggmf",
+      "name": "paas-apps1-qapg-2xs5x-infra-2-dkftb",
       "taints": [
         {
           "effect": "NoSchedule",
-          "key": "node-role.kubernetes.io/infra"
+          "key": "node-role.kubernetes.io/infra",
+          "value": "reserved"
         },
         {
           "effect": "NoExecute",
-          "key": "node-role.kubernetes.io/infra"
-        }
-      ]
-    }
-    {
-      "name": "oscdmzprd01-n5xps-infra-xstc7",
-      "taints": [
-        {
-          "effect": "NoSchedule",
-          "key": "node-role.kubernetes.io/infra"
+          "key": "node-role.kubernetes.io/infra",
+          "value": "reserved"
         },
         {
-          "effect": "NoExecute",
-          "key": "node-role.kubernetes.io/infra"
-        }
-      ]
-    }
-    {
-      "name": "oscdmzprd01-n5xps-loki-9c5z2",
-      "taints": [
-        {
           "effect": "NoSchedule",
-          "key": "node.ocs.openshift.io/loki",
-          "value": "true"
-        }
-      ]
-    }
-    {
-      "name": "oscdmzprd01-n5xps-loki-tj4bh",
-      "taints": [
-        {
-          "effect": "NoSchedule",
-          "key": "node.ocs.openshift.io/loki",
-          "value": "true"
-        }
-      ]
-    }
-    {
-      "name": "oscdmzprd01-n5xps-loki-z852k",
-      "taints": [
-        {
-          "effect": "NoSchedule",
-          "key": "node.ocs.openshift.io/loki",
-          "value": "true"
-        }
-      ]
-    }
-    {
-      "name": "oscdmzprd01-n5xps-storage-1-dj9c9",
-      "taints": [
-        {
-          "effect": "NoSchedule",
-          "key": "node.ocs.openshift.io/storage",
-          "value": "true"
-        }
-      ]
-    }
-    {
-      "name": "oscdmzprd01-n5xps-storage-2-nrhkd",
-      "taints": [
-        {
-          "effect": "NoSchedule",
-          "key": "node.ocs.openshift.io/storage",
-          "value": "true"
-        }
-      ]
-    }
-    {
-      "name": "oscdmzprd01-n5xps-storage-3-wnsfn",
-      "taints": [
-        {
-          "effect": "NoSchedule",
-          "key": "node.ocs.openshift.io/storage",
-          "value": "true"
-        }
-      ]
-    }
-    {
-      "name": "oscdmzprd01-n5xps-storage-4-d6p6k",
-      "taints": [
-        {
-          "effect": "NoSchedule",
-          "key": "node.ocs.openshift.io/storage",
-          "value": "true"
-        }
-      ]
-    }
-    {
-      "name": "oscdmzprd01-n5xps-storage-5-642cg",
-      "taints": [
-        {
-          "effect": "NoSchedule",
-          "key": "node.ocs.openshift.io/storage",
-          "value": "true"
+          "key": "node.kubernetes.io/unschedulable",
+          "timeAdded": "2026-08-10T13:48:51Z"
         }
       ]
     }

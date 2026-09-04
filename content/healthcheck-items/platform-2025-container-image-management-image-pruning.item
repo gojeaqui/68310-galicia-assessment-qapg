@@ -39,15 +39,14 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    
-    [openshift@bastion ~]$ oc get cronjobs -n openshift-image-registry
+    [guillermo@darkstar paas-apps1-qapg]$ omc get cronjobs -n openshift-image-registry
     NAME           SCHEDULE    SUSPEND   ACTIVE   LAST SCHEDULE   AGE
-    image-pruner   0 0 * * *   False     0        19h             3y60d
-    ---
+    image-pruner   0 0 * * *   False     0        25d             70d
 
-    [openshift@bastion ~]$ oc get jobs -n openshift-image-registry
+        ---
+
+    [guillermo@darkstar paas-apps1-qapg]$ omc get jobs -n openshift-image-registry
     NAME                    COMPLETIONS   DURATION   AGE
-    image-pruner-29348640   1/1           6s         2d19h
-    image-pruner-29350080   1/1           6s         43h
-    image-pruner-29351520   1/1           6s         19h
-    ---
+    image-pruner-29769120   1/1           3s         2d
+    image-pruner-29770560   1/1           4s         1d
+    image-pruner-29772000   1/1           4s         16h

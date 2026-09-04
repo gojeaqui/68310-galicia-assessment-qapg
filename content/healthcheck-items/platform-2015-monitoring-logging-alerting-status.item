@@ -27,14 +27,14 @@ check_definition:
     impact_and_risk_text: ""
     remediation_text: ""
   - key: "changes_required01"
-    scenario_description_short_text: "Openshift alerting is not configured"
-    description_long_text: "OpenShift alerts provide information to administrators about the status of the cluster. Alerts are firing that have not been properly addressed."
-    impact_and_risk_text: "Alerts that are firing can indicate imminent failure or just provide information based on the severity of the alert. Critical alerts should be immediately addressed and resolved to prevent platform outages or degraded performance. Other alerts such as 'INFO' may just need to be silenced once acknowledged"
-    remediation_text: "Review all alerts and remediate or silence as needed"
+    scenario_description_short_text: "OpenShift tiene alertas activas sin atender"
+    description_long_text: "Las alertas de OpenShift proporcionan información a los administradores sobre el estado del clúster. Algunas alertas están en estado \"firing\" y no han sido atendidas."
+    impact_and_risk_text: "Las alertas activas pueden indicar un fallo inminente o simplemente proporcionar información según la gravedad de la alerta. Las alertas críticas deben atenderse y resolverse inmediatamente para evitar interrupciones de la plataforma o una degradación del rendimiento. Otras alertas, como las de tipo 'INFO', pueden silenciarse una vez revisadas"
+    remediation_text: "Revisar todas las alertas y remediarlas o silenciarlas según sea necesario"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: tbe
-  common_outcome_key: ""
+  status: changes_recommended
+  common_outcome_key: "changes_required01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -44,3 +44,24 @@ customer_environment_findings:
     impact_risk_additional_text: ""
     remediation_additional_text: ""
     additional_comments_text: ""
+  outcome_evidence: |
+    [guillermo@darkstar paas-apps1-qapg]$ omc prom rules -s firing,pending -o wide
+    GROUP                                         RULE                                        SEVERITY   STATE    AGE   ALERTS   ACTIVE SINCE
+    vsphere-problem-detector.rules                VSphereOpenshiftClusterHealthFail           warning    firing   16s   1        07 Aug 26 14:48 UTC
+    cluster-operators                             ClusterNotUpgradeable                       info       firing   1s    1        07 Aug 26 19:21 UTC
+    cluster-operators                             ClusterOperatorDegraded                     warning    firing   1s    3        07 Aug 26 19:48 UTC
+    cluster-version                               UpdateAvailable                             info       firing   0s    1        07 Aug 26 18:19 UTC
+    openshift-ingress-to-route-controller.rules   IngressWithoutClassName                     warning    firing   13s   6        07 Aug 26 14:51 UTC
+    openshift-ingress.rules                       IngressControllerDegraded                   warning    firing   12s   7        10 Aug 26 14:49 UTC
+    insights                                      InsightsRecommendationActive                info       firing   12s   4        07 Aug 26 18:19 UTC
+    cluster-version                               PodDisruptionBudgetAtLimit                  warning    firing   9s    8        27 Jul 26 16:53 UTC
+    mcc-drain-error                               MCCDrainError                               warning    firing   14s   1        07 Aug 26 19:21 UTC
+    general.rules                                 Watchdog                                    none       firing   27s   1        07 Aug 26 18:18 UTC
+    openshift-kubernetes.rules                    ClusterMonitoringOperatorDeprecatedConfig   info       firing   7s    1        01 Jul 26 14:26 UTC
+    openshift-kubernetes.rules                    KubeDeploymentReplicasMismatch              warning    firing   7s    7        10 Aug 26 13:49 UTC
+    openshift-kubernetes.rules                    KubePodNotScheduled                         warning    firing   7s    7        10 Aug 26 13:49 UTC
+
+# Estas alertas son importantes:
+# - VSphereOpenshiftClusterHealthFail
+# - IngressControllerDegraded
+# - PodDisruptionBudgetAtLimit

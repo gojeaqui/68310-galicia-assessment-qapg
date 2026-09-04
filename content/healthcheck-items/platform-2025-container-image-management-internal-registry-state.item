@@ -21,7 +21,7 @@ check_definition:
   common_outcomes:
   - key: "no_change01"
     scenario_description_short_text: "Registry interna configurada"
-    description_long_text: "La Registry interna de OpenShift está funcionando correctamente"
+    description_long_text: "La Registry interna de OpenShift está funcionando correctamente. Observacion: Solo tiene 2 replicas y utiliza 'emptyDir'"
     impact_and_risk_text: ""
     remediation_text: ""
   - key: "change01"
@@ -43,21 +43,43 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get configs.imageregistry.operator.openshift.io cluster -o yaml
+    [guillermo@darkstar paas-apps1-qapg]$ omc get configs.imageregistry.operator.openshift.io cluster -o yaml
     apiVersion: imageregistry.operator.openshift.io/v1
     kind: Config
     metadata:
-      creationTimestamp: "2022-08-24T17:47:48Z"
+      annotations:
+        argocd.argoproj.io/sync-wave: "20"
+        argocd.argoproj.io/tracking-id: paas-apps1-qapg-infra-nodes:imageregistry.operator.openshift.io/Config:openshift-machine-api/cluster
+      creationTimestamp: "2026-06-01T16:20:33Z"
       finalizers:
       - imageregistry.operator.openshift.io/finalizer
-      generation: 16
+      generation: 5
+      labels:
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: infra-nodes
+        gitops.bancogalicia.com.ar/cluster: paas-apps1-qapg
+        gitops.bancogalicia.com.ar/domain: apps
+        gitops.bancogalicia.com.ar/env: qa
+        gitops.bancogalicia.com.ar/managed-by: argocd
+        gitops.bancogalicia.com.ar/tier: high
+        helm.sh/chart: infra-nodes-0.1.0
       name: cluster
-      resourceVersion: "1038000376"
-      uid: ab570c8a-f5ff-47e0-80cb-a8a75ca3c720
+      resourceVersion: "54354359"
+      uid: 1d37c057-6ffa-4629-a295-9cd1a37ef68b
     spec:
-      defaultRoute: true
-      disableRedirect: true
-      httpSecret: f70c1cca7444cb5e54afc9825acb67b02cd1f3b4b2c379b9c8a8a6bee0f0e495487780afdd85f62de2ecaf7f0b742e74916daf56047a95023ea548c11077b44b
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: docker-registry
+                  operator: In
+                  values:
+                  - default
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      httpSecret: bb8fd30dd0df147f85a33d6acd68029f03e606167d6c2ff95db91c278fe62d7a816980e36778f1a16b7ea8e56ed6ead7b20c49a9706bd25e0d02cc96c45b5c05
       logLevel: Normal
       managementState: Managed
       nodeSelector:
@@ -65,7 +87,7 @@ customer_environment_findings:
       observedConfig: null
       operatorLogLevel: Normal
       proxy: {}
-      replicas: 3
+      replicas: 2
       requests:
         read:
           maxWaitInQueue: 0s
@@ -73,81 +95,81 @@ customer_environment_findings:
           maxWaitInQueue: 0s
       rolloutStrategy: RollingUpdate
       storage:
+        emptyDir: {}
         managementState: Managed
-        pvc:
-          claim: oscdmzprd01-registry-pvc
       tolerations:
       - effect: NoSchedule
         key: node-role.kubernetes.io/infra
+        value: reserved
       - effect: NoExecute
         key: node-role.kubernetes.io/infra
+        value: reserved
       unsupportedConfigOverrides: null
     status:
       conditions:
-      - lastTransitionTime: "2023-12-19T16:56:50Z"
+      - lastTransitionTime: "2026-06-01T16:20:33Z"
         reason: AsExpected
         status: "False"
         type: ImageConfigControllerDegraded
-      - lastTransitionTime: "2025-07-01T05:02:35Z"
+      - lastTransitionTime: "2026-08-07T18:18:48Z"
         message: The registry is ready
         reason: Ready
         status: "False"
         type: Progressing
-      - lastTransitionTime: "2025-06-25T19:42:57Z"
+      - lastTransitionTime: "2026-06-02T15:47:11Z"
         message: The registry is ready
         reason: Ready
         status: "True"
         type: Available
-      - lastTransitionTime: "2024-12-22T05:58:35Z"
+      - lastTransitionTime: "2026-06-02T15:47:11Z"
         status: "False"
         type: Degraded
-      - lastTransitionTime: "2022-08-24T21:37:33Z"
+      - lastTransitionTime: "2026-06-01T20:53:13Z"
         status: "False"
         type: Removed
-      - lastTransitionTime: "2022-08-24T17:48:14Z"
+      - lastTransitionTime: "2026-06-01T16:20:40Z"
         reason: AsExpected
         status: "False"
         type: ImageRegistryCertificatesControllerDegraded
-      - lastTransitionTime: "2022-08-24T17:48:22Z"
+      - lastTransitionTime: "2026-06-01T16:21:02Z"
         reason: AsExpected
         status: "False"
         type: AzureStackCloudControllerDegraded
-      - lastTransitionTime: "2022-08-24T17:49:04Z"
+      - lastTransitionTime: "2026-06-02T15:12:52Z"
         message: The daemon set node-ca has available replicas
         reason: AsExpected
         status: "True"
         type: NodeCADaemonAvailable
-      - lastTransitionTime: "2024-04-16T19:00:52Z"
-        reason: AsExpected
-        status: "False"
-        type: NodeCADaemonControllerDegraded
-      - lastTransitionTime: "2023-08-06T18:31:47Z"
-        reason: PVC Exists
-        status: "True"
-        type: StorageExists
-      - lastTransitionTime: "2025-08-27T17:56:07Z"
+      - lastTransitionTime: "2026-08-07T18:17:54Z"
         message: The daemon set node-ca is deployed
         reason: AsExpected
         status: "False"
         type: NodeCADaemonProgressing
+      - lastTransitionTime: "2026-06-01T16:21:02Z"
+        reason: AsExpected
+        status: "False"
+        type: NodeCADaemonControllerDegraded
+      - lastTransitionTime: "2026-06-02T15:46:49Z"
+        message: EmptyDir storage successfully created
+        reason: Creation Successful
+        status: "True"
+        type: StorageExists
       generations:
       - group: apps
         hash: ""
-        lastGeneration: 8
+        lastGeneration: 1
         name: node-ca
         namespace: openshift-image-registry
         resource: daemonsets
       - group: apps
         hash: ""
-        lastGeneration: 21
+        lastGeneration: 4
         name: image-registry
         namespace: openshift-image-registry
         resource: deployments
-      observedGeneration: 16
-      readyReplicas: 3
+      observedGeneration: 5
+      readyReplicas: 2
       storage:
+        emptyDir: {}
         managementState: Managed
-        pvc:
-          claim: oscdmzprd01-registry-pvc
       storageManaged: true
-    ---
