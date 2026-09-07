@@ -45,48 +45,54 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get OAuth cluster -o yaml
+    [guillermo@darkstar paas-apps1-qapg]$ omc get OAuth cluster -o yaml
     apiVersion: config.openshift.io/v1
     kind: OAuth
     metadata:
       annotations:
+        argocd.argoproj.io/sync-wave: "10"
+        argocd.argoproj.io/tracking-id: paas-apps1-qapg-platform-base:config.openshift.io/OAuth:default/cluster
         include.release.openshift.io/ibm-cloud-managed: "true"
         include.release.openshift.io/self-managed-high-availability: "true"
         include.release.openshift.io/single-node-developer: "true"
         release.openshift.io/create-only: "true"
-      creationTimestamp: "2022-08-24T17:35:53Z"
-      generation: 16
+      creationTimestamp: "2026-06-01T15:59:58Z"
+      generation: 2
+      labels:
+        app.kubernetes.io/component: config
+        app.kubernetes.io/name: oauth-ldap
+        app.kubernetes.io/part-of: oauth-ldap
+        gitops.bancogalicia.com.ar/cluster: paas-apps1-qapg
+        gitops.bancogalicia.com.ar/domain: apps
+        gitops.bancogalicia.com.ar/env: qa
+        gitops.bancogalicia.com.ar/managed-by: argocd
+        gitops.bancogalicia.com.ar/site: pg
+        gitops.bancogalicia.com.ar/tier: high
       name: cluster
       ownerReferences:
       - apiVersion: config.openshift.io/v1
         kind: ClusterVersion
         name: version
-        uid: e3eb1514-02ac-42ec-a68e-4a5a6e2a17c0
-      resourceVersion: "965239692"
-      uid: ca82bc5e-ada3-4b64-83fa-a6b881b45128
+        uid: 1079c954-6109-4583-bb1a-1c647dd2c64f
+      resourceVersion: "448320"
+      uid: c1da6727-be56-4d94-bbec-6d4f1d1207f6
     spec:
       identityProviders:
       - ldap:
           attributes:
-            email: []
+            email:
+            - mail
             id:
-            - dn
-            name:
             - cn
+            name:
+            - displayName
             preferredUsername:
             - sAMAccountName
-          bindDN: CN=Ldap_OP,OU=Servicio,OU=Usuarios,OU=Produccion,DC=cc,DC=bna,DC=net
+          bindDN: bgcmz\uoscp13m
           bindPassword:
-            name: ldap-secret
+            name: ldap-bind-password
           insecure: true
-          url: ldap://cc.bna.net:389/DC=cc,DC=bna,DC=net?sAMAccountName?sub?(&(objectclass=*)(|(memberOf=CN=BNA_Openshift_Admin,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)(memberOf=CN=BNA_Openshift_ReadLogs,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)(memberOf=CN=BNA_Openshift_Read,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)(memberOf=CN=BNA_Openshift_SecAdm,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)(memberOf=CN=BNA_Openshift_SupportCyberbank,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)(memberOf=CN=BNA_Openshift_Ops,OU=Aplicacion,OU=Grupos,OU=Produccion,DC=cc,DC=bna,DC=net)))
+          url: ldap://bgcmz.bancogalicia.com.ar:389/ou=UsuariosCorp,dc=bgcmz,dc=bancogalicia,dc=com,dc=ar?sAMAccountname?sub?(memberOf:1.2.840.113556.1.4.1941:=CN=GAPOpenshift,OU=grupos,DC=bgcmz,DC=bancogalicia,DC=com,DC=ar)
         mappingMethod: claim
-        name: CC-BNA-NET
+        name: AD-Prod
         type: LDAP
-      - htpasswd:
-          fileData:
-            name: htpasswd-4n9kz
-        mappingMethod: claim
-        name: htpasswd-userdb
-        type: HTPasswd
-    ---

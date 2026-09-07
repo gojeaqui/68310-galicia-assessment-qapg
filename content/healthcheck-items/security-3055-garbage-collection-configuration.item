@@ -37,6 +37,20 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [openshift@bastion ~]$ oc get kubeletconfigs -A
-    No resources found
+    [guillermo@darkstar paas-apps1-qapg]$ omc get kubeletconfigs -A
+    NAME                                       AGE
+    autosizingreserved-maxpods-infra           69d
+    autosizingreserved-maxpods-worker-apps-0   69d
+    autosizingreserved-maxpods-worker-apps-1   69d
+    autosizingreserved-maxpods-worker-apps-2   69d
+    dynamic-master                             69d
+
     ---
+
+    [guillermo@darkstar paas-apps1-qapg]$ omc get kubeletconfigs -A -o custom-columns="NAME:.metadata.name,SPEC:.spec"
+    NAME                                       SPEC
+    autosizingreserved-maxpods-infra           {"kubeletConfig":{"autoSizingReserved":true},"machineConfigPoolSelector":{"matchLabels":{"pools.operator.machineconfiguration.openshift.io/infra":""}}}
+    autosizingreserved-maxpods-worker-apps-0   {"kubeletConfig":{"autoSizingReserved":true,"maxPods":180},"machineConfigPoolSelector":{"matchLabels":{"pools.operator.machineconfiguration.openshift.io/worker-apps-0":""}}}
+    autosizingreserved-maxpods-worker-apps-1   {"kubeletConfig":{"autoSizingReserved":true,"maxPods":180},"machineConfigPoolSelector":{"matchLabels":{"pools.operator.machineconfiguration.openshift.io/worker-apps-1":""}}}
+    autosizingreserved-maxpods-worker-apps-2   {"kubeletConfig":{"autoSizingReserved":true,"maxPods":180},"machineConfigPoolSelector":{"matchLabels":{"pools.operator.machineconfiguration.openshift.io/worker-apps-2":""}}}
+    dynamic-master                             {"kubeletConfig":{"autoSizingReserved":true},"machineConfigPoolSelector":{"matchLabels":{"pools.operator.machineconfiguration.openshift.io/master":""}}}
