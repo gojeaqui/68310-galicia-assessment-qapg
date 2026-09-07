@@ -42,9 +42,12 @@ Resources
 
 Se encontró que se utiliza una subnet para los Pods con subnetting de /18 y hostPrefix: 24
 Al usar estos valores, la arquitectura de red del clúster quedará definida de la siguiente manera:
-- Máximo de Nodos: Máximo de 64 nodos en el clúster. (Se restan los bits del prefijo del host (24) menos los bits de la subred del clúster (18). $2^{(24-18)} = 2^6 = 64$ nodos)
-- Pods por Nodo: Cada nodo podrá alojar hasta 256 pods (incluyendo los pods de infraestructura). ($2^{(32-24)} = 2^8 = 256$ direcciones IP por nodo)
-Total de Pods en el Clúster: El límite total será de 16,384 pods ($64 \times 256$)
+
+* Máximo de Nodos: Máximo de 64 nodos en el clúster. (Se restan los bits del prefijo del host (24) menos los bits de la subred del clúster (18). stem:[2^{(24-18)} = 2^6 = 64] nodos)
+
+* Pods por Nodo: Cada nodo podrá alojar hasta 256 pods (incluyendo los pods de infraestructura). (stem:[2^{(32-24)} = 2^8 = 256] direcciones IP por nodo)
+
+Total de Pods en el Clúster: El límite total será de 16,384 pods (stem:[64 \times 256])
 
 == Operadores
 

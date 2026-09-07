@@ -43,10 +43,10 @@ A continuación se deja un resumen de lo que se encontró durante el assessment:
 | La ausencia de collectors puede provocar una recolección incompleta de logs y pérdida de información útil para auditoría y troubleshooting.
 | Revisar la configuración del stack de Logging, validar las `tolerations` requeridas para los nodos infra y asegurar el despliegue correcto del operador Loki.
 
-| *Almacenamiento de Logging no óptimo*
-| El despliegue de OpenShift Logging presenta ausencia de algunos PVC requeridos por Loki.
-| Logging requiere almacenamiento persistente de alto rendimiento. Un almacenamiento inadecuado puede afectar el rendimiento y, dependiendo de la tecnología utilizada, generar problemas de fiabilidad o corrupción de datos.
-| Configurar almacenamiento persistente respaldado por SSD/NVMe y asegurar la creación y disponibilidad de los PVC requeridos por Loki.
+| *Forwarding de logs hacia un Hub Loki*
+| Se encontró que se realiza un forwarding de los logs hacia un Loki centralizado en el cluster `paas-svc-prdpg`
+| No esta soportado el reenvío de logs hacia un Loki que sea parte del stack de Logging de Red Hat en un cluster diferente al que residan los collectors. (https://access.redhat.com/solutions/7017738)
+| Se puede desestimar esta advertencia si hay un support exception o si se esta utilizando un stack Loki no Red Hat
 
 | *Cuenta `kubeadmin` habilitada*
 | La cuenta predeterminada `kubeadmin` continúa habilitada en el clúster.
@@ -68,10 +68,34 @@ A continuación se deja un resumen de lo que se encontró durante el assessment:
 | Si el atributo cambia, OpenShift puede interpretar al usuario como una identidad diferente, pudiendo impedirle acceder con su identidad anterior. El riesgo es especialmente relevante para usuarios con privilegios administrativos.
 | Utilizar un atributo de Active Directory que sea inmutable durante toda la vida de la cuenta. Evaluar `sAMAccountName` como alternativa, siempre que las políticas del AD garanticen que no cambia. Validar previamente el impacto sobre las identidades existentes y definir un procedimiento que evite bloquear el acceso administrativo.
 
+| *Pod IP Subnet limitada*
+| Se encontró que se utiliza una subnet para los Pods con subnetting de /18 y `hostPrefix: 24`
+| La configuración de Pod IP Subnet implica que en el cluster habrán coo máximo 64 nodos y 256 pods por nodo como máximo
+| Validar que esta configuración de red sea la deseada
+
+| *Update channel establecido en `stable`*
+| Se encontró que se utiliza el channel `stable` para las actualizaciones del cluster, teniendo disponible el canal `eus`.
+| Si el cluster queda suscripto al channel `eus` se puede asegurar que no se van a cometer errores durante los proceso de upgrade.
+| Validar que esta configuración del canal de actualización sea la deseada
+
+| *Nodos de Infra de 100Gi*
+| Se encontró que los nodos de Infra tienen una capacidad de disco de 100Gi.
+| Un tamaño de disco de 100Gi esta en el limite de lo recomendado y puede ocasionar problemas en los nodos.
+| Se recomienda regenerar los MachineSet de infra con un tamaño de disco de 120Gi al menos
+
+| *Control Plane MachineSets no creados*
+| Encontramos que los Control Plane MachineSets no existen en el cluster
+| Ante la perdida de un nodo master, el mismo se debe recuperar manualmente
+| Verificar que exista el Operador Cluster Control Plane Machine Set y crear el objecto ControlPlaneMachineSet en base a un MachineSet existente
+
+| *Utilización del StorageClass legado 'thin'*
+| Se encontró el uso del StorageClass legado 'thin' a pesar de ser un cluster 4.20 instalado reciente
+| El StorageClass thin (Legado): Utiliza el provisionador kubernetes.io/vsphere-volume. Es el driver antiguo (in-tree) que está siendo reemplazado en Kubernetes y OpenShift
+| Se recomienda revisar porque esta actualmente el StorageClass 'thin' para evaluar su remoción
+
+| *Auto aprovisionamiento de Proyectos habilitado*
+| El auto aprovisionamiento está habilitado para system:authenticated:oauth. Debe deshabilitarse en el entorno de producción para evitar la creación incontrolada de espacios de nombres.
+| Permitir el auto aprovisionamiento a usuarios autenticados reduce el control sobre la creación de proyectos.
+| Eliminar el auto aprovisionamiento del grupo system:authenticated:oauth.
+
 |===
-
-Los puntos que consideramos críticos son los siguientes:
-
-* Uso de NFS Subdir External Provisioner
-* Registry interna degradada
-* Conexión LDAP no cifrada

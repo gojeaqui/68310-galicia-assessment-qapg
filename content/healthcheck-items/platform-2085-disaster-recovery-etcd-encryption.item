@@ -30,14 +30,14 @@ check_definition:
     impact_and_risk_text: ""
     remediation_text: ""
   - key: "recommend01"
-    scenario_description_short_text: "etcd encryption not enabled"
-    description_long_text: "etcd data encryption is not a default setting and must be configured per client"
-    impact_and_risk_text: "If etcd is not encrypted a loss of sensitive data can occur if an etcd backup is exposed to the incorrect parties"
-    remediation_text: "Each OpenShift cluster should have ECTD encryption set for the additional layer of security"
+    scenario_description_short_text: "Cifrado de etcd no habilitado"
+    description_long_text: "El cifrado de datos de etcd no está habilitado de forma predeterminada y debe configurarse por cliente"
+    impact_and_risk_text: "Si etcd no está cifrado, puede producirse una pérdida de datos confidenciales si una copia de seguridad de etcd queda expuesta a personas no autorizadas"
+    remediation_text: "Cada clúster de OpenShift debería tener habilitado el cifrado de etcd como capa adicional de seguridad"
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: tbe
-  common_outcome_key: ""
+  status: changes_recommended
+  common_outcome_key: "recommend01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""

@@ -12,7 +12,7 @@ decision making or implementation.
 [cols="4,6",options=header]
 |===
 |Nombre
-|Correo Electrónico
+|Correo ElectrÃ³nico
 
 |Fernando Daniel Carozza
 |fernando.carozza@bancogalicia.com.ar
