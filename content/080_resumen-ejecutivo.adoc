@@ -98,4 +98,9 @@ A continuación se deja un resumen de lo que se encontró durante el assessment:
 | Permitir el auto aprovisionamiento a usuarios autenticados reduce el control sobre la creación de proyectos.
 | Eliminar el auto aprovisionamiento del grupo system:authenticated:oauth.
 
+| *La cuenta de servicio VMWare necesita revision*
+| Existe un problema con la cuenta o la configuración del vCenter en el Openshift
+| El operador 'vsphere-problem-detector' no puede encontrar el datacenter 'cpd intersite' en el vCenter, posiblemente por problema de permisos
+| Se recomienda revisar los permisos de la cuenta de servicio asi como el usuario y contraseña
+
 |===
