@@ -23,7 +23,7 @@ check_definition:
       question: "Are there any monitoring or alerting mechanisms in place for the ingress shards?"
   common_outcomes:
     - key: "advisory01"
-      scenario_description_short_text: "Information Only"
+      scenario_description_short_text: "Hay un Ingress Sharding configurado"
       description_long_text: ""  # Consultant to fill out ingress sharding details
       impact_and_risk_text: ""
       remediation_text: ""
@@ -44,8 +44,8 @@ check_definition:
       remediation_text: "Implement monitoring and alerting for key metrics such as request latency, error rate, and throughput for each shard."
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: tbe
-  common_outcome_key: ""
+  status: pass
+  common_outcome_key: "advisory01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""

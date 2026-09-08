@@ -23,8 +23,8 @@ check_definition:
           oc get clusterversion 
   common_outcomes:
   - key: "no_change01"
-    scenario_description_short_text: "Supported Cluster Version"
-    description_long_text: "Current cluster version is supported by Red Hat and is the latest."
+    scenario_description_short_text: "Versión del clúster soportada"
+    description_long_text: "La versión actual del clúster cuenta con soporte de Red Hat."
     impact_and_risk_text: ""
     remediation_text: ""
   - key: "changes_required01"
@@ -44,8 +44,8 @@ check_definition:
     remediation_text: "Revisar que el mcp 'infra' haya terminado de actualizar."
 customer_environment_findings:
   # pass, fail, changes_recommended, etc.  See config.yaml for all statuses. 
-  status: changes_recommended
-  common_outcome_key: "changes_recommended02"
+  status: pass
+  common_outcome_key: "no_change01"
   outcome_overrides:
       scenario_description_short_text: ""
       description_long_text: ""
@@ -56,9 +56,9 @@ customer_environment_findings:
     remediation_additional_text: ""
     additional_comments_text: ""
   outcome_evidence: |
-    [guillermo@darkstar paas-apps1-qapg]$ omc get clusterversion
+    [guillermo@darkstar paas1-qapg]$ omc get clusterversion
     NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
-    version   4.20.17   True        False         28m     Error while reconciling 4.20.17: ingress, machine-config has an unknown error: ClusterOperatorsDegraded
+    version   4.20.17   True        False         14d     Cluster version is 4.20.17
 
     ---
 
