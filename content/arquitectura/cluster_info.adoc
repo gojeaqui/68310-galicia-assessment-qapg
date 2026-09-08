@@ -54,6 +54,8 @@ Total de Pods en el Clúster: El límite total será de 16,384 pods (stem:[64 \t
 // omc get co
 // =CONCATENATE("|";A1;"|";B1;"|";C1;"|";D1;"|";E1;"|";F1)
 
+[options="header"]
+|===
 |NAME|VERSION|AVAILABLE|PROGRESSING|DEGRADED|SINCE
 |authentication|4.20.17|True|False|False|18d
 |baremetal|4.20.17|True|False|False|98d
@@ -89,12 +91,15 @@ Total de Pods en el Clúster: El límite total será de 16,384 pods (stem:[64 \t
 |operator-lifecycle-manager-packageserver|4.20.17|True|False|False|31d
 |service-ca|4.20.17|True|False|False|98d
 |storage|4.20.17|True|False|False|14d
+|===
 
 == Machine Config Pools
 
 // omc get mcp
 // =CONCATENATE("|";A1;"|";B1;"|";C1;"|";D1;"|";E1;"|";F1;"|";G1;"|";H1;"|";I1;"|";J1)
 
+[options="header"]
+|===
 |NAME|CONFIG|UPDATED|UPDATING|DEGRADED|MACHINECOUNT|READYMACHINECOUNT|UPDATEDMACHINECOUNT|DEGRADEDMACHINECOUNT
 |infra|rendered-infra-c5ece5426b563f96a68b1b6f928d8a95|True|False|False|3|3|3|0
 |master|rendered-master-1c931772a0c85070f3f96f58cd21e7c4|True|False|False|3|3|3|0
@@ -102,6 +107,7 @@ Total de Pods en el Clúster: El límite total será de 16,384 pods (stem:[64 \t
 |worker-apps-1|rendered-worker-apps-1-6abdf5d3dbabc90afc345e07446b7008|True|False|False|6|6|6|0
 |worker-apps-2|rendered-worker-apps-2-6abdf5d3dbabc90afc345e07446b7008|True|False|False|6|6|6|0
 |worker|rendered-worker-c5ece5426b563f96a68b1b6f928d8a95|True|False|False|0|0|0|0
+|===
 
 == Operadores
 
