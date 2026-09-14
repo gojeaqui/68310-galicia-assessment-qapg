@@ -93,6 +93,49 @@ Total de Pods en el Clúster: El límite total será de 16,384 pods (stem:[64 \t
 |storage|4.20.17|True|False|False|14d
 |===
 
+== Alertas
+
+Reglas de Prometheus en estado firing o pending (`omc prom rules -s firing,pending -o wide`).
+
+[options="header"]
+|===
+|GROUP|RULE|SEVERITY|STATE|AGE|ALERTS|ACTIVE SINCE
+|vsphere-problem-detector.rules|VSphereOpenshiftClusterHealthFail|warning|firing|22s|1|07 Aug 26 14:48 UTC
+|cluster-version|UpdateAvailable|info|firing|6s|1|29 Aug 26 04:48 UTC
+|openshift-ingress-to-route-controller.rules|IngressWithoutClassName|warning|firing|19s|6|31 Aug 26 11:13 UTC
+|insights|InsightsRecommendationActive|info|firing|18s|3|26 Aug 26 12:40 UTC
+|general.rules|Watchdog|none|firing|3s|1|26 Aug 26 12:40 UTC
+|openshift-kubernetes.rules|ClusterMonitoringOperatorDeprecatedConfig|info|firing|12s|1|01 Jul 26 14:26 UTC
+|===
+
+== ETCD
+
+=== Estado
+
+Estado de los miembros de etcd (`omc etcd status`).
+
+[options="header"]
+|===
+|ENDPOINT|ID|VERSION|DB SIZE/IN USE|NOT USED|IS LEADER|IS LEARNER|RAFT TERM|RAFT INDEX|RAFT APPLIED INDEX|ERRORS
+|https://10.254.36.12:2379|33f258265df4535f|3.5.26|441 MB/374 MB|16%|false|false|22|159702012|159702012|
+|https://10.254.36.11:2379|5c9b75809b5fb6e7|3.5.26|462 MB/374 MB|20%|true|false|22|159702012|159702012|
+|https://10.254.36.13:2379|fb0f176899d1cecc|3.5.26|445 MB/374 MB|16%|false|false|22|159702012|159702012|
+|===
+
+Métricas de rendimiento de etcd obtenidas desde el monitoring del clúster (ventana de 30 minutos).
+
+=== Disk Backend Commit Duration
+
+Percentil 99 de la duración de commit en disco de etcd (`etcd_disk_backend_commit_duration_seconds`).
+
+image::etcd-disk_paas-apps1-qapg.jpg[pdfwidth=80%]
+
+=== Network Peer Round Trip Time
+
+Percentil 99 del tiempo de ida y vuelta entre peers de etcd (`etcd_network_peer_round_trip_time_seconds`).
+
+image::etcd-net_paas-apps1-qapg.jpg[pdfwidth=80%]
+
 == Machine Config Pools
 
 // omc get mcp
@@ -161,22 +204,44 @@ Total de Pods en el Clúster: El límite total será de 16,384 pods (stem:[64 \t
 [options="header"]
 |===
 |NAME|CAPACITY|ACCESS MODES|RECLAIM POLICY|STATUS|CLAIM|STORAGECLASS
-|pvc-132b4778-5aed-406b-9f1c-1c5fd978a0f1|1Gi|RWX|Delete|Bound|acin-acercandoinv-qas/resources|ocs-storagecluster-cephfs
-|pvc-085e7c1e-fd53-4485-9cf7-a40ace2eee1f|1Gi|RWO|Delete|Released|amp/system-searchd-manticore|thin-csi
-|pvc-8c378346-02d9-451a-a377-25082bce4d5e|1Gi|RWO|Delete|Bound|amp/system-searchd-manticore|thin-csi
-|pvc-e28acb48-2e57-49a3-8729-f18796140843|10Gi|RWX|Delete|Bound|amp/system-storage|ocs-storagecluster-cephfs
-|pvc-0e937afc-ea64-4586-9886-f6bccbd2fa27|3Gi|RWO|Delete|Bound|arqa-arquitectura-qas/data-volume-datagrid-service-0|ocs-storagecluster-cephfs
-|pvc-4be6d6be-eb33-4991-94aa-91781a429dee|3Gi|RWO|Delete|Bound|arqa-arquitectura-qas/data-volume-datagrid-service-1|ocs-storagecluster-cephfs
-|pvc-c02b930c-1611-499b-9e47-67c53c98bde7|1Gi|RWO|Delete|Bound|default/nginx-pvc|thin-csi
-|pvc-42ed7ad3-991e-4db6-869d-c85c4943f612|10Gi|RWX|Delete|Bound|devq-ocpquay-qas/k6-results-pvc|ocs-storagecluster-cephfs
-|pvc-a9eae2ae-33ad-4042-8b32-c70b24c51a22|1Gi|RWO|Delete|Bound|devq-ocpquay-qas/k6-results-smoke-login|ocs-storagecluster-cephfs
-|pvc-6ddda17f-6f08-42b1-8aa2-4a51fd135f06|15Gi|RWO|Delete|Bound|netbackup/netbackup-netbackupkops|thin-csi
-|pvc-4eb8b7ed-0d1d-4e57-8002-5029d03c4f3b|3Gi|RWO|Delete|Bound|ocp-etcd-backup/etcd-backup-pvc|thin-csi
-|pvc-c66d76a6-0979-4d51-9ec3-23e966805ab9|40Gi|RWO|Delete|Bound|openshift-monitoring/ocs-alertmanager-claim-alertmanager-main-0|thin-csi
-|pvc-3f7019bb-88a1-413d-9851-65c31422786b|40Gi|RWO|Delete|Bound|openshift-monitoring/ocs-alertmanager-claim-alertmanager-main-1|thin-csi
-|pvc-b2ca4f9c-2533-45b5-b92b-19d0ae7e8cef|300Gi|RWO|Delete|Bound|openshift-monitoring/prometheus-k8s-db-prometheus-k8s-0|thin-csi
-|pvc-566d432b-0f33-4fe2-b46a-89a2c0d475d5|300Gi|RWO|Delete|Bound|openshift-monitoring/prometheus-k8s-db-prometheus-k8s-1|thin-csi
-|pvc-c32a9056-5630-48dd-ac2d-053b5196c21b|1Gi|RWX|Delete|Bound|test-devops-qas/resources|ocs-storagecluster-cephfs
+|pvc-132b4778-5aed-406b-9f1c-1c5fd978a0f1|1Gi|ReadWriteMany|Delete|Bound|acin-acercandoinv-qas/resources|ocs-storagecluster-cephfs
+|pvc-085e7c1e-fd53-4485-9cf7-a40ace2eee1f|1Gi|ReadWriteOnce|Delete|Released|amp/system-searchd-manticore|thin-csi
+|pvc-8c378346-02d9-451a-a377-25082bce4d5e|1Gi|ReadWriteOnce|Delete|Bound|amp/system-searchd-manticore|thin-csi
+|pvc-e28acb48-2e57-49a3-8729-f18796140843|10Gi|ReadWriteMany|Delete|Bound|amp/system-storage|ocs-storagecluster-cephfs
+|pvc-f938e361-dd05-41e6-8c51-dc0c787f6fae|1Gi|ReadWriteMany|Delete|Bound|aple-apislending-qas/resources|ocs-storagecluster-cephfs
+|pvc-9fa14e06-a849-4e93-b3b2-6e01db8e2fe8|1Gi|ReadWriteMany|Delete|Bound|botd-botdedatos-qas/archivosder|ocs-storagecluster-cephfs
+|pvc-39171bca-b8a0-4299-bab1-3da9ae75e402|1Gi|ReadWriteMany|Delete|Bound|bpmo-ctrolctabenef-qas/resources|ocs-storagecluster-cephfs
+|pvc-b0f7cf7d-0981-412a-886a-b6bd60e2e593|1Gi|ReadWriteMany|Delete|Bound|cdip-plazofijoelect-qas/resources|ocs-storagecluster-cephfs
+|pvc-a7fb99c6-8610-43e0-8e4b-36b726ec9e91|1Gi|ReadWriteOnce|Delete|Bound|cocp-cosautomation-qas/data|ocs-storagecluster-cephfs
+|pvc-c02b930c-1611-499b-9e47-67c53c98bde7|1Gi|ReadWriteOnce|Delete|Bound|default/nginx-pvc|thin-csi
+|pvc-676435b9-7071-42a2-8920-276e172da6e7|10Gi|ReadWriteMany|Delete|Bound|devq-ocpquay-qas/k6-results-pvc|ocs-storagecluster-cephfs
+|pvc-373341fc-c442-4e00-9489-ee7326a97da9|1Gi|ReadWriteOnce|Delete|Bound|devq-ocpquay-qas/k6-results-smoke-login|ocs-storagecluster-cephfs
+|pvc-db1bf458-00b5-47f6-81a9-17062420e4eb|1Gi|ReadWriteMany|Delete|Bound|esdv-ecosistemasdv-qas/resources|ocs-storagecluster-cephfs
+|pvc-30f77c72-3334-47bb-b06a-b33a2f43dcfb|1Gi|ReadWriteMany|Delete|Bound|gson-gsonboarding-qas/resources|ocs-storagecluster-cephfs
+|pvc-89c546e8-9354-4639-b8c5-aa48324b4108|1Gi|ReadWriteMany|Delete|Bound|icea-iccmsafip-qas/resources|ocs-storagecluster-cephfs
+|pvc-144b1496-2653-40da-bdd4-8b4db9cefee2|1Gi|ReadWriteMany|Delete|Bound|intr-transftitulos-qas/resources|ocs-storagecluster-cephfs
+|pvc-d1657525-32e7-4c6a-9b06-f9e68962af0f|1Gi|ReadWriteMany|Delete|Bound|lsgo-sitioleasing-qas/leasing|ocs-storagecluster-cephfs
+|pvc-6ddda17f-6f08-42b1-8aa2-4a51fd135f06|15Gi|ReadWriteOnce|Delete|Bound|netbackup/netbackup-netbackupkops|thin-csi
+|pvc-4eb8b7ed-0d1d-4e57-8002-5029d03c4f3b|3Gi|ReadWriteOnce|Delete|Bound|ocp-etcd-backup/etcd-backup-pvc|thin-csi
+|pvc-8d4b8202-16df-4d70-a587-1d865f42541a|10Gi|ReadWriteMany|Delete|Bound|ofbf-financiaciones-qas/archivos|ocs-storagecluster-cephfs
+|pvc-a74a7c92-3018-4daa-aff7-af9641316dd5|1Gi|ReadWriteMany|Delete|Bound|ofbf-financiaciones-qas/resources|ocs-storagecluster-cephfs
+|pvc-c66d76a6-0979-4d51-9ec3-23e966805ab9|40Gi|ReadWriteOnce|Delete|Bound|openshift-monitoring/ocs-alertmanager-claim-alertmanager-main-0|thin-csi
+|pvc-3f7019bb-88a1-413d-9851-65c31422786b|40Gi|ReadWriteOnce|Delete|Bound|openshift-monitoring/ocs-alertmanager-claim-alertmanager-main-1|thin-csi
+|pvc-b2ca4f9c-2533-45b5-b92b-19d0ae7e8cef|300Gi|ReadWriteOnce|Delete|Bound|openshift-monitoring/prometheus-k8s-db-prometheus-k8s-0|thin-csi
+|pvc-566d432b-0f33-4fe2-b46a-89a2c0d475d5|300Gi|ReadWriteOnce|Delete|Bound|openshift-monitoring/prometheus-k8s-db-prometheus-k8s-1|thin-csi
+|pvc-efca998f-c2ce-4fff-906d-567865d3308f|2Gi|ReadWriteMany|Delete|Bound|pnoe-noe-qas/http-root|ocs-storagecluster-cephfs
+|pvc-56201768-16ce-4fb9-a413-57091fbc3bc8|1Gi|ReadWriteMany|Delete|Bound|pnoe-noe-qas/redis|ocs-storagecluster-cephfs
+|pvc-350669e6-675c-436f-bce3-bc1508ac8968|1Gi|ReadWriteMany|Delete|Bound|pnoe-noe-qas/resources|ocs-storagecluster-cephfs
+|pvc-ee1fbe67-2832-4d00-96f6-865e348c8b7c|1Gi|ReadWriteMany|Delete|Bound|pnoe-noe-qas/ui-monitor|ocs-storagecluster-cephfs
+|pvc-87118d86-a3de-4957-9d08-28b46230e85a|1Gi|ReadWriteMany|Delete|Bound|pnoe-noe-qas/ui-monitor-ultimos|ocs-storagecluster-cephfs
+|pvc-7720d323-1fb9-4345-af43-bb359b70ea6e|1Gi|ReadWriteMany|Delete|Bound|pnoe-noe-qas/ui-panel-televisor|ocs-storagecluster-cephfs
+|pvc-1645658c-57bf-40cf-84e1-d59c1685e121|1Gi|ReadWriteMany|Delete|Bound|pnoe-noe-qas/ui-supervisor|ocs-storagecluster-cephfs
+|pvc-e2d7d362-1399-4647-9ad9-0c1ca823d47a|3Gi|ReadWriteOnce|Delete|Bound|posc-sessioncontrol-qas/data-volume-datagrid-service-0|ocs-storagecluster-cephfs
+|pvc-d5aac74d-f2b9-4966-9ed8-bd833b930e2b|3Gi|ReadWriteOnce|Delete|Bound|posc-sessioncontrol-qas/data-volume-datagrid-service-1|ocs-storagecluster-cephfs
+|pvc-539bdb09-334c-4407-9469-ec37ea042ae1|1Gi|ReadWriteMany|Delete|Bound|srep-sregalicia-qas/k6-operator-bff-cvme-load-testing-results-pvc|ocs-storagecluster-cephfs
+|pvc-8b09c2f8-2a80-4b7e-a608-0cffe2258238|1Gi|ReadWriteMany|Delete|Bound|test-devops-qas/resources|ocs-storagecluster-cephfs
+|pvc-8aef4339-a34b-4f5f-b7bb-14558a9b37df|3Gi|ReadWriteOnce|Delete|Bound|tytm-middleware-qas/data-volume-datagrid-service-0|ocs-storagecluster-cephfs
+|pvc-ac3c775a-f310-435c-a181-73be23b94a3b|3Gi|ReadWriteOnce|Delete|Bound|tytm-middleware-qas/data-volume-datagrid-service-1|ocs-storagecluster-cephfs
 |===
 
 == Nodos

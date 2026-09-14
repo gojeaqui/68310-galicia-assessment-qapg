@@ -26,6 +26,9 @@ check_definition:
       question: "Are there any known issues with the current service account configuration?"
     - type: survey
       question: "Is there a backup mechanism for service account configurations?"
+    - type: "command"
+      command: |
+        oc -n openshift-cluster-storage-operator get event
   common_outcomes:
     - key: "no_change01"
       scenario_description_short_text: "Cuenta de servicio correctamente configurada"
