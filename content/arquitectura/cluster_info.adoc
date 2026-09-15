@@ -108,6 +108,8 @@ Reglas de Prometheus en estado firing o pending (`omc prom rules -s firing,pendi
 |openshift-kubernetes.rules|ClusterMonitoringOperatorDeprecatedConfig|info|firing|12s|1|01 Jul 26 14:26 UTC
 |===
 
+#*NOTA*: La alerta `VSphereOpenshiftClusterHealthFail` indica que hay algun problema con la cuenta del VMWare#
+
 == ETCD
 
 === Estado
